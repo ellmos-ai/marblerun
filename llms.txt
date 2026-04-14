@@ -1,0 +1,26 @@
+# MarbleRun / llmauto - LLM Automation Framework
+
+> MarbleRun (package name: llmauto) is a chain-execution framework for autonomous LLM agent loops. Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context from link to link via handoff files. Named after a marble run: the context rolls through the chain, agent by agent.
+
+llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external dependencies (Python stdlib + Claude Code CLI). Python 3.10+, MIT.
+
+Core concepts: Chain (JSON definition with ordered links), Link (one agent with role, model, prompt), Role (worker / reviewer / controller with skip-if-not-assigned), Handoff (context-passing file between links), Marble Run Pattern (sequential loops with max_rounds / runtime limits), Pipe Mode (one-shot CLI calls), Background Execution (chains run in separate terminal windows).
+
+## Docs
+
+- [README](https://github.com/ellmos-ai/MarbleRun/blob/main/README.md): Overview, install, chain definition, quick start
+- [USER-DOCU.md](https://github.com/ellmos-ai/MarbleRun/blob/main/USER-DOCU.md): Detailed user guide
+- [Automatisierung-in-claude-code.md](https://github.com/ellmos-ai/MarbleRun/blob/main/Automatisierung-in-claude-code.md): Integration guide for Claude Code CLI (German)
+- [CONTRIBUTING](https://github.com/ellmos-ai/MarbleRun/blob/main/CONTRIBUTING.md): Contribution workflow
+- [SECURITY](https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md): Security policy
+- [LICENSE](https://github.com/ellmos-ai/MarbleRun/blob/main/LICENSE): MIT license text
+
+## ellmos family (related projects)
+
+- [USMC](https://github.com/ellmos-ai/usmc): Tier 1 -- shared memory primitive
+- [Rinnsal](https://github.com/ellmos-ai/rinnsal): Tier 2 -- USMC + llmauto (uses this project as automation module)
+- [BACH](https://github.com/ellmos-ai/bach): Tier 3 -- full text-based OS with llmauto chain integration
+
+## Optional
+
+- [GitHub Issues](https://github.com/ellmos-ai/MarbleRun/issues): Bug reports and feature requests
