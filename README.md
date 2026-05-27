@@ -43,8 +43,8 @@ Think of it as a marble run: the marble (context) rolls from link to link in a l
 ## Installation
 
 ```bash
-git clone https://github.com/lukisch/llmauto.git
-cd llmauto
+git clone https://github.com/ellmos-ai/MarbleRun.git
+cd MarbleRun
 
 # Run directly (no install needed)
 python -m llmauto --help
