@@ -11,6 +11,11 @@
 Universelles Automatisierungstool für LLM-Agenten.
 Chain-Ausführung, Prompt-Verwaltung, autonome Arbeitsschleifen.
 
+**Kanonischer Suchname:** `ellmos MarbleRun` oder `llmauto`.
+Dieses Repository ist nicht das Confidential-Computing-Projekt
+`edgelesssys/marblerun` und kein Marble-Run-Spielbaukasten, sondern ein
+Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
+
 **Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+
 
 ---
@@ -20,6 +25,18 @@ Chain-Ausführung, Prompt-Verwaltung, autonome Arbeitsschleifen.
 llmauto orchestriert autonome LLM-Agenten-Ketten ("Marble Runs" -- Kugelbahnen). Mehrere Agenten arbeiten nacheinander -- Worker führen Aufgaben aus, Reviewer prüfen Ergebnisse, Controller koordinieren -- und reichen den Kontext über Handoff-Dateien weiter.
 
 Stell es dir wie eine Kugelbahn vor: Die Kugel (Kontext) rollt von Glied zu Glied in einer Schleife, wobei jedes Glied ein LLM-Agent mit einer bestimmten Rolle und einem bestimmten Prompt ist.
+
+### Beste Suchphrasen
+
+Diese Begriffe helfen bei Websuche, GitHub-Suche, LLM-Tool-Indexes und interner
+Automationsdokumentation:
+
+| Suchphrase | Zweck |
+|---|---|
+| `ellmos MarbleRun` | Grenzt dieses Repo von Confidential-Computing- und Spielprojekten namens MarbleRun ab |
+| `llmauto Claude Code automation` | Findet Paket- und CLI-Namen im Code |
+| `MarbleRun LLM agent chains` | Beschreibt das zentrale Chain-Execution-Muster |
+| `local-first multi-agent orchestration Python` | Beschreibt den lokalen Zero-Dependency-Automatisierungsfall |
 
 ### Hauptmerkmale
 
@@ -43,8 +60,8 @@ Stell es dir wie eine Kugelbahn vor: Die Kugel (Kontext) rollt von Glied zu Glie
 ## Installation
 
 ```bash
-git clone https://github.com/lukisch/llmauto.git
-cd llmauto
+git clone https://github.com/ellmos-ai/MarbleRun.git
+cd MarbleRun
 
 # Direkt ausführen (keine Installation nötig)
 python -m llmauto --help
@@ -279,7 +296,7 @@ Siehe `chains/` für die vollständige Liste der enthaltenen Chain-Definitionen.
 
 ## Siehe auch: OpenClaw
 
-MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Worker, Reviewer und Controller in Schleifen zusammenarbeiten. Wie steht es im Vergleich zu [OpenClaw](https://github.com/openclaw/openclaw) (274K+ Stars)?
+MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Worker, Reviewer und Controller in Schleifen zusammenarbeiten. Wie steht es im Vergleich zu [OpenClaw](https://github.com/openclaw/openclaw)?
 
 | | **MarbleRun** | **OpenClaw** |
 |---|---|---|

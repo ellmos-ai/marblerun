@@ -11,6 +11,11 @@
 Universal automation tool for LLM agents.
 Chain execution, prompt management, autonomous work loops.
 
+**Canonical search name:** `ellmos MarbleRun` or `llmauto`.
+This repository is not the confidential-computing project `edgelesssys/marblerun`
+and not a marble-run game toolkit; it is a Python/Claude Code automation
+framework for autonomous LLM agent chains.
+
 **Author:** Lukas Geiger | **License:** MIT | **Python:** 3.10+
 
 ---
@@ -20,6 +25,18 @@ Chain execution, prompt management, autonomous work loops.
 llmauto orchestrates autonomous LLM agent chains ("marble runs"). Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context via handoff files.
 
 Think of it as a marble run: the marble (context) rolls from link to link in a loop, with each link being an LLM agent with a specific role and prompt.
+
+### Best Search Phrases
+
+Use these phrases when looking for the project in search engines, GitHub search,
+LLM tool indexes, or internal automation docs:
+
+| Phrase | Why it matters |
+|---|---|
+| `ellmos MarbleRun` | Distinguishes this repo from confidential-computing and game projects named MarbleRun |
+| `llmauto Claude Code automation` | Finds the package and CLI name used in code |
+| `MarbleRun LLM agent chains` | Describes the central chain-execution pattern |
+| `local-first multi-agent orchestration Python` | Captures the zero-dependency local automation use case |
 
 ### Key Features
 
@@ -279,7 +296,7 @@ See `chains/` for the full set of included chain definitions.
 
 ## See Also: OpenClaw
 
-MarbleRun makes LLMs act -- autonomous multi-agent chains where workers, reviewers, and controllers collaborate in loops. How does it compare to [OpenClaw](https://github.com/openclaw/openclaw) (274K+ stars)?
+MarbleRun makes LLMs act -- autonomous multi-agent chains where workers, reviewers, and controllers collaborate in loops. How does it compare to [OpenClaw](https://github.com/openclaw/openclaw)?
 
 | | **MarbleRun** | **OpenClaw** |
 |---|---|---|
@@ -307,7 +324,7 @@ Lukas Geiger -- [github.com/lukisch](https://github.com/lukisch)
 
 ## Haftung / Liability
 
-Dieses Projekt ist eine **unentgeltliche Open-Source-Schenkung** im Sinne der §§ 516 ff. BGB. Die Haftung des Urhebers ist gemäß **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die Haftungsausschlüsse aus GPL-3.0 / MIT / Apache-2.0 §§ 15–16 (je nach gewählter Lizenz).
+Dieses Projekt ist eine **unentgeltliche Open-Source-Schenkung** im Sinne der §§ 516 ff. BGB. Die Haftung des Urhebers ist gemäß **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die Haftungsausschlüsse der MIT-Lizenz.
 
 Nutzung auf eigenes Risiko. Keine Wartungszusage, keine Verfügbarkeitsgarantie, keine Gewähr für Fehlerfreiheit oder Eignung für einen bestimmten Zweck.
 

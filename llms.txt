@@ -4,6 +4,12 @@
 
 llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external dependencies (Python stdlib + Claude Code CLI). Python 3.10+, MIT.
 
+Canonical repository: https://github.com/ellmos-ai/MarbleRun
+Canonical package / CLI name: llmauto
+Canonical search phrases: ellmos MarbleRun; llmauto Claude Code automation; MarbleRun LLM agent chains; local-first multi-agent orchestration Python.
+
+Disambiguation: this repo is not edgelesssys/marblerun, not a confidential-computing control plane, and not a game or Blender marble-run toolkit. It is the ellmos-ai Python automation framework for Claude Code and autonomous LLM agent chains.
+
 Core concepts: Chain (JSON definition with ordered links), Link (one agent with role, model, prompt), Role (worker / reviewer / controller with skip-if-not-assigned), Handoff (context-passing file between links), Marble Run Pattern (sequential loops with max_rounds / runtime limits), Pipe Mode (one-shot CLI calls), Background Execution (chains run in separate terminal windows).
 
 ## Docs
