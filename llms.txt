@@ -30,3 +30,5 @@ Core concepts: Chain (JSON definition with ordered links), Link (one agent with 
 ## Optional
 
 - [GitHub Issues](https://github.com/ellmos-ai/MarbleRun/issues): Bug reports and feature requests
+
+## Last-checked: 2026-06-10
