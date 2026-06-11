@@ -37,6 +37,16 @@ Automationsdokumentation:
 | `llmauto Claude Code automation` | Findet Paket- und CLI-Namen im Code |
 | `MarbleRun LLM agent chains` | Beschreibt das zentrale Chain-Execution-Muster |
 | `local-first multi-agent orchestration Python` | Beschreibt den lokalen Zero-Dependency-Automatisierungsfall |
+| `Claude Code agent chain runner` | Passt zu Suchen nach unbeaufsichtigten Claude-Code-Worker-/Reviewer-/Controller-Schleifen |
+| `llmauto autonomous agent loop` | Verbindet CLI-/Paketnamen mit dem zentralen Automationsmuster |
+
+### Discovery-Kontext
+
+MarbleRun wird am besten über den CLI-/Paketnamen `llmauto` plus Anwendungsfall
+gefunden: Claude-Code-Automation, Agent-Chain-Runner, lokale Multi-Agenten-
+Orchestrierung und handoff-basierte autonome Arbeitsschleifen. Der reine Name
+`MarbleRun` wird bewusst abgegrenzt, weil öffentliche Suchergebnisse auch
+Confidential-Computing-Infrastruktur und physische Marble-Run-Projekte zeigen.
 
 ### Hauptmerkmale
 

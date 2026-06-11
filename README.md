@@ -37,6 +37,16 @@ LLM tool indexes, or internal automation docs:
 | `llmauto Claude Code automation` | Finds the package and CLI name used in code |
 | `MarbleRun LLM agent chains` | Describes the central chain-execution pattern |
 | `local-first multi-agent orchestration Python` | Captures the zero-dependency local automation use case |
+| `Claude Code agent chain runner` | Matches users searching for unattended Claude Code worker/reviewer/controller loops |
+| `llmauto autonomous agent loop` | Combines the CLI/package name with the core automation pattern |
+
+### Discovery Context
+
+MarbleRun is best discovered through its CLI/package name `llmauto` plus the
+use case: Claude Code automation, agent-chain runner, local-first multi-agent
+orchestration, and handoff-based autonomous work loops. The bare name
+`MarbleRun` is intentionally disambiguated because public search results also
+include confidential-computing infrastructure and physical marble-run projects.
 
 ### Key Features
 

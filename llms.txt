@@ -1,3 +1,5 @@
+## Last-checked: 2026-06-12
+
 # MarbleRun / llmauto - LLM Automation Framework
 
 > MarbleRun (package name: llmauto) is a chain-execution framework for autonomous LLM agent loops. Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context from link to link via handoff files. Named after a marble run: the context rolls through the chain, agent by agent.
@@ -11,6 +13,37 @@ Canonical search phrases: ellmos MarbleRun; llmauto Claude Code automation; Marb
 Disambiguation: this repo is not edgelesssys/marblerun, not a confidential-computing control plane, and not a game or Blender marble-run toolkit. It is the ellmos-ai Python automation framework for Claude Code and autonomous LLM agent chains.
 
 Core concepts: Chain (JSON definition with ordered links), Link (one agent with role, model, prompt), Role (worker / reviewer / controller with skip-if-not-assigned), Handoff (context-passing file between links), Marble Run Pattern (sequential loops with max_rounds / runtime limits), Pipe Mode (one-shot CLI calls), Background Execution (chains run in separate terminal windows).
+
+## Audience
+
+- Developers building unattended Claude Code automation loops
+- LLM-agent operators who need worker/reviewer/controller chains
+- Local-first automation users who prefer Python stdlib tooling
+- Maintainers comparing lightweight chain runners and agent orchestrators
+- ellmos/BACH/Rinnsal users looking for the standalone automation layer
+
+## Search Phrases
+
+```text
+ellmos MarbleRun
+ellmos-ai MarbleRun
+llmauto Claude Code automation
+llmauto autonomous agent loop
+MarbleRun LLM agent chains
+Claude Code agent chain runner
+local-first multi-agent orchestration Python
+Python handoff-based agent framework
+worker reviewer controller LLM loop
+zero dependency LLM automation CLI
+```
+
+## External Discovery Notes
+
+As of 2026-06-12, web search finds the canonical GitHub repository for exact
+ellmos/llmauto queries. Broad `MarbleRun` searches still collide with
+confidential-computing and game/toolkit projects, so downstream directories,
+LLM indexes, and package metadata should prefer `llmauto` plus Claude Code,
+agent-chain, and local-first automation wording.
 
 ## Docs
 
@@ -30,5 +63,3 @@ Core concepts: Chain (JSON definition with ordered links), Link (one agent with 
 ## Optional
 
 - [GitHub Issues](https://github.com/ellmos-ai/MarbleRun/issues): Bug reports and feature requests
-
-## Last-checked: 2026-06-10

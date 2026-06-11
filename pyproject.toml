@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 authors = [
     {name = "Lukas Geiger", email = "lukisch@users.noreply.github.com"},
 ]
-keywords = ["llm", "automation", "claude", "claude-code", "agent", "agent-chains", "multi-agent", "orchestration", "llmauto", "marblerun", "local-first"]
+keywords = ["llm", "automation", "claude", "claude-code", "claude-cli", "agent", "agent-chains", "multi-agent", "orchestration", "autonomous-agents", "handoff", "chain-runner", "llmauto", "marblerun", "local-first"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
