@@ -90,6 +90,24 @@ def resolve_prompt(link, chain_config):
     return prompt_key if prompt_key else "Fuehre die naechste Aufgabe aus."
 
 
+def _home_placeholders(home=None):
+    """Liefert (home_native, home_bash) fuer {HOME}/{BASH_HOME}-Ersetzung.
+
+    Cross-platform: Auf Windows wird C:\\Users\\Name zu /c/Users/Name
+    (Git-Bash-Stil); auf macOS/Linux (kein ':' im Pfad) bleibt der
+    Home-Pfad unveraendert.
+    """
+    if home is None:
+        home = _ACTUAL_HOME
+    home_native = home.rstrip(os.sep).rstrip("/")
+    drive, sep, rest = home_native.partition(":")
+    if sep:
+        home_bash = "/" + drive.lower() + rest.replace("\\", "/")
+    else:
+        home_bash = home_native
+    return home_native, home_bash
+
+
 UNTIL_FULL_SUFFIX = (
     "\n\nWICHTIG: Dein Kontext ist deine Begrenzung. Arbeite so viele Aufgaben ab "
     "wie moeglich. Erst wenn du merkst, dass dein Kontext knapp wird oder eine "
@@ -374,9 +392,7 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
         )
 
         prompt_text = resolve_prompt(link, config)
-        home_win = _ACTUAL_HOME.rstrip(os.sep)
-        drive, rest = home_win.split(":", 1)
-        home_bash = "/" + drive.lower() + rest.replace("\\", "/")
+        home_win, home_bash = _home_placeholders()
         prompt_text = prompt_text.replace("{HOME}", home_win)
         prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
 
@@ -556,9 +572,7 @@ def run_chain(chain_name, background=False):
                         )
 
                         prompt_text = resolve_prompt(link, config)
-                        home_win = _ACTUAL_HOME.rstrip(os.sep)
-                        drive, rest = home_win.split(":", 1)
-                        home_bash = "/" + drive.lower() + rest.replace("\\", "/")
+                        home_win, home_bash = _home_placeholders()
                         prompt_text = prompt_text.replace("{HOME}", home_win)
                         prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
 
@@ -662,10 +676,7 @@ def run_chain(chain_name, background=False):
 
                 # Prompt aufloesen + {HOME} durch tatsaechliches User-Home ersetzen
                 prompt_text = resolve_prompt(link, config)
-                home_win = _ACTUAL_HOME.rstrip(os.sep)  # z.B. C:\Users\YourUsername
-                # C:\Users\YourUsername -> /c/Users/YourUsername (nur Laufwerksbuchstabe lowercase)
-                drive, rest = home_win.split(":", 1)
-                home_bash = "/" + drive.lower() + rest.replace("\\", "/")  # z.B. /c/Users/YourUsername
+                home_win, home_bash = _home_placeholders()
                 prompt_text = prompt_text.replace("{HOME}", home_win)
                 prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
 
