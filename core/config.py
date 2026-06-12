@@ -17,6 +17,12 @@ _KNOWN_USER_HOMES = [
 ]
 _ACTUAL_HOME = str(Path.home()) + os.sep
 
+# BACH_ROOT: aus Umgebungsvariable oder dynamisch aus Dateipfad ableiten
+# Im Module-Kontext ist BACH meist nicht direkt verfuegbar (Fallback: False/None)
+_bach_root_candidate = Path(os.environ.get("BACH_ROOT", str(Path(__file__).parents[4])))
+BACH_AVAILABLE = _bach_root_candidate.exists() and (_bach_root_candidate / "system").exists()
+BACH_ROOT = _bach_root_candidate if BACH_AVAILABLE else None
+
 
 DEFAULT_GLOBAL_CONFIG = {
     "default_model": "claude-sonnet-4-6",

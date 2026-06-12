@@ -5,21 +5,23 @@ llmauto -- LLM Automatisierung
 Universelles Automatisierungstool fuer LLM-Agenten.
 Ketten-Ausfuehrung, Einzelaufrufe, Prompt-Management.
 
-Verwendung:
-    python llmauto.py chain start <name>         Kette starten
-    python llmauto.py chain start <name> --bg    Im Hintergrund
-    python llmauto.py chain list                 Alle Ketten anzeigen
-    python llmauto.py chain status [name]        Status anzeigen
-    python llmauto.py chain stop <name> [grund]  Kette stoppen
-    python llmauto.py chain log <name> [N]       Log anzeigen
-    python llmauto.py chain reset <name>         State zuruecksetzen
-    python llmauto.py chain create                Neue Kette interaktiv erstellen
+Verwendung (aus system/tools/ heraus):
+    python -m llmauto chain start <name>         Kette starten
+    python -m llmauto chain start <name> --bg    Im Hintergrund
+    python -m llmauto chain list                 Alle Ketten anzeigen
+    python -m llmauto chain status [name]        Status anzeigen
+    python -m llmauto chain stop <name> [grund]  Kette stoppen
+    python -m llmauto chain pause <name> [grund] Kette an Checkpoint pausieren
+    python -m llmauto chain resume <name>        Pause aufheben
+    python -m llmauto chain steer <name> <text>  Operator-Hinweis vormerken
+    python -m llmauto chain log <name> [N]       Log anzeigen
+    python -m llmauto chain reset <name>         State zuruecksetzen
 
-    python llmauto.py pipe "prompt"              Einzelner Claude-Aufruf
-    python llmauto.py pipe -f prompt.txt         Prompt aus Datei
+    python -m llmauto pipe "prompt"              Einzelner Claude-Aufruf
+    python -m llmauto pipe -f prompt.txt         Prompt aus Datei
 
-    python llmauto.py status                     Globaler Status
-    python llmauto.py version                    Version anzeigen
+    python -m llmauto status                     Globaler Status
+    python -m llmauto version                    Version anzeigen
 """
 import argparse
 import sys
@@ -42,7 +44,8 @@ VERSION = "0.1.0"
 def cmd_chain(args):
     """Chain-Modus Subkommandos."""
     from llmauto.modes.chain import (
-        run_chain, show_status, stop_chain, show_log, reset_chain
+        run_chain, show_status, stop_chain, pause_chain, resume_chain,
+        steer_chain, show_log, reset_chain
     )
     from llmauto.core.config import list_chains
 
@@ -84,6 +87,28 @@ def cmd_chain(args):
         reason = " ".join(args.extra) if args.extra else None
         return stop_chain(args.name, reason)
 
+    elif action == "pause":
+        if not args.name:
+            print("Fehler: Ketten-Name erforderlich.")
+            return 1
+        reason = " ".join(args.extra) if args.extra else None
+        return pause_chain(args.name, reason)
+
+    elif action == "resume":
+        if not args.name:
+            print("Fehler: Ketten-Name erforderlich.")
+            return 1
+        return resume_chain(args.name)
+
+    elif action == "steer":
+        if not args.name:
+            print("Fehler: Ketten-Name erforderlich.")
+            return 1
+        if not args.extra:
+            print("Fehler: Steering-Nachricht erforderlich.")
+            return 1
+        return steer_chain(args.name, " ".join(args.extra))
+
     elif action == "log":
         if not args.name:
             print("Fehler: Ketten-Name erforderlich.")
@@ -96,11 +121,6 @@ def cmd_chain(args):
             print("Fehler: Ketten-Name erforderlich.")
             return 1
         return reset_chain(args.name)
-
-    elif action == "create":
-        from llmauto.core.chain_creator import create_chain
-        create_chain()
-        return 0
 
     else:
         print(f"Unbekannte Chain-Aktion: {action}")
@@ -126,7 +146,7 @@ def cmd_pipe(args):
     else:
         # Stdin lesen
         if sys.stdin.isatty():
-            print("Fehler: Kein Prompt angegeben. Verwende: llmauto pipe \"prompt\" oder -f datei.txt")
+            print("Fehler: Kein Prompt angegeben. Verwende: python -m llmauto pipe \"prompt\" oder -f datei.txt")
             return 1
         prompt = sys.stdin.read()
 
@@ -181,7 +201,7 @@ def main():
 
     # --- chain ---
     chain_parser = subparsers.add_parser("chain", help="Ketten-Modus (Marble-Run)")
-    chain_parser.add_argument("chain_action", choices=["start", "list", "status", "stop", "log", "reset", "create"],
+    chain_parser.add_argument("chain_action", choices=["start", "list", "status", "stop", "pause", "resume", "steer", "log", "reset"],
                               help="Aktion")
     chain_parser.add_argument("name", nargs="?", default=None, help="Ketten-Name")
     chain_parser.add_argument("extra", nargs="*", help="Zusaetzliche Argumente (Grund bei stop, Zeilenanzahl bei log)")
