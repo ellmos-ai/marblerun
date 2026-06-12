@@ -111,11 +111,23 @@ def _normalize_paths(obj):
     return obj
 
 
+def _chain_dirs():
+    """Suchreihenfolge fuer Chain-Configs: oeffentlich, dann _private."""
+    return [BASE_DIR / "chains", BASE_DIR / "chains" / "_private"]
+
+
 def load_chain(name):
-    """Laedt eine gespeicherte Chain-Config."""
-    chain_file = BASE_DIR / "chains" / f"{name}.json"
-    if not chain_file.exists():
-        raise FileNotFoundError(f"Kette '{name}' nicht gefunden: {chain_file}")
+    """Laedt eine gespeicherte Chain-Config.
+
+    Sucht erst in chains/, dann in chains/_private/ (_private-Konvention
+    fuer persoenliche, nicht veroeffentlichte Ketten).
+    """
+    candidates = [d / f"{name}.json" for d in _chain_dirs()]
+    chain_file = next((c for c in candidates if c.exists()), None)
+    if chain_file is None:
+        raise FileNotFoundError(
+            f"Kette '{name}' nicht gefunden: {' / '.join(str(c) for c in candidates)}"
+        )
     with open(chain_file, "r", encoding="utf-8") as f:
         chain = json.load(f)
     # Pfade an aktuelles System anpassen
@@ -136,11 +148,15 @@ def save_chain(name, config):
 
 
 def list_chains():
-    """Listet alle gespeicherten Ketten."""
-    chains_dir = BASE_DIR / "chains"
-    if not chains_dir.exists():
-        return []
-    return [f.stem for f in chains_dir.glob("*.json")]
+    """Listet alle gespeicherten Ketten (inkl. chains/_private/)."""
+    names = []
+    for chains_dir in _chain_dirs():
+        if not chains_dir.exists():
+            continue
+        for f in chains_dir.glob("*.json"):
+            if f.stem not in names:
+                names.append(f.stem)
+    return names
 
 
 def new_link(**kwargs):

@@ -103,6 +103,53 @@ class TestLoadChain:
             load_chain("nonexistent-chain-xyz")
 
 
+class TestPrivateChains:
+    """Tests fuer die _private-Konvention: chains/_private/ als Fallback."""
+
+    @pytest.fixture
+    def private_base(self, tmp_path):
+        from llmauto.core import config as cfg_module
+        original_base = cfg_module.BASE_DIR
+        cfg_module.BASE_DIR = tmp_path
+        (tmp_path / "chains").mkdir()
+        (tmp_path / "chains" / "_private").mkdir()
+        yield tmp_path
+        cfg_module.BASE_DIR = original_base
+
+    def _write_chain(self, path, name, mode="loop"):
+        chain = {"chain_name": name, "mode": mode,
+                 "links": [{"name": "w1", "role": "worker"}]}
+        (path / f"{name}.json").write_text(json.dumps(chain), encoding="utf-8")
+
+    def test_load_private_chain(self, private_base):
+        self._write_chain(private_base / "chains" / "_private", "geheim")
+        config = load_chain("geheim")
+        assert config["chain_name"] == "geheim"
+
+    def test_public_chain_wins_over_private(self, private_base):
+        self._write_chain(private_base / "chains", "doppelt", mode="once")
+        self._write_chain(private_base / "chains" / "_private", "doppelt", mode="loop")
+        config = load_chain("doppelt")
+        assert config["mode"] == "once"
+
+    def test_list_chains_includes_private(self, private_base):
+        self._write_chain(private_base / "chains", "oeffentlich")
+        self._write_chain(private_base / "chains" / "_private", "geheim")
+        chains = list_chains()
+        assert "oeffentlich" in chains
+        assert "geheim" in chains
+
+    def test_list_chains_no_duplicates(self, private_base):
+        self._write_chain(private_base / "chains", "doppelt")
+        self._write_chain(private_base / "chains" / "_private", "doppelt")
+        chains = list_chains()
+        assert chains.count("doppelt") == 1
+
+    def test_missing_chain_still_raises(self, private_base):
+        with pytest.raises(FileNotFoundError):
+            load_chain("gibt-es-nicht")
+
+
 class TestSaveChain:
     def test_save_and_reload(self, tmp_path):
         from llmauto.core import config as cfg_module

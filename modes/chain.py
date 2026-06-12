@@ -31,11 +31,17 @@ def log(msg, chain_name="default", also_print=True):
         f.write(line + "\n")
 
 
-def resolve_prompt(link, chain_config):
-    """Liest den Prompt-Text fuer ein Kettenglied."""
+def resolve_prompt(link, chain_config, base_dir=None):
+    """Liest den Prompt-Text fuer ein Kettenglied.
+
+    Datei-Prompts werden erst in prompts/, dann in prompts/_private/
+    gesucht (_private-Konvention fuer persoenliche Prompts).
+    """
     prompt_key = link.get("prompt", "")
     prompts_section = chain_config.get("prompts", {})
-    base_dir = Path(__file__).parent.parent
+    if base_dir is None:
+        base_dir = Path(__file__).parent.parent
+    prompt_dirs = [base_dir / "prompts", base_dir / "prompts" / "_private"]
 
     # B45: bach:// URL-Schema fuer DB-Prompts (nur wenn BACH verfuegbar)
     if prompt_key.startswith("bach://"):
@@ -72,15 +78,17 @@ def resolve_prompt(link, chain_config):
         elif isinstance(prompt_def, str):
             return prompt_def
 
-    # 2. Direkt als Datei im prompts/ Ordner suchen
-    prompt_file = base_dir / "prompts" / prompt_key
-    if prompt_file.exists():
-        return prompt_file.read_text(encoding="utf-8")
+    # 2. Direkt als Datei in prompts/ bzw. prompts/_private/ suchen
+    for prompt_dir in prompt_dirs:
+        prompt_file = prompt_dir / prompt_key
+        if prompt_file.exists():
+            return prompt_file.read_text(encoding="utf-8")
 
-    # 3. Als .txt versuchen
-    prompt_file_txt = base_dir / "prompts" / f"{prompt_key}.txt"
-    if prompt_file_txt.exists():
-        return prompt_file_txt.read_text(encoding="utf-8")
+    # 3. Als .txt versuchen (gleiche Suchreihenfolge)
+    for prompt_dir in prompt_dirs:
+        prompt_file_txt = prompt_dir / f"{prompt_key}.txt"
+        if prompt_file_txt.exists():
+            return prompt_file_txt.read_text(encoding="utf-8")
 
     # 4. Fallback: Prompt-Key als Datei-Referenz verwenden
     if Path(prompt_key).exists():

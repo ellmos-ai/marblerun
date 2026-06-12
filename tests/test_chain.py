@@ -1,7 +1,7 @@
 """Tests fuer llmauto.modes.chain -- Hilfsfunktionen."""
 import pytest
 
-from llmauto.modes.chain import _home_placeholders
+from llmauto.modes.chain import _home_placeholders, resolve_prompt
 
 
 class TestHomePlaceholders:
@@ -34,3 +34,36 @@ class TestHomePlaceholders:
         home_native, home_bash = _home_placeholders()
         assert home_native
         assert home_bash.startswith("/") or ":" not in home_bash
+
+
+class TestResolvePromptPrivate:
+    """Tests fuer die _private-Konvention: prompts/_private/ als Fallback."""
+
+    @pytest.fixture
+    def prompt_base(self, tmp_path):
+        (tmp_path / "prompts" / "_private").mkdir(parents=True)
+        return tmp_path
+
+    def test_private_prompt_found(self, prompt_base):
+        (prompt_base / "prompts" / "_private" / "geheim.txt").write_text(
+            "PRIVATER PROMPT", encoding="utf-8")
+        result = resolve_prompt({"prompt": "geheim"}, {}, base_dir=prompt_base)
+        assert result == "PRIVATER PROMPT"
+
+    def test_private_prompt_exact_filename(self, prompt_base):
+        (prompt_base / "prompts" / "_private" / "geheim.txt").write_text(
+            "PRIVATER PROMPT", encoding="utf-8")
+        result = resolve_prompt({"prompt": "geheim.txt"}, {}, base_dir=prompt_base)
+        assert result == "PRIVATER PROMPT"
+
+    def test_public_prompt_wins_over_private(self, prompt_base):
+        (prompt_base / "prompts" / "doppelt.txt").write_text(
+            "OEFFENTLICH", encoding="utf-8")
+        (prompt_base / "prompts" / "_private" / "doppelt.txt").write_text(
+            "PRIVAT", encoding="utf-8")
+        result = resolve_prompt({"prompt": "doppelt"}, {}, base_dir=prompt_base)
+        assert result == "OEFFENTLICH"
+
+    def test_unknown_prompt_falls_back_to_inline(self, prompt_base):
+        result = resolve_prompt({"prompt": "Mach Aufgabe X"}, {}, base_dir=prompt_base)
+        assert result == "Mach Aufgabe X"
