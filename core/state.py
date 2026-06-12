@@ -38,6 +38,14 @@ class ChainState:
     def stop_file(self):
         return self.state_dir / "STOP"
 
+    @property
+    def pause_file(self):
+        return self.state_dir / "PAUSE.json"
+
+    @property
+    def steer_file(self):
+        return self.state_dir / "steer_queue.json"
+
     # --- Status ---
 
     def get_status(self):
@@ -137,6 +145,89 @@ class ChainState:
             return self.stop_file.read_text(encoding="utf-8").strip()
         return None
 
+    # --- Pause (Operator-Kontrolle an sicheren Checkpoints) ---
+
+    def request_pause(self, reason="Manuell pausiert"):
+        """Merkt eine Pause fuer den naechsten sicheren Checkpoint vor.
+
+        Persistiert als JSON-Datei im State-Verzeichnis, damit der
+        laufende Chain-Prozess die Anforderung beim naechsten Poll sieht.
+
+        Returns: Payload-Dict mit reason + created_at.
+        """
+        payload = {
+            "reason": reason,
+            "created_at": datetime.now().isoformat(),
+        }
+        self.pause_file.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        return payload
+
+    def get_pause_request(self):
+        """Gibt die vorgemerkte Pause-Anforderung zurueck (oder None).
+
+        Eine vorhandene, aber nicht parsbare Datei gilt weiterhin als
+        Pause-Anforderung (fail-safe), mit Fallback-Reason.
+        """
+        if not self.pause_file.exists():
+            return None
+        try:
+            payload = json.loads(self.pause_file.read_text(encoding="utf-8"))
+            if isinstance(payload, dict):
+                return payload
+        except (json.JSONDecodeError, OSError):
+            pass
+        return {"reason": "Manuell pausiert", "created_at": None}
+
+    def is_pause_requested(self):
+        return self.pause_file.exists()
+
+    def clear_pause(self):
+        """Hebt eine vorgemerkte Pause auf (idempotent)."""
+        if self.pause_file.exists():
+            self.pause_file.unlink()
+
+    # --- Steering (Operator-Hinweise fuer den naechsten Modelllauf) ---
+
+    def _read_steer_queue(self):
+        if not self.steer_file.exists():
+            return []
+        try:
+            queue = json.loads(self.steer_file.read_text(encoding="utf-8"))
+            if isinstance(queue, list):
+                return queue
+        except (json.JSONDecodeError, OSError):
+            pass
+        return []
+
+    def request_steer(self, message):
+        """Haengt einen Operator-Hinweis an die Steer-Queue an.
+
+        Returns: der angehaengte Eintrag (message + created_at).
+        """
+        entry = {
+            "message": message,
+            "created_at": datetime.now().isoformat(),
+        }
+        queue = self._read_steer_queue()
+        queue.append(entry)
+        self.steer_file.write_text(
+            json.dumps(queue, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        return entry
+
+    def peek_steer_requests(self):
+        """Gibt alle vorgemerkten Hinweise zurueck ohne sie zu entfernen."""
+        return self._read_steer_queue()
+
+    def consume_steer_requests(self):
+        """Gibt alle vorgemerkten Hinweise zurueck und leert die Queue."""
+        queue = self._read_steer_queue()
+        if self.steer_file.exists():
+            self.steer_file.unlink()
+        return queue
+
     # --- Shutdown-Checks ---
 
     def check_shutdown(self, config):
@@ -178,7 +269,7 @@ class ChainState:
     def reset(self):
         self.set_status("READY")
         self.round_file.write_text("0", encoding="utf-8")
-        for f in [self.start_time_file, self.stop_file]:
+        for f in [self.start_time_file, self.stop_file, self.pause_file, self.steer_file]:
             if f.exists():
                 f.unlink()
         self.write_handoff(

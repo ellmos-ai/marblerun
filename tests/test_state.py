@@ -125,6 +125,94 @@ class TestSkipProtection:
         assert restored is False
 
 
+class TestPause:
+    """Tests fuer Pause/Resume an sicheren Checkpoints."""
+
+    def test_no_pause_initially(self, state):
+        assert not state.is_pause_requested()
+        assert state.get_pause_request() is None
+
+    def test_request_pause_returns_payload(self, state):
+        payload = state.request_pause("Operator-Pause")
+        assert payload["reason"] == "Operator-Pause"
+        assert "created_at" in payload
+
+    def test_request_and_get_pause(self, state):
+        state.request_pause("Test-Pause")
+        assert state.is_pause_requested()
+        request = state.get_pause_request()
+        assert request is not None
+        assert request.get("reason") == "Test-Pause"
+
+    def test_clear_pause(self, state):
+        state.request_pause("Kurz anhalten")
+        state.clear_pause()
+        assert not state.is_pause_requested()
+        assert state.get_pause_request() is None
+
+    def test_clear_pause_without_request_is_noop(self, state):
+        state.clear_pause()  # Darf nicht werfen
+        assert not state.is_pause_requested()
+
+    def test_pause_persists_across_instances(self, state, tmp_path):
+        state.request_pause("Persistenz-Test")
+        reloaded = type(state)("test-chain", tmp_path)
+        assert reloaded.is_pause_requested()
+        assert reloaded.get_pause_request().get("reason") == "Persistenz-Test"
+
+    def test_corrupt_pause_file_treated_as_pause(self, state):
+        state.pause_file.write_text("kein json", encoding="utf-8")
+        # Datei existiert -> Pause gilt als angefordert, Payload mit Fallback-Reason
+        assert state.is_pause_requested()
+        request = state.get_pause_request()
+        assert request is not None
+        assert "reason" in request
+
+
+class TestSteer:
+    """Tests fuer Operator-Steering-Queue."""
+
+    def test_no_steer_initially(self, state):
+        assert state.peek_steer_requests() == []
+        assert state.consume_steer_requests() == []
+
+    def test_request_steer_appends(self, state):
+        state.request_steer("Fokussiere auf Tests")
+        pending = state.peek_steer_requests()
+        assert len(pending) == 1
+        assert pending[0]["message"] == "Fokussiere auf Tests"
+        assert "created_at" in pending[0]
+
+    def test_peek_does_not_consume(self, state):
+        state.request_steer("Hinweis 1")
+        state.peek_steer_requests()
+        assert len(state.peek_steer_requests()) == 1
+
+    def test_multiple_steer_requests_ordered(self, state):
+        state.request_steer("Erster Hinweis")
+        state.request_steer("Zweiter Hinweis")
+        pending = state.peek_steer_requests()
+        assert [r["message"] for r in pending] == ["Erster Hinweis", "Zweiter Hinweis"]
+
+    def test_consume_returns_and_clears(self, state):
+        state.request_steer("Einmal-Hinweis")
+        consumed = state.consume_steer_requests()
+        assert len(consumed) == 1
+        assert consumed[0]["message"] == "Einmal-Hinweis"
+        assert state.peek_steer_requests() == []
+        assert state.consume_steer_requests() == []
+
+    def test_steer_persists_across_instances(self, state, tmp_path):
+        state.request_steer("Persistenter Hinweis")
+        reloaded = type(state)("test-chain", tmp_path)
+        assert len(reloaded.peek_steer_requests()) == 1
+
+    def test_corrupt_steer_file_returns_empty(self, state):
+        state.steer_file.write_text("kein json", encoding="utf-8")
+        assert state.peek_steer_requests() == []
+        assert state.consume_steer_requests() == []
+
+
 class TestShutdown:
     def test_no_stop_initially(self, state):
         assert not state.is_stop_requested()
@@ -165,10 +253,14 @@ class TestReset:
         state.record_start()
         state.increment_round()
         state.request_stop("Test")
+        state.request_pause("Test-Pause")
+        state.request_steer("Test-Hinweis")
 
         state.reset()
 
         assert state.get_status() == "READY"
         assert state.get_round() == 0
         assert not state.is_stop_requested()
+        assert not state.is_pause_requested()
+        assert state.peek_steer_requests() == []
         assert "INITIAL (Reset)" in state.get_handoff()
