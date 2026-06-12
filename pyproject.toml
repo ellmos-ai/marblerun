@@ -34,8 +34,13 @@ Issues = "https://github.com/ellmos-ai/MarbleRun/issues"
 [project.scripts]
 llmauto = "llmauto.llmauto:main"
 
-[tool.setuptools.packages.find]
-include = ["llmauto*"]
+# Das Repo-Root IST das Paket (kein llmauto/-Unterordner, kein src-Layout):
+# package-dir mappt "llmauto" auf ".", Subpackages werden explizit gelistet.
+[tool.setuptools]
+packages = ["llmauto", "llmauto.core", "llmauto.modes"]
+
+[tool.setuptools.package-dir]
+llmauto = "."
 
 [tool.setuptools.package-data]
 llmauto = [
