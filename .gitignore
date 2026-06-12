@@ -56,3 +56,6 @@ desktop.ini
 /add_*.py
 /update_*.py
 /test_*.py
+
+# Interne Aufgabenliste (zitiert private Pfade)
+TODO.md
