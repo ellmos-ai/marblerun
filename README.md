@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/MarbleRun_symbol_logo.jpg" alt="MarbleRun banner" width="700">
-</p>
+![MarbleRun banner](assets/MarbleRun_symbol_logo.jpg)
 
 # llmauto -- LLM Automation Framework (MarbleRun)
 
