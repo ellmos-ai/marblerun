@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="100%" height="auto">
+  <defs>
+    <!-- Fonts -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&amp;family=Fira+Code:wght@400;500&amp;display=swap');
+      
+      .text-marble {
+        font-family: 'Outfit', 'Segoe UI', sans-serif;
+        font-weight: 900;
+        font-size: 62px;
+        letter-spacing: 1px;
+      }
+      .text-tagline {
+        font-family: 'Outfit', 'Segoe UI', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 5px;
+      }
+      .text-mono {
+        font-family: 'Fira Code', 'Courier New', monospace;
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+    </style>
+
+    <!-- Radial Background Gradient -->
+    <radialGradient id="bg-glow" cx="300" cy="160" r="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="50%" stop-color="#080c18" />
+      <stop offset="100%" stop-color="#04060b" />
+    </radialGradient>
+
+    <!-- Dot Grid Pattern -->
+    <pattern id="dot-grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.2" fill="#38bdf8" opacity="0.12" />
+    </pattern>
+
+    <!-- Swoosh Gradient (Teardrop Trail) -->
+    <linearGradient id="swoosh-grad" x1="0%" y1="30%" x2="100%" y2="70%">
+      <stop offset="0%" stop-color="#d946ef" stop-opacity="0" />
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#d946ef" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Marble Core Gradient -->
+    <radialGradient id="marble-core" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="25%" stop-color="#22d3ee" />
+      <stop offset="75%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#3b0764" />
+    </radialGradient>
+
+    <!-- Marble Outer Glow Gradient -->
+    <radialGradient id="marble-outer-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d946ef" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Glow Filters -->
+    <filter id="glow-cyan" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-magenta" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-cyan-strong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-magenta-strong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="blur" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-cyan-small" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-magenta-small" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Solid Background -->
+  <rect width="1200" height="340" fill="#05080f" />
+  
+  <!-- Glowing Background Radial Center -->
+  <rect width="1200" height="340" fill="url(#bg-glow)" />
+
+  <!-- High-tech Dot Grid -->
+  <rect width="1200" height="340" fill="url(#dot-grid)" />
+
+  <!-- ================= BACKGROUND CIRCUIT BOARD (Right Region) ================= -->
+  <g opacity="0.8">
+    <!-- Faint circuit traces -->
+    <path d="M 720,60 H 770 L 790,80 V 130" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.08" />
+    <path d="M 680,260 L 720,220 H 780" fill="none" stroke="#a855f7" stroke-width="1.2" opacity="0.08" />
+    <path d="M 950,50 L 980,80 H 1050 L 1070,100" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.08" />
+    <path d="M 1120,120 V 180 L 1090,210 H 1040" fill="none" stroke="#a855f7" stroke-width="1.2" opacity="0.08" />
+    <path d="M 920,280 H 980 L 1000,260 V 220" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.08" />
+
+    <!-- Tiny Background Pads -->
+    <circle cx="790" cy="130" r="2" fill="#38bdf8" opacity="0.15" />
+    <circle cx="780" cy="220" r="2" fill="#a855f7" opacity="0.15" />
+    <circle cx="1070" cy="100" r="2" fill="#38bdf8" opacity="0.15" />
+    <circle cx="1040" cy="210" r="2" fill="#a855f7" opacity="0.15" />
+    <circle cx="1000" cy="220" r="2" fill="#38bdf8" opacity="0.15" />
+
+    <!-- Faint Hexagons -->
+    <polygon points="929,70 924.5,77.8 915.5,77.8 911,70 915.5,62.2 924.5,62.2" stroke="#38bdf8" stroke-width="1" fill="none" opacity="0.07" />
+    <polygon points="1109,260 1104.5,267.8 1095.5,267.8 1091,260 1095.5,252.2 1104.5,252.2" stroke="#a855f7" stroke-width="1" fill="none" opacity="0.07" />
+
+    <!-- Faint Binary Data -->
+    <text x="1020" y="275" class="text-mono" font-size="9" fill="#38bdf8" opacity="0.06" letter-spacing="2">01100001 01110101</text>
+    <text x="730" y="105" class="text-mono" font-size="9" fill="#a855f7" opacity="0.06" letter-spacing="2">11010011 10101111</text>
+  </g>
+
+  <!-- ================= HERO MARBLE-RUN SCENE (Left Region) ================= -->
+  
+  <!-- Circuit Board Decorative Hexagons (Left) -->
+  <g>
+    <polygon points="108,150 104,157 96,157 92,150 96,143 104,143" stroke="#22d3ee" stroke-width="1.2" fill="none" opacity="0.3" />
+    <polygon points="458,100 454,107 446,107 442,100 446,93 454,93" stroke="#d946ef" stroke-width="1.2" fill="none" opacity="0.3" />
+    <polygon points="328,260 324,267 316,267 312,260 316,253 324,253" stroke="#22d3ee" stroke-width="1.2" fill="none" opacity="0.3" />
+    <polygon points="258,60 254,67 246,67 242,60 246,53 254,53" stroke="#d946ef" stroke-width="1.2" fill="none" opacity="0.3" />
+  </g>
+
+  <!-- Faint Data Bits / Dots (Left) -->
+  <g>
+    <circle cx="180" cy="70" r="2.5" fill="#22d3ee" opacity="0.4" />
+    <circle cx="380" cy="220" r="3" fill="#22d3ee" opacity="0.3" />
+    <circle cx="480" cy="160" r="2" fill="#22d3ee" opacity="0.5" />
+    <circle cx="360" cy="70" r="3" fill="#d946ef" opacity="0.4" />
+    <circle cx="220" cy="280" r="2" fill="#d946ef" opacity="0.5" />
+    <circle cx="150" cy="220" r="2.5" fill="#d946ef" opacity="0.3" />
+    <text x="100" y="80" class="text-mono" font-size="9" fill="#22d3ee" opacity="0.2" letter-spacing="1">01</text>
+    <text x="400" y="270" class="text-mono" font-size="9" fill="#d946ef" opacity="0.2" letter-spacing="1">10</text>
+  </g>
+
+  <!-- Branch Circuit Traces (Left) -->
+  <!-- Branch 1 (Cyan, top right off track) -->
+  <path d="M 290,120 L 320,90 H 380" fill="none" stroke="#22d3ee" stroke-width="6" stroke-linecap="round" filter="url(#glow-cyan)" opacity="0.35" />
+  <path d="M 290,120 L 320,90 H 380" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+
+  <!-- Branch 2 (Magenta, bottom left off track) -->
+  <path d="M 210,250 L 180,280 H 130" fill="none" stroke="#d946ef" stroke-width="6" stroke-linecap="round" filter="url(#glow-magenta)" opacity="0.35" />
+  <path d="M 210,250 L 180,280 H 130" fill="none" stroke="#d946ef" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+
+  <!-- Branch 3 (Cyan, middle left off track) -->
+  <path d="M 170,160 H 140 L 120,140 V 100" fill="none" stroke="#22d3ee" stroke-width="6" stroke-linecap="round" filter="url(#glow-cyan)" opacity="0.35" />
+  <path d="M 170,160 H 140 L 120,140 V 100" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+
+  <!-- MAIN MARBLE-RUN TRACK (Neon Pipes / Rails) -->
+  <!-- Track path: M 150,90 L 220,90 L 250,120 L 290,120 L 330,160 L 330,210 L 290,250 L 210,250 L 170,210 L 170,160 L 210,120 L 360,120 L 420,180 Q 480,240 540,240 -->
+
+  <!-- Glow Underlay Layer (Thicker) -->
+  <!-- Cyan main track -->
+  <path d="M 150,90 L 220,90 L 250,120 L 290,120 L 330,160 L 330,210 L 290,250 L 210,250 L 170,210 L 170,160 L 210,120 L 360,120 L 420,180 Q 480,240 540,240"
+        fill="none" stroke="#22d3ee" stroke-width="11" stroke-linecap="round" filter="url(#glow-cyan)" opacity="0.55" />
+        
+  <!-- Magenta accent segments (overlays) -->
+  <!-- Segment A: Loop right vertical side -->
+  <path d="M 330,160 L 330,210" fill="none" stroke="#d946ef" stroke-width="11" stroke-linecap="round" filter="url(#glow-magenta)" opacity="0.65" />
+  <!-- Segment B: Loop left vertical side -->
+  <path d="M 170,210 L 170,160" fill="none" stroke="#d946ef" stroke-width="11" stroke-linecap="round" filter="url(#glow-magenta)" opacity="0.65" />
+  <!-- Segment C: Final curve slope -->
+  <path d="M 420,180 Q 480,240 540,240" fill="none" stroke="#d946ef" stroke-width="11" stroke-linecap="round" filter="url(#glow-magenta)" opacity="0.6" />
+
+  <!-- Arrowhead Glow (Magenta) -->
+  <path d="M 524,229 L 544,240 L 524,251" fill="none" stroke="#d946ef" stroke-width="11" stroke-linejoin="round" stroke-linecap="round" filter="url(#glow-magenta)" opacity="0.6" />
+
+  <!-- Solid Neon Core Layer (Medium Thickness) -->
+  <!-- Cyan track core -->
+  <path d="M 150,90 L 220,90 L 250,120 L 290,120 L 330,160 L 330,210 L 290,250 L 210,250 L 170,210 L 170,160 L 210,120 L 360,120 L 420,180 Q 480,240 540,240"
+        fill="none" stroke="#22d3ee" stroke-width="4.5" stroke-linecap="round" />
+        
+  <!-- Magenta core segments -->
+  <path d="M 330,160 L 330,210" fill="none" stroke="#d946ef" stroke-width="4.5" stroke-linecap="round" />
+  <path d="M 170,210 L 170,160" fill="none" stroke="#d946ef" stroke-width="4.5" stroke-linecap="round" />
+  <path d="M 420,180 Q 480,240 540,240" fill="none" stroke="#d946ef" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- Arrowhead Solid -->
+  <path d="M 524,229 L 544,240 L 524,251" fill="none" stroke="#d946ef" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" />
+
+  <!-- Glossy White Center Highlight (Thin) -->
+  <path d="M 150,90 L 220,90 L 250,120 L 290,120 L 330,160 L 330,210 L 290,250 L 210,250 L 170,210 L 170,160 L 210,120 L 360,120 L 420,180 Q 480,240 540,240"
+        fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.95" />
+  <path d="M 525,231 L 540,240 L 525,249" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" opacity="0.95" />
+
+  <!-- ================= ANIMATED STROKE (Energy Bolt Running Down Track) ================= -->
+  <path d="M 150,90 L 220,90 L 250,120 L 290,120 L 330,160 L 330,210 L 290,250 L 210,250 L 170,210 L 170,160 L 210,120 L 360,120 L 420,180 Q 480,240 540,240"
+        fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" filter="url(#glow-cyan)" stroke-dasharray="100, 850">
+    <animate attributeName="stroke-dashoffset" values="950;0" dur="3.5s" repeatCount="indefinite" />
+  </path>
+
+  <!-- ================= HERO MARBLE (Orb with spec highlight + swoosh) ================= -->
+  <g>
+    <!-- Comet Swoosh/Motion Trail (Behind the marble at cx=260, cy=120) -->
+    <!-- Teardrop shape curves along track behind marble (from x=150 to x=260) -->
+    <path d="M 150,90 Q 210,85 240,100 A 32 32 0 0 1 245,145 Q 215,115 150,90 Z" fill="url(#swoosh-grad)" />
+
+    <!-- Marble Outer Glow (Pulsing) -->
+    <circle cx="260" cy="120" r="54" fill="url(#marble-outer-glow)">
+      <animate attributeName="r" values="48;58;48" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.45;0.75;0.45" dur="3s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Marble Core (Deep radial light, glowing cyan filter) -->
+    <circle cx="260" cy="120" r="32" fill="url(#marble-core)" filter="url(#glow-cyan)" />
+
+    <!-- 3D Glass Sphere Details -->
+    <!-- Specular Highlight (Reflection of light source top-left) -->
+    <ellipse cx="250" cy="110" rx="9" ry="5.5" transform="rotate(-28 250 110)" fill="#ffffff" opacity="0.85" />
+    
+    <!-- Secondary soft specular glow (bottom-right reflection) -->
+    <ellipse cx="270" cy="130" rx="5" ry="3" transform="rotate(-28 270 130)" fill="#ffffff" opacity="0.25" />
+
+    <!-- Outer rim shine -->
+    <circle cx="260" cy="120" r="32" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
+  </g>
+
+  <!-- Pulsing Branch Junction Dots -->
+  <!-- Dot 1 (Branch 1 end at 380,90) -->
+  <circle cx="380" cy="90" r="5.5" fill="#22d3ee" filter="url(#glow-cyan-small)">
+    <animate attributeName="r" values="4.5;7.5;4.5" dur="2.4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.4s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Dot 2 (Branch 2 end at 130,280) -->
+  <circle cx="130" cy="280" r="5.5" fill="#d946ef" filter="url(#glow-magenta-small)">
+    <animate attributeName="r" values="4.5;7.5;4.5" dur="3.2s" begin="0.6s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="3.2s" begin="0.6s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Dot 3 (Branch 3 end at 120,100) -->
+  <circle cx="120" cy="100" r="5.5" fill="#22d3ee" filter="url(#glow-cyan-small)">
+    <animate attributeName="r" values="4.5;7.5;4.5" dur="2.8s" begin="1.2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" begin="1.2s" repeatCount="indefinite" />
+  </circle>
+
+
+  <!-- ================= WORDMARK & BRANDING (Right Region) ================= -->
+  
+  <!-- Glowing Text Underlay (Cyan for Marble, Magenta for Run) -->
+  <text x="820" y="165" class="text-marble" text-anchor="middle" opacity="0.65">
+    <tspan fill="#22d3ee" filter="url(#glow-cyan-strong)">Marble</tspan>
+    <tspan fill="#d946ef" filter="url(#glow-magenta-strong)">Run</tspan>
+  </text>
+
+  <!-- Solid Crisp Foreground Text -->
+  <text x="820" y="165" class="text-marble" text-anchor="middle">
+    <tspan fill="#e2fbfd">Marble</tspan>
+    <tspan fill="#fef2ff">Run</tspan>
+  </text>
+
+  <!-- Tagline below -->
+  <text x="820" y="210" class="text-tagline" fill="#94a3b8" text-anchor="middle">AI AGENT ORCHESTRATION</text>
+
+  <!-- Mono Command line helper -->
+  <text x="820" y="250" class="text-mono" fill="#38bdf8" opacity="0.38" text-anchor="middle">$ marblerun run chain.json</text>
+</svg>
