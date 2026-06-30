@@ -29,6 +29,7 @@ from pathlib import Path
 
 # Sicherstellen dass das Paket importierbar ist, auch als direktes Script
 PACKAGE_DIR = Path(__file__).resolve().parent
+__path__ = [str(PACKAGE_DIR)]
 _parent = str(PACKAGE_DIR.parent)
 if _parent not in sys.path:
     sys.path.insert(0, _parent)

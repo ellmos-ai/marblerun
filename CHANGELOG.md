@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Allow source-tree imports such as `llmauto.core` and `llmauto.modes` when
+  running tests directly from a checkout.
+
 ### Documentation
 
 - Added 2026-06-12 discovery context for `llmauto`, Claude Code agent-chain
