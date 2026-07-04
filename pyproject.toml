@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "llmauto"
-version = "0.1.0"
+dynamic = ["version"]
 description = "MarbleRun / llmauto: local-first LLM automation framework for Claude Code agent chains"
 readme = "README.md"
 license = {text = "MIT"}
@@ -49,3 +49,6 @@ llmauto = [
     "templates/*.json",
     "config.json",
 ]
+
+[tool.setuptools.dynamic]
+version = { attr = "llmauto.__version__" }

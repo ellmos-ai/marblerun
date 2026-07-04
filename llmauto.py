@@ -16,6 +16,7 @@ Verwendung (aus system/tools/ heraus):
     python -m llmauto chain steer <name> <text>  Operator-Hinweis vormerken
     python -m llmauto chain log <name> [N]       Log anzeigen
     python -m llmauto chain reset <name>         State zuruecksetzen
+    python -m llmauto chain create               Neue Kette interaktiv anlegen
 
     python -m llmauto pipe "prompt"              Einzelner Claude-Aufruf
     python -m llmauto pipe -f prompt.txt         Prompt aus Datei
@@ -39,7 +40,7 @@ if __name__ == "__main__" and "llmauto" not in sys.modules:
     sys.modules.pop("llmauto", None)
     import llmauto  # noqa: F401 -- Paket laden
 
-VERSION = "0.1.0"
+from llmauto import __version__ as VERSION  # Single Source: __init__.py
 
 
 def cmd_chain(args):
@@ -123,6 +124,11 @@ def cmd_chain(args):
             return 1
         return reset_chain(args.name)
 
+    elif action == "create":
+        from llmauto.core.chain_creator import create_chain
+        result = create_chain()
+        return 0 if result is not None else 1
+
     else:
         print(f"Unbekannte Chain-Aktion: {action}")
         return 1
@@ -161,7 +167,7 @@ def cmd_pipe(args):
         fallback_model=args.fallback,
         permission_mode=global_config.get("default_permission_mode", "dontAsk"),
         allowed_tools=global_config.get("default_allowed_tools"),
-        timeout=args.timeout or global_config.get("default_timeout_seconds", 1800),
+        timeout=args.timeout or global_config.get("default_timeout_seconds", 7200),
     )
 
     if not args.quiet:
@@ -202,7 +208,7 @@ def main():
 
     # --- chain ---
     chain_parser = subparsers.add_parser("chain", help="Ketten-Modus (Marble-Run)")
-    chain_parser.add_argument("chain_action", choices=["start", "list", "status", "stop", "pause", "resume", "steer", "log", "reset"],
+    chain_parser.add_argument("chain_action", choices=["start", "list", "status", "stop", "pause", "resume", "steer", "log", "reset", "create"],
                               help="Aktion")
     chain_parser.add_argument("name", nargs="?", default=None, help="Ketten-Name")
     chain_parser.add_argument("extra", nargs="*", help="Zusaetzliche Argumente (Grund bei stop, Zeilenanzahl bei log)")

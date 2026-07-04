@@ -28,7 +28,7 @@ DEFAULT_GLOBAL_CONFIG = {
     "default_model": "claude-sonnet-4-6",
     "default_permission_mode": "dontAsk",
     "default_allowed_tools": ["Read", "Edit", "Write", "Bash", "Glob", "Grep"],
-    "default_timeout_seconds": 1800,
+    "default_timeout_seconds": 7200,
     "telegram": {
         "enabled": False,
         "bot_token_env": "LLMAUTO_TELEGRAM_BOT_TOKEN",

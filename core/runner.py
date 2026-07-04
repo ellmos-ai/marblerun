@@ -15,7 +15,7 @@ class ClaudeRunner:
     """Wrapper um die Claude CLI fuer automatisierte Aufrufe."""
 
     def __init__(self, model="claude-sonnet-4-6", fallback_model=None,
-                 permission_mode="dontAsk", allowed_tools=None, timeout=1800,
+                 permission_mode="dontAsk", allowed_tools=None, timeout=7200,
                  cwd=None):
         self.model = model
         self.fallback_model = fallback_model

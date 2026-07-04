@@ -395,7 +395,7 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
             fallback_model=fallback,
             permission_mode=global_config.get("default_permission_mode", "dontAsk"),
             allowed_tools=global_config.get("default_allowed_tools"),
-            timeout=global_config.get("default_timeout_seconds", 1800),
+            timeout=global_config.get("default_timeout_seconds", 7200),
             cwd=str(base_dir),
         )
 
@@ -502,7 +502,6 @@ def run_chain(chain_name, background=False):
     log("=" * 60, chain_name)
 
     global_config = load_global_config()
-    telegram_interval = 0  # Zaehler fuer Telegram-Updates
 
     try:
         while True:
@@ -575,7 +574,7 @@ def run_chain(chain_name, background=False):
                             fallback_model=fallback,
                             permission_mode=global_config.get("default_permission_mode", "dontAsk"),
                             allowed_tools=global_config.get("default_allowed_tools"),
-                            timeout=global_config.get("default_timeout_seconds", 1800),
+                            timeout=global_config.get("default_timeout_seconds", 7200),
                             cwd=str(base_dir),
                         )
 
@@ -590,6 +589,7 @@ def run_chain(chain_name, background=False):
                             prompt_text += operator_steer
 
                         log(f"{link_name} ({role}): Starte {model}...", chain_name)
+                        handoff_before = state.get_handoff()
                         result = runner.run(prompt_text)
 
                         # Output-Log
@@ -606,6 +606,11 @@ def run_chain(chain_name, background=False):
                                     f.write(f"\n--- STDERR ---\n{result['stderr']}\n")
                         except Exception as e:
                             log(f"  WARNUNG: Output-Log fehlgeschlagen: {e}", chain_name)
+
+                        # Skip-Overwrite-Schutz: SKIP-Kurznachricht darf den
+                        # Haupt-Handoff nicht ersetzen (per-Link Datei statt dessen)
+                        if state.protect_handoff_from_skip(link_name, handoff_before):
+                            log(f"  SKIP-SCHUTZ: Handoff wiederhergestellt ({link_name} schrieb nur SKIP)", chain_name)
 
                         if result["success"]:
                             log(f"{link_name}: OK ({result['duration_s']:.0f}s)", chain_name)
@@ -678,7 +683,7 @@ def run_chain(chain_name, background=False):
                     fallback_model=fallback,
                     permission_mode=global_config.get("default_permission_mode", "dontAsk"),
                     allowed_tools=global_config.get("default_allowed_tools"),
-                    timeout=global_config.get("default_timeout_seconds", 1800),
+                    timeout=global_config.get("default_timeout_seconds", 7200),
                     cwd=runner_cwd,
                 )
 
@@ -698,6 +703,7 @@ def run_chain(chain_name, background=False):
                     log(f"{link_name} ({role}): CONTINUE {model}...", chain_name)
                 else:
                     log(f"{link_name} ({role}): Starte {model}...", chain_name)
+                handoff_before = state.get_handoff()
                 result = runner.run(prompt_text, continue_conversation=is_continuation)
 
                 # Output-Log: stdout/stderr jedes Glieds in eigene Datei schreiben
@@ -720,6 +726,11 @@ def run_chain(chain_name, background=False):
                 if use_continue and result["success"] and not is_continuation:
                     marker.touch()
 
+                # Skip-Overwrite-Schutz: SKIP-Kurznachricht darf den
+                # Haupt-Handoff nicht ersetzen (per-Link Datei statt dessen)
+                if state.protect_handoff_from_skip(link_name, handoff_before):
+                    log(f"  SKIP-SCHUTZ: Handoff wiederhergestellt ({link_name} schrieb nur SKIP)", chain_name)
+
                 if result["success"]:
                     log(f"{link_name}: OK ({result['duration_s']:.0f}s)", chain_name)
                 else:
@@ -737,7 +748,6 @@ def run_chain(chain_name, background=False):
                     state.set_status("RUNNING")
 
                 # Telegram-Update wenn fuer dieses Glied aktiviert
-                telegram_interval += 1
                 if link.get("telegram_update", False):
                     send_telegram_update(chain_name, state)
 

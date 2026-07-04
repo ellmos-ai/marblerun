@@ -59,3 +59,6 @@ desktop.ini
 
 # Interne Aufgabenliste (zitiert private Pfade)
 TODO.md
+
+# Multi-Agent Lock-System (lokal, nie committen)
+LOCK*.txt

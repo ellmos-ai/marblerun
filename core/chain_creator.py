@@ -12,6 +12,8 @@ from llmauto.core.config import BASE_DIR
 
 CHAINS_DIR = BASE_DIR / "chains"
 PROMPTS_DIR = BASE_DIR / "prompts"
+# PROMPT-Vorlagen (.txt), vom Creator selbst angelegt. Nicht zu verwechseln
+# mit templates/ im Repo-Root — dort liegen CHAIN-Vorlagen (.json).
 TEMPLATES_DIR = PROMPTS_DIR / "templates"
 
 MODELS = {
