@@ -4,6 +4,10 @@
 
 ### Fixed
 
+- Repository hygiene now ignores common local credential, recovery-code,
+  private-key, certificate, and SQLite runtime artifacts while keeping
+  `.env.example` and `.env.sample` trackable; guarded by
+  `tests/test_repository_hygiene.py`.
 - **Skip-overwrite protection is now actually wired in** (module review
   2026-07-04): `state.protect_handoff_from_skip()` existed but was never
   called — a worker replying only "SKIPPED" could replace the main handoff

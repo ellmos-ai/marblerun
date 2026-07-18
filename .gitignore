@@ -39,6 +39,43 @@ venv/
 
 # Environment Variables
 .env
+.env.*
+!.env.example
+!.env.sample
+
+# Local credentials and tokens
+.npmrc
+.pypirc
+credentials.json
+secrets.json
+tokens.json
+token.json
+*token*.txt
+*token*.json
+*secret*.txt
+*secret*.json
+*credential*.txt
+*credential*.json
+*password*.txt
+*password*.json
+*recovery*codes*.txt
+
+# Private keys and certificates
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# Local state databases
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+*.sqlite-shm
+*.sqlite-wal
 
 # OS
 .DS_Store
