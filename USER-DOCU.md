@@ -27,7 +27,7 @@ Die Kommunikation erfolgt ueber eine `handoff.md`-Datei.
 ## 2. Schnellstart
 
 ```bash
-cd "/c/Users/lukas/OneDrive/.AI/MODULES/llmauto"
+cd ~/path/to/llmauto        # dorthin, wo du llmauto ausgecheckt hast
 
 # Chain starten (Vordergrund)
 python -m llmauto chain start forschung-todos
@@ -54,7 +54,7 @@ python -m llmauto chain log forschung-todos
 
 ### 3.1 forschung-todos (Forschungspipeline)
 
-**Zweck:** Wissenschaftliche TODOs aus `.RESEARCH/` systematisch abarbeiten.
+**Zweck:** Wissenschaftliche TODOs aus einem Forschungs-Verzeichnis systematisch abarbeiten.
 
 **Aufgabenquellen:**
 - `SCIENTIFIC_WORK_NOTES.md` — Zentrale Sammlung inhaltlicher Aufgaben (~186 Tasks)
@@ -93,7 +93,7 @@ bei "Max. X Einsaetze" anpassen (wird nicht automatisch aus JSON gelesen).
 
 ### 3.2 software-entwicklung (Software-Pipeline)
 
-**Zweck:** ATI-Tasks und AUFGABEN.txt aus `.SOFTWARE/` abarbeiten.
+**Zweck:** Aufgaben und `AUFGABEN.txt` aus einem Software-Projektordner abarbeiten.
 
 **2 Links pro Runde:**
 
@@ -184,8 +184,8 @@ Prompts werden in dieser Reihenfolge gesucht:
 5. Fallback: Key selbst als Prompt-Text
 
 Template-Variablen in Prompts:
-- `{HOME}` → `C:\Users\lukas` (Windows-Pfad)
-- `{BASH_HOME}` → `/c/Users/lukas` (Unix-Pfad)
+- `{HOME}` → dein Windows-Home, z.B. `C:\Users\<name>` (Windows-Pfad)
+- `{BASH_HOME}` → dein Unix-Home, z.B. `/c/Users/<name>` (Unix-Pfad)
 
 ### 4.4 Benutzerdefinierte Parameter
 
@@ -289,7 +289,7 @@ Typische Aufgaben:
 ### 8.1 Ordnerstruktur
 
 ```
-.RESEARCH/
+research-tasks/
   CLAUDE.md                     ← Projektanweisungen (Session-Start)
   PUBLIKATIONSVERFAHREN.md      ← Konventionen, Workflow, Templates
   STATUS_UEBERSICHT.md          ← Dashboard aller Projekte

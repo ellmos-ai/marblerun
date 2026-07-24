@@ -112,7 +112,7 @@ Jede Chain besteht aus **Links** (Glieder), die sequentiell durchlaufen werden. 
 
 ### 4. einzelaufgaben (Einzel-Task-Queue)
 
-**Zweck:** Gemischte Aufgaben aus MODULAR_AGENTS abarbeiten
+**Zweck:** Gemischte Aufgaben aus einem Sammel-Projektordner abarbeiten
 
 | Eigenschaft | Wert |
 |---|---|

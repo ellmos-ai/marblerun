@@ -2,7 +2,7 @@
 
 ## Herkunft
 Urspruenglich als BACH-Modul gebaut, dann als Standalone extrahiert:
-`C:\Users\User\OneDrive\.SOFTWARE\DEV_AutoPrompter\`
+einem internen Entwicklungsordner (`DEV_AutoPrompter`)
 
 ## Was es macht
 - PyQt6 GUI mit Dark Theme

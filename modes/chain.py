@@ -2,7 +2,7 @@
 llmauto.modes.chain -- Ketten-Modus (Marble-Run)
 ==================================================
 Sequentielle Agent-Ketten: Link1 -> Link2 -> ... -> LinkN -> (loop)
-Portiert aus BACH_Dev/marble_run/marble.py, nutzt core-Module.
+Portiert aus einem internen BACH-Prototyp (marble_run), nutzt core-Module.
 """
 import os
 import sys

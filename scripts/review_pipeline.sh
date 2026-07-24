@@ -3,7 +3,8 @@
 # Sequentielle Pipeline: forschung-review -> review-only -> forschung-publish (zenodo)
 # Starten mit: bash scripts/review_pipeline.sh &
 
-LLMAUTO_DIR="/c/Users/User/OneDrive/KI&AI/MODULAR_AGENTS"
+# Set LLMAUTO_DIR to your checkout, or export it before running.
+LLMAUTO_DIR="${LLMAUTO_DIR:-$HOME/llmauto}"
 LOG_FILE="$LLMAUTO_DIR/llmauto/logs/review_pipeline.log"
 POLL_INTERVAL=120  # 2 Minuten
 

@@ -3,7 +3,8 @@
 # Wartet bis review-only Chain fertig ist, startet dann Konsistenz-Check Opus
 # Laeuft im Hintergrund: bash poll_and_start_consistency.sh &
 
-LLMAUTO_DIR="/c/Users/User/OneDrive/KI&AI/MODULAR_AGENTS"
+# Set LLMAUTO_DIR to your checkout, or export it before running.
+LLMAUTO_DIR="${LLMAUTO_DIR:-$HOME/llmauto}"
 PROMPT_FILE="$LLMAUTO_DIR/llmauto/prompts/cfm_cross_reference_check.txt"
 POLL_INTERVAL=60  # Sekunden
 LOG_FILE="$LLMAUTO_DIR/llmauto/logs/poll_consistency.log"
@@ -34,7 +35,8 @@ PROMPT=$(cat "$PROMPT_FILE")
 
 # Claude Opus starten mit dem Konsistenz-Check Prompt
 log "Starte claude --model claude-opus-4-6 ..."
-cd "/c/Users/User/OneDrive/Forschung/Natur&Technik/Spieltheorie Urknall/papers"
+# Directory the consistency check should run in. Override via WORK_DIR.
+cd "${WORK_DIR:-$HOME/papers}"
 
 claude --model claude-opus-4-6 \
     --permission-mode bypassPermissions \

@@ -93,14 +93,14 @@ Fertige Ketten werden als wiederverwendbare Patterns gespeichert.
     "task_pools": {
         "masterplan": {
             "type": "file",
-            "path": "C:\\Users\\User\\OneDrive\\KI&AI\\BACH_Dev\\MASTERPLAN.txt",
-            "description": "BACH MASTERPLAN Aufgaben"
+            "path": "C:\\Users\\<you>\\projects\\my-app\\MASTERPLAN.txt",
+            "description": "Aufgaben aus einer Masterplan-Datei"
         },
         "research": {
             "type": "directory",
-            "path": "C:\\Users\\User\\OneDrive\\Forschung\\tasks\\",
+            "path": "C:\\Users\\<you>\\projects\\research\\tasks\\",
             "pattern": "*.md",
-            "description": "Forschungs-Aufgaben"
+            "description": "Aufgaben aus einem Verzeichnis (ein Task pro Datei)"
         },
         "software": {
             "type": "github_issues",
