@@ -14,7 +14,16 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt
 `edgelesssys/marblerun` und kein Marble-Run-Spielbaukasten, sondern ein
 Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
+[![Pytest](https://img.shields.io/badge/Pytest-83%20passed-brightgreen.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
+[![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)]()
+[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
+
+> [!NOTE]
+> **Für KI-Agenten & automatisierte Tools:** Eine maschinenlesbare Architektur-Zusammenfassung, Suchanker und Integrationshinweise befinden sich in [`llms.txt`](llms.txt).
+
 **Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+
+
 
 ---
 

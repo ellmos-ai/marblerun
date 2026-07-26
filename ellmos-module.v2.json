@@ -1,0 +1,42 @@
+{
+  "schema": "ellmos.module.v2",
+  "id": "llmauto",
+  "display_name": "llmauto",
+  "category": "orchestration",
+  "kind": "workflow",
+  "status": "active",
+  "visibility": "public",
+  "provides": [
+    "automation.default",
+    "automation.agent-chain",
+    "automation.loop"
+  ],
+  "requires": [],
+  "optional": [
+    "routing.default"
+  ],
+  "conflicts": [],
+  "surfaces": [
+    "cli",
+    "workflow"
+  ],
+  "state": {
+    "ownership": "module",
+    "location": "project"
+  },
+  "boundaries": {
+    "network": "optional",
+    "data": "application-defined",
+    "platforms": [
+      "windows",
+      "macos",
+      "linux"
+    ]
+  },
+  "source_of_truth": {
+    "type": "local-directory",
+    "path": ".",
+    "repository": null
+  },
+  "adapters": []
+}

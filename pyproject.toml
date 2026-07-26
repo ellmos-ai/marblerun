@@ -52,3 +52,9 @@ llmauto = [
 
 [tool.setuptools.dynamic]
 version = { attr = "llmauto.__version__" }
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+norecursedirs = ["_archive", "build", "dist", ".git", ".pytest_cache", "legacy"]
+python_files = ["test_*.py", "*_test.py"]
