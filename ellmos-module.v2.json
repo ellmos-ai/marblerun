@@ -1,7 +1,7 @@
 {
   "schema": "ellmos.module.v2",
-  "id": "llmauto",
-  "display_name": "llmauto",
+  "id": "marblerun",
+  "display_name": "MarbleRun",
   "category": "control",
   "kind": "workflow",
   "status": "active",
