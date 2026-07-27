@@ -7,6 +7,8 @@ existierte monatelang als toter Code, weil modes/chain.py ihn nie aufrief
 Verdrahtung still wieder verschwindet — die Chain-Loop selbst ist ohne
 laufende claude-CLI nicht sinnvoll unit-testbar.
 """
+import os
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -28,6 +30,20 @@ class TestSkipProtectionWiring(unittest.TestCase):
 
 
 class TestCliActions(unittest.TestCase):
+    def test_source_tree_module_entrypoint_from_repo_root(self):
+        env = os.environ.copy()
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        result = subprocess.run(
+            [sys.executable, "-B", "-m", "llmauto", "version"],
+            cwd=REPO_ROOT,
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "llmauto v0.1.0")
+
     def test_chain_create_registered(self):
         src = (REPO_ROOT / "llmauto.py").read_text(encoding="utf-8")
         self.assertIn('"create"', src.split("chain_action")[1].split("help=")[0],

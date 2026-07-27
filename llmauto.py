@@ -25,20 +25,34 @@ Verwendung (aus system/tools/ heraus):
     python -m llmauto version                    Version anzeigen
 """
 import argparse
+import importlib.util
 import sys
 from pathlib import Path
 
-# Sicherstellen dass das Paket importierbar ist, auch als direktes Script
+# Sicherstellen, dass das Paket importierbar ist, auch als direktes Script
+# oder via ``python -m llmauto`` aus dem Repo-Root. Dort verdeckt diese Datei
+# wegen des historischen CLI-/Paket-Gleichnamens sonst das gemappte Paket.
 PACKAGE_DIR = Path(__file__).resolve().parent
-__path__ = [str(PACKAGE_DIR)]
-_parent = str(PACKAGE_DIR.parent)
-if _parent not in sys.path:
-    sys.path.insert(0, _parent)
-# Wenn direkt ausgefuehrt: verhindere dass "llmauto.py" als Modul "llmauto" gilt
-if __name__ == "__main__" and "llmauto" not in sys.modules:
-    import importlib
-    sys.modules.pop("llmauto", None)
-    import llmauto  # noqa: F401 -- Paket laden
+
+
+def _ensure_source_package():
+    package = sys.modules.get("llmauto")
+    if package is not None and hasattr(package, "__path__"):
+        return
+
+    spec = importlib.util.spec_from_file_location(
+        "llmauto",
+        PACKAGE_DIR / "__init__.py",
+        submodule_search_locations=[str(PACKAGE_DIR)],
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError(f"llmauto-Paket kann nicht aus {PACKAGE_DIR} geladen werden")
+    package = importlib.util.module_from_spec(spec)
+    sys.modules["llmauto"] = package
+    spec.loader.exec_module(package)
+
+
+_ensure_source_package()
 
 from llmauto import __version__ as VERSION  # Single Source: __init__.py
 

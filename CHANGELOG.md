@@ -12,6 +12,9 @@
 
 ### Fixed
 
+- `python -m llmauto ...` now boots correctly from the repository root after
+  the source directory rename to `marblerun`; the CLI no longer imports the
+  sibling `llmauto.py` as a partially initialized package.
 - Repository hygiene now ignores common local credential, recovery-code,
   private-key, certificate, and SQLite runtime artifacts while keeping
   `.env.example` and `.env.sample` trackable; guarded by
