@@ -32,7 +32,7 @@ framework for autonomous LLM agent chains.
 llmauto orchestrates autonomous LLM agent chains ("marble runs"). Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context via handoff files.
 
 Provider selection is per chain link. Claude remains the default; Codex and Agy
-run through the shared COMAS adapter layer, while Kimi stays fail-closed until a
+run through the shared COMA adapter layer, while Kimi stays fail-closed until a
 model/login is configured:
 
 ```json

@@ -81,7 +81,7 @@ class TestProviderRunner:
     def test_factory_keeps_claude_compatible(self):
         assert isinstance(build_runner("claude"), ClaudeRunner)
 
-    def test_codex_uses_comas_and_workspace_write(self):
+    def test_codex_uses_coma_and_workspace_write(self):
         runner = build_runner(
             "codex", model="gpt-test", effort="high", cwd=r"C:\projekt"
         )

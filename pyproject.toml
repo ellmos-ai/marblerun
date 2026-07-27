@@ -35,7 +35,7 @@ Issues = "https://github.com/ellmos-ai/MarbleRun/issues"
 llmauto = "llmauto.llmauto:main"
 
 [project.optional-dependencies]
-providers = ["comas @ git+https://github.com/dev-bricks/comas.git"]
+providers = ["coma @ git+https://github.com/dev-bricks/coma.git"]
 
 # Das Repo-Root IST das Paket (kein llmauto/-Unterordner, kein src-Layout):
 # package-dir mappt "llmauto" auf ".", Subpackages werden explizit gelistet.

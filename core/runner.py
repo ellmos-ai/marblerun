@@ -1,7 +1,7 @@
 """
 llmauto.core.runner -- Multi-Provider CLI Wrapper
 =================================================
-Zentraler Baustein: Startet Claude direkt und weitere Provider über COMAS.
+Zentraler Baustein: Startet Claude direkt und weitere Provider über COMA.
 Handhabt Environment, Fallback, Timeout, Output-Capture.
 """
 import subprocess
@@ -125,9 +125,9 @@ class ClaudeRunner:
 
 
 class ProviderRunner:
-    """Einheitlicher Runner für Codex, Agy und Kimi über COMAS.
+    """Einheitlicher Runner für Codex, Agy und Kimi über COMA.
 
-    COMAS bleibt die einzige Stelle, die provider-spezifische CLI-Flags kennt.
+    COMA bleibt die einzige Stelle, die provider-spezifische CLI-Flags kennt.
     MarbleRun kümmert sich weiterhin nur um Ketten, Handoffs und Wiederholungen.
     """
 
@@ -143,12 +143,12 @@ class ProviderRunner:
         if backend == "claude":
             raise ValueError("Für claude ClaudeRunner oder build_runner verwenden")
         try:
-            from comas import Spawner
-            from comas.adapters import get_adapter
+            from coma import Spawner
+            from coma.adapters import get_adapter
         except ImportError as error:
             raise RuntimeError(
-                "Backend benötigt COMAS. Installiere die MarbleRun-Option "
-                "'providers' oder comas aus https://github.com/dev-bricks/comas."
+                "Backend benötigt COMA. Installiere die MarbleRun-Option "
+                "'providers' oder coma aus https://github.com/dev-bricks/coma."
             ) from error
 
         adapter_options = {"timeout": timeout, "cwd": cwd}
