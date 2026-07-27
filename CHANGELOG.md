@@ -5,7 +5,7 @@
 ### Maintenance & Hygiene (2026-07-26)
 
 - Added `[tool.pytest.ini_options]` in `pyproject.toml` targeting `tests/` and excluding `_archive/` (83/83 unit tests passing 100% green).
-- Created GitHub Actions CI workflow (`.github/workflows/tests.yml`) testing Python 3.10-3.13.
+- Created GitHub Actions CI workflow (`.github/workflows/tests.yml`) testing Python 3.10-3.13 on Ubuntu and Windows; `fail-fast: false` retains independent platform findings.
 - Updated `ellmos-module.v2.json` visibility to `public`.
 - Updated `llms.txt` header to `2026-07-26` with verified test status.
 - Added Shields.io badges and GFM AI callout notes to `README.md` and `README_de.md`.
