@@ -31,6 +31,22 @@ framework for autonomous LLM agent chains.
 
 llmauto orchestrates autonomous LLM agent chains ("marble runs"). Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context via handoff files.
 
+Provider selection is per chain link. Claude remains the default; Codex and Agy
+run through the shared COMAS adapter layer, while Kimi stays fail-closed until a
+model/login is configured:
+
+```json
+{
+  "name": "reviewer",
+  "role": "reviewer",
+  "backend": "codex",
+  "model": "gpt-5.6-sol",
+  "prompt": "prompts/example_reviewer.txt"
+}
+```
+
+Install the optional provider bridge with `pip install -e ".[providers]"`.
+
 Think of it as a marble run: the marble (context) rolls from link to link in a loop, with each link being an LLM agent with a specific role and prompt.
 
 ### Best Search Phrases

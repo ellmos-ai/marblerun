@@ -1,7 +1,7 @@
 """Tests fuer llmauto.core.runner -- ClaudeRunner."""
 import pytest
 
-from llmauto.core.runner import ClaudeRunner
+from llmauto.core.runner import ClaudeRunner, ProviderRunner, build_runner
 
 
 class TestClaudeRunnerInit:
@@ -75,3 +75,27 @@ class TestBuildEnv:
         runner = ClaudeRunner()
         env = runner._build_env()
         assert env.get("PYTHONIOENCODING") == "utf-8"
+
+
+class TestProviderRunner:
+    def test_factory_keeps_claude_compatible(self):
+        assert isinstance(build_runner("claude"), ClaudeRunner)
+
+    def test_codex_uses_comas_and_workspace_write(self):
+        runner = build_runner(
+            "codex", model="gpt-test", effort="high", cwd=r"C:\projekt"
+        )
+        assert isinstance(runner, ProviderRunner)
+        cmd = runner.adapter.build_cmd("Hallo")
+        assert "exec" in cmd
+        assert cmd[cmd.index("--sandbox") + 1] == "workspace-write"
+        assert cmd[cmd.index("--model") + 1] == "gpt-test"
+
+    def test_agy_gets_chain_workspace(self):
+        runner = build_runner("agy", cwd=r"C:\projekt")
+        cmd = runner.adapter.build_cmd("Hallo")
+        assert cmd[cmd.index("--add-dir") + 1] == r"C:\projekt"
+
+    def test_kimi_stays_guarded_without_explicit_opt_in(self):
+        runner = build_runner("kimi")
+        assert runner.spawner.allow_unverified is False

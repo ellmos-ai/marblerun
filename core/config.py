@@ -25,7 +25,15 @@ BACH_ROOT = _bach_root_candidate if BACH_AVAILABLE else None
 
 
 DEFAULT_GLOBAL_CONFIG = {
+    "default_backend": "claude",
     "default_model": "claude-sonnet-4-6",
+    "provider_models": {
+        "claude": "claude-sonnet-4-6",
+        "codex": None,
+        "agy": "Gemini 3.6 Flash (High)",
+        "kimi": None,
+    },
+    "allow_unverified_backends": False,
     "default_permission_mode": "dontAsk",
     "default_allowed_tools": ["Read", "Edit", "Write", "Bash", "Glob", "Grep"],
     "default_timeout_seconds": 7200,
@@ -55,6 +63,7 @@ DEFAULT_LINK = {
     "name": "",
     "role": "worker",
     "model": None,
+    "backend": None,
     "fallback_model": None,
     "prompt": "",
     "task_pool": "",

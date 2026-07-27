@@ -1,7 +1,7 @@
 """
-llmauto.core.runner -- Claude CLI Wrapper
-==========================================
-Zentraler Baustein: Startet Claude-Prozesse mit konfigurierbaren Parametern.
+llmauto.core.runner -- Multi-Provider CLI Wrapper
+=================================================
+Zentraler Baustein: Startet Claude direkt und weitere Provider über COMAS.
 Handhabt Environment, Fallback, Timeout, Output-Capture.
 """
 import subprocess
@@ -122,3 +122,91 @@ class ClaudeRunner:
         if not result["success"]:
             raise RuntimeError(f"Claude Fehler (rc={result['returncode']}): {result['stderr']}")
         return result["output"]
+
+
+class ProviderRunner:
+    """Einheitlicher Runner für Codex, Agy und Kimi über COMAS.
+
+    COMAS bleibt die einzige Stelle, die provider-spezifische CLI-Flags kennt.
+    MarbleRun kümmert sich weiterhin nur um Ketten, Handoffs und Wiederholungen.
+    """
+
+    def __init__(
+        self,
+        backend,
+        model=None,
+        timeout=7200,
+        cwd=None,
+        allow_unverified=False,
+        **options,
+    ):
+        if backend == "claude":
+            raise ValueError("Für claude ClaudeRunner oder build_runner verwenden")
+        try:
+            from comas import Spawner
+            from comas.adapters import get_adapter
+        except ImportError as error:
+            raise RuntimeError(
+                "Backend benötigt COMAS. Installiere die MarbleRun-Option "
+                "'providers' oder comas aus https://github.com/dev-bricks/comas."
+            ) from error
+
+        adapter_options = {"timeout": timeout, "cwd": cwd}
+        if model:
+            adapter_options["model"] = model
+        if backend == "codex":
+            adapter_options["write"] = bool(options.pop("write", True))
+            effort = options.pop("effort", None)
+            if effort:
+                adapter_options["effort"] = effort
+        elif backend == "agy" and cwd:
+            adapter_options["add_dirs"] = options.pop("add_dirs", [cwd])
+        adapter_options.update(options)
+
+        self.backend = backend
+        self.model = model or ""
+        self.timeout = timeout
+        self.cwd = cwd
+        self.adapter = get_adapter(backend, **adapter_options)
+        self.spawner = Spawner(
+            self.adapter, allow_unverified=bool(allow_unverified)
+        )
+
+    def run(self, prompt, **overrides):
+        return self.spawner.run(prompt, **overrides)
+
+    def pipe(self, prompt, **overrides):
+        return self.spawner.pipe(prompt, **overrides)
+
+
+def build_runner(
+    backend="claude",
+    *,
+    model=None,
+    fallback_model=None,
+    permission_mode="dontAsk",
+    allowed_tools=None,
+    timeout=7200,
+    cwd=None,
+    allow_unverified=False,
+    **options,
+):
+    """Runner-Fabrik; bestehende Claude-Konfiguration bleibt kompatibel."""
+    backend = (backend or "claude").lower()
+    if backend == "claude":
+        return ClaudeRunner(
+            model=model or "claude-sonnet-4-6",
+            fallback_model=fallback_model,
+            permission_mode=permission_mode,
+            allowed_tools=allowed_tools,
+            timeout=timeout,
+            cwd=cwd,
+        )
+    return ProviderRunner(
+        backend,
+        model=model,
+        timeout=timeout,
+        cwd=cwd,
+        allow_unverified=allow_unverified,
+        **options,
+    )

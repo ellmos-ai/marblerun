@@ -11,7 +11,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-from ..core.runner import ClaudeRunner
+from ..core.runner import build_runner
 from ..core.config import load_chain, list_chains, load_global_config, _ACTUAL_HOME, BACH_AVAILABLE, BACH_ROOT
 from ..core.state import ChainState
 
@@ -390,16 +390,23 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
 
     def _execute_worker(link):
         link_name = link.get("name", "worker")
-        model = link.get("model") or global_config.get("default_model", "claude-sonnet-4-6")
+        backend = link.get("backend") or global_config.get("default_backend", "claude")
+        model = (
+            link.get("model")
+            or global_config.get("provider_models", {}).get(backend)
+            or (global_config.get("default_model") if backend == "claude" else None)
+        )
         fallback = link.get("fallback_model")
 
-        runner = ClaudeRunner(
+        runner = build_runner(
+            backend,
             model=model,
             fallback_model=fallback,
             permission_mode=global_config.get("default_permission_mode", "dontAsk"),
             allowed_tools=global_config.get("default_allowed_tools"),
             timeout=global_config.get("default_timeout_seconds", 7200),
             cwd=str(base_dir),
+            allow_unverified=global_config.get("allow_unverified_backends", False),
         )
 
         prompt_text = resolve_prompt(link, config)
@@ -569,16 +576,23 @@ def run_chain(chain_name, background=False):
 
                         link_name = link.get("name", f"link-{i+1}")
                         role = link.get("role", "worker")
-                        model = link.get("model") or global_config.get("default_model", "claude-sonnet-4-6")
+                        backend = link.get("backend") or global_config.get("default_backend", "claude")
+                        model = (
+                            link.get("model")
+                            or global_config.get("provider_models", {}).get(backend)
+                            or (global_config.get("default_model") if backend == "claude" else None)
+                        )
                         fallback = link.get("fallback_model")
 
-                        runner = ClaudeRunner(
+                        runner = build_runner(
+                            backend,
                             model=model,
                             fallback_model=fallback,
                             permission_mode=global_config.get("default_permission_mode", "dontAsk"),
                             allowed_tools=global_config.get("default_allowed_tools"),
                             timeout=global_config.get("default_timeout_seconds", 7200),
                             cwd=str(base_dir),
+                            allow_unverified=global_config.get("allow_unverified_backends", False),
                         )
 
                         prompt_text = resolve_prompt(link, config)
@@ -664,7 +678,12 @@ def run_chain(chain_name, background=False):
 
                 link_name = link.get("name", f"link-{i+1}")
                 role = link.get("role", "worker")
-                model = link.get("model") or global_config.get("default_model", "claude-sonnet-4-6")
+                backend = link.get("backend") or global_config.get("default_backend", "claude")
+                model = (
+                    link.get("model")
+                    or global_config.get("provider_models", {}).get(backend)
+                    or (global_config.get("default_model") if backend == "claude" else None)
+                )
                 fallback = link.get("fallback_model")
 
                 # Continue-Modus: Dediziertes CWD damit --continue
@@ -681,13 +700,15 @@ def run_chain(chain_name, background=False):
                     runner_cwd = str(base_dir)
 
                 # Runner erstellen
-                runner = ClaudeRunner(
+                runner = build_runner(
+                    backend,
                     model=model,
                     fallback_model=fallback,
                     permission_mode=global_config.get("default_permission_mode", "dontAsk"),
                     allowed_tools=global_config.get("default_allowed_tools"),
                     timeout=global_config.get("default_timeout_seconds", 7200),
                     cwd=runner_cwd,
+                    allow_unverified=global_config.get("allow_unverified_backends", False),
                 )
 
                 # Prompt aufloesen + {HOME} durch tatsaechliches User-Home ersetzen

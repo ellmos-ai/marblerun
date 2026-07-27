@@ -45,7 +45,8 @@ class TestNormalizePaths:
 class TestDefaultGlobalConfig:
     def test_has_required_keys(self):
         required = ["default_model", "default_permission_mode",
-                     "default_allowed_tools", "default_timeout_seconds"]
+                     "default_allowed_tools", "default_timeout_seconds",
+                     "default_backend", "provider_models"]
         for key in required:
             assert key in DEFAULT_GLOBAL_CONFIG
 
@@ -58,6 +59,7 @@ class TestNewLink:
         link = new_link()
         assert link["role"] == "worker"
         assert link["model"] is None
+        assert link["backend"] is None
 
     def test_overrides(self):
         link = new_link(name="test-worker", model="claude-opus-4-6", role="controller")
