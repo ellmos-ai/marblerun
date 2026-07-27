@@ -107,7 +107,10 @@ def _home_placeholders(home=None):
     """
     if home is None:
         home = _ACTUAL_HOME
-    home_native = home.rstrip(os.sep).rstrip("/")
+    # Beide Trennzeichen fest, NICHT os.sep: Diese Funktion verarbeitet
+    # Windows-Pfade auch auf Nicht-Windows-Systemen (CI laeuft auf Linux, dort
+    # ist os.sep == "/" -- ein abschliessender Backslash blieb dann stehen).
+    home_native = home.rstrip("\\/")
     drive, sep, rest = home_native.partition(":")
     if sep:
         home_bash = "/" + drive.lower() + rest.replace("\\", "/")
