@@ -39,7 +39,7 @@ log "Starte claude --model claude-opus-4-6 ..."
 cd "${WORK_DIR:-$HOME/papers}"
 
 claude --model claude-opus-4-6 \
-    --permission-mode bypassPermissions \
+    --permission-mode dontAsk \
     --output-format text \
     -p "$PROMPT" \
     >> "$LLMAUTO_DIR/llmauto/logs/cfm_consistency_check.log" 2>&1
