@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Maintenance & Hygiene (2026-07-29)
+
+- Updated `llms.txt` Last-checked timestamp to `2026-07-29` and test metrics (87 passed, 3 skipped gracefully on missing optional `coma` dependency).
+- Hardened `tests/test_runner.py` with `pytest.importorskip("coma")` to handle environment variations where optional provider backends are omitted.
+- Verified repository hygiene, clean git working tree, and pytest test suite.
+
 ### Maintenance & Hygiene (2026-07-26)
 
 - Added `[tool.pytest.ini_options]` in `pyproject.toml` targeting `tests/` and excluding `_archive/` (83/83 unit tests passing 100% green).
