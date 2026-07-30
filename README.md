@@ -1,4 +1,4 @@
-![MarbleRun banner](assets/banner_v2.svg)
+![MarbleRun banner](assets/banner.png)
 
 # llmauto -- LLM Automation Framework (MarbleRun)
 
