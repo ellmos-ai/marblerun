@@ -4,6 +4,8 @@
 
 ### Maintenance & Hygiene (2026-08-01)
 
+- Synchronized the maintained German README with the canonical English
+  provider, code-example, project-structure, and liability sections.
 - Updated `llms.txt` Last-checked timestamp to `2026-08-01`.
 - Synced Pytest badges in `README.md` and `README_de.md` to 87 passed.
 - Verified repository hygiene, 100% clean git working tree, and pytest test suite (87 passed, 3 skipped).
