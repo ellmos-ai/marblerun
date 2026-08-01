@@ -31,6 +31,23 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 llmauto orchestriert autonome LLM-Agenten-Ketten ("Marble Runs" -- Kugelbahnen). Mehrere Agenten arbeiten nacheinander -- Worker führen Aufgaben aus, Reviewer prüfen Ergebnisse, Controller koordinieren -- und reichen den Kontext über Handoff-Dateien weiter.
 
+Die Provider-Auswahl erfolgt pro Chain-Link. Claude bleibt der Standard; Codex
+und Agy laufen über die gemeinsame COMA-Adapterschicht, während Kimi
+fail-closed bleibt, bis Modell und Login konfiguriert sind:
+
+```json
+{
+  "name": "reviewer",
+  "role": "reviewer",
+  "backend": "codex",
+  "model": "gpt-5.6-sol",
+  "prompt": "prompts/example_reviewer.txt"
+}
+```
+
+Die optionale Provider-Bridge wird mit `pip install -e ".[providers]"`
+installiert.
+
 Stell es dir wie eine Kugelbahn vor: Die Kugel (Kontext) rollt von Glied zu Glied in einer Schleife, wobei jedes Glied ein LLM-Agent mit einer bestimmten Rolle und einem bestimmten Prompt ist.
 
 ### Beste Suchphrasen
@@ -80,10 +97,10 @@ Confidential-Computing-Infrastruktur und physische Marble-Run-Projekte zeigen.
 git clone https://github.com/ellmos-ai/MarbleRun.git
 cd MarbleRun
 
-# Direkt ausführen (keine Installation nötig)
+# Run directly (no install needed)
 python -m llmauto --help
 
-# Oder als Paket installieren
+# Or install as package
 pip install -e .
 llmauto --help
 ```
@@ -137,35 +154,35 @@ Execute the assigned tasks, then write a handoff for the reviewer:
 ### 3. Chain ausführen
 
 ```bash
-# Im Vordergrund starten
+# Start in foreground
 python -m llmauto chain start my-chain
 
-# Im Hintergrund starten (öffnet neues Terminalfenster)
+# Start in background (opens new terminal window)
 python -m llmauto chain start my-chain --bg
 
-# Status prüfen
+# Check status
 python -m llmauto chain status my-chain
 
-# Sauber stoppen (nach Abschluss des aktuellen Links)
+# Stop gracefully (after current link finishes)
 python -m llmauto chain stop my-chain "Reason for stopping"
 
-# Logs anzeigen
+# View logs
 python -m llmauto chain log my-chain 50
 
-# State zurücksetzen (zurück auf Runde 0)
+# Reset state (back to round 0)
 python -m llmauto chain reset my-chain
 ```
 
 ### 4. Pipe Mode (Einzelaufrufe)
 
 ```bash
-# Direkter Prompt
+# Direct prompt
 python -m llmauto pipe "Explain quantum computing in 3 sentences"
 
-# Aus Datei
+# From file
 python -m llmauto pipe -f prompt.txt
 
-# Mit Model-Override
+# With model override
 python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 ```
 
@@ -176,14 +193,14 @@ python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 ### Wie Marble Runs funktionieren
 
 ```
-Runde N:
-  [Link 1: Worker]  --führt Aufgaben aus-->  schreibt handoff.md
+Round N:
+  [Link 1: Worker]  --executes tasks-->  writes handoff.md
                                               |
-  [Link 2: Reviewer] --liest Handoff-->  prüft + korrigiert --> schreibt handoff.md
+  [Link 2: Reviewer] --reads handoff-->  reviews + fixes --> writes handoff.md
                                               |
-  [Link 3: Controller] --liest Handoff-->  koordiniert --> schreibt handoff.md
+  [Link 3: Controller] --reads handoff-->  coordinates --> writes handoff.md
                                               |
-                                        Runde N+1 ...
+                                        Round N+1 ...
 ```
 
 ### Abbruchbedingungen
@@ -269,20 +286,20 @@ die zur Laufzeit aufgelöst werden.
 
 ```
 llmauto/
-  llmauto.py              Haupt-CLI-Einstiegspunkt
-  config.json             Globale Konfiguration
+  llmauto.py              Main CLI entry point
+  config.json             Global configuration
   core/
-    runner.py             Claude CLI Wrapper (subprocess, env, fallback)
-    config.py             Konfigurationsverwaltung (Chains, global)
-    state.py              State Management (Handoff, Runden, Abbruch)
+    runner.py             Claude CLI wrapper (subprocess, env, fallback)
+    config.py             Config management (chains, global)
+    state.py              State management (handoff, rounds, shutdown)
   modes/
-    chain.py              Marble Run Engine
-  chains/                 Chain-Definitionen (JSON)
-  prompts/                Prompt-Vorlagen pro Chain
-  state/                  Laufzeit-State pro Chain (gitignored)
-  logs/                   Laufzeit-Logs (gitignored)
-  templates/              Chain-Muster-Vorlagen
-  docs/                   Dokumentation
+    chain.py              Marble run engine
+  chains/                 Chain definitions (JSON)
+  prompts/                Prompt templates per chain
+  state/                  Runtime state per chain (gitignored)
+  logs/                   Runtime logs (gitignored)
+  templates/              Chain pattern templates
+  docs/                   Documentation
 ```
 
 ---
@@ -336,3 +353,13 @@ MIT-Lizenz. Siehe [LICENSE](LICENSE).
 ## Autor
 
 Lukas Geiger -- [github.com/lukisch](https://github.com/lukisch)
+
+---
+
+## Haftung / Liability
+
+Dieses Projekt ist eine **unentgeltliche Open-Source-Schenkung** im Sinne der §§ 516 ff. BGB. Die Haftung des Urhebers ist gemäß **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die Haftungsausschlüsse der MIT-Lizenz.
+
+Nutzung auf eigenes Risiko. Keine Wartungszusage, keine Verfügbarkeitsgarantie, keine Gewähr für Fehlerfreiheit oder Eignung für einen bestimmten Zweck.
+
+This project is an unpaid open-source donation. Liability is limited to intent and gross negligence (§ 521 German Civil Code). Use at your own risk. No warranty, no maintenance guarantee, no fitness-for-purpose assumed.
