@@ -131,72 +131,80 @@
         font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       }
       
-      /* Domino Tipping Keyframes */
+      /* Domino Tipping Keyframes (Chain Direction: Left to Right -> Positive Rotation) */
       @keyframes dominoTip1 {
-        0%, 5% { transform: rotate(0deg); }
-        15%, 85% { transform: rotate(68deg); }
-        95%, 100% { transform: rotate(0deg); }
+        0%, 3% { transform: rotate(0deg); }
+        11%, 86% { transform: rotate(68deg); }
+        96%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoTip2 {
-        0%, 8% { transform: rotate(0deg); }
-        18%, 85% { transform: rotate(65deg); }
-        95%, 100% { transform: rotate(0deg); }
+        0%, 6% { transform: rotate(0deg); }
+        14%, 86% { transform: rotate(65deg); }
+        96%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoTip3 {
-        0%, 11% { transform: rotate(0deg); }
-        21%, 85% { transform: rotate(62deg); }
-        95%, 100% { transform: rotate(0deg); }
+        0%, 9% { transform: rotate(0deg); }
+        17%, 86% { transform: rotate(62deg); }
+        96%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoTip4 {
-        0%, 14% { transform: rotate(0deg); }
-        24%, 85% { transform: rotate(58deg); }
-        95%, 100% { transform: rotate(0deg); }
+        0%, 12% { transform: rotate(0deg); }
+        20%, 86% { transform: rotate(59deg); }
+        96%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoTip5 {
-        0%, 17% { transform: rotate(0deg); }
-        27%, 85% { transform: rotate(55deg); }
-        95%, 100% { transform: rotate(0deg); }
+        0%, 15% { transform: rotate(0deg); }
+        23%, 86% { transform: rotate(56deg); }
+        96%, 100% { transform: rotate(0deg); }
       }
 
-      /* Marble 1 (Red) Movement down Ramp into Funnel */
+      /* Marble 1 (Red) Movement: Ramp down -> Funnel Swirl -> Drop Tube */
       @keyframes marble1Move {
-        0%, 16% { transform: translate(320px, 320px); opacity: 0; }
-        18% { transform: translate(320px, 320px); opacity: 1; }
-        30% { transform: translate(490px, 385px); opacity: 1; }
-        35% { transform: translate(575px, 400px); opacity: 1; }
-        42% { transform: translate(590px, 425px); opacity: 0.9; }
-        48% { transform: translate(570px, 440px); opacity: 0.8; }
-        54% { transform: translate(580px, 465px); opacity: 1; }
-        58% { transform: translate(580px, 515px); opacity: 1; }
-        62%, 100% { transform: translate(580px, 515px); opacity: 0; }
+        0%, 21% { transform: translate(330px, 406px); opacity: 0; }
+        22% { transform: translate(330px, 406px); opacity: 1; }
+        25% { transform: translate(370px, 418px); opacity: 1; }
+        28% { transform: translate(440px, 440px); opacity: 1; }
+        31% { transform: translate(540px, 471px); opacity: 1; }
+        33% { transform: translate(560px, 408px); opacity: 1; }
+        36% { transform: translate(635px, 418px); opacity: 1; }
+        39% { transform: translate(575px, 438px); opacity: 1; }
+        42% { transform: translate(620px, 462px); opacity: 1; }
+        45% { transform: translate(598px, 485px); opacity: 1; }
+        48% { transform: translate(598px, 520px); opacity: 1; }
+        50%, 100% { transform: translate(598px, 520px); opacity: 0; }
       }
 
-      /* Marble 2 (Teal) Looping and Finish */
+      /* Marble 2 (Teal) Movement: Funnel Exit -> Looping -> Strike End Domino */
       @keyframes marble2Move {
-        0%, 55% { transform: translate(710px, 480px); opacity: 0; }
-        57% { transform: translate(710px, 480px); opacity: 1; }
-        63% { transform: translate(770px, 390px); opacity: 1; }
-        68% { transform: translate(810px, 295px); opacity: 1; }
-        73% { transform: translate(845px, 370px); opacity: 1; }
-        78% { transform: translate(890px, 440px); opacity: 1; }
-        84% { transform: translate(960px, 420px); opacity: 1; }
-        88%, 100% { transform: translate(1010px, 390px); opacity: 0; }
+        0%, 47% { transform: translate(598px, 520px); opacity: 0; }
+        48% { transform: translate(598px, 520px); opacity: 1; }
+        50% { transform: translate(645px, 515px); opacity: 1; }
+        53% { transform: translate(710px, 480px); opacity: 1; }
+        56% { transform: translate(740px, 435px); opacity: 1; }
+        59% { transform: translate(770px, 365px); opacity: 1; }
+        63% { transform: translate(820px, 320px); opacity: 1; }
+        67% { transform: translate(870px, 365px); opacity: 1; }
+        71% { transform: translate(900px, 435px); opacity: 1; }
+        74% { transform: translate(930px, 445px); opacity: 1; }
+        77% { transform: translate(965px, 445px); opacity: 1; }
+        80% { transform: translate(980px, 465px); opacity: 1; }
+        82%, 100% { transform: translate(980px, 465px); opacity: 0; }
       }
 
-      /* Final Domino Cascade Tipping */
+      /* Final Domino Cascade Tipping (Chain Direction: Left to Right -> Positive Rotation) */
       @keyframes dominoEnd1 {
-        0%, 80% { transform: rotate(0deg); }
-        87%, 93% { transform: rotate(-55deg); }
+        0%, 77% { transform: rotate(0deg); }
+        85%, 93% { transform: rotate(62deg); }
         98%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoEnd2 {
-        0%, 82% { transform: rotate(0deg); }
-        89%, 93% { transform: rotate(-55deg); }
+        0%, 80% { transform: rotate(0deg); }
+        88%, 93% { transform: rotate(59deg); }
         98%, 100% { transform: rotate(0deg); }
       }
       @keyframes dominoEnd3 {
-        0%, 84% { transform: rotate(0deg); }
-        91%, 93% { transform: rotate(-55deg); }
+        0%, 83% { transform: rotate(0deg); }
+        91%, 93% { transform: rotate(56deg); }
         98%, 100% { transform: rotate(0deg); }
       }
 
@@ -206,18 +214,20 @@
         50% { transform: scale(1.08); opacity: 1; }
       }
       
-      .animated-tip-1 { animation: dominoTip1 6s ease-in-out infinite; transform-origin: 32px 90px; }
-      .animated-tip-2 { animation: dominoTip2 6s ease-in-out infinite; transform-origin: 32px 90px; }
-      .animated-tip-3 { animation: dominoTip3 6s ease-in-out infinite; transform-origin: 32px 90px; }
-      .animated-tip-4 { animation: dominoTip4 6s ease-in-out infinite; transform-origin: 32px 90px; }
-      .animated-tip-5 { animation: dominoTip5 6s ease-in-out infinite; transform-origin: 32px 90px; }
+      .animated-tip-1 { animation: dominoTip1 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-tip-2 { animation: dominoTip2 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-tip-3 { animation: dominoTip3 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-tip-4 { animation: dominoTip4 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-tip-5 { animation: dominoTip5 6s ease-in-out infinite; transform-origin: 34px 90px; }
 
       .animated-marble-1 { animation: marble1Move 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
       .animated-marble-2 { animation: marble2Move 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 
-      .animated-end-1 { animation: dominoEnd1 6s ease-in-out infinite; transform-origin: 5px 90px; }
-      .animated-end-2 { animation: dominoEnd2 6s ease-in-out infinite; transform-origin: 5px 90px; }
-      .animated-end-3 { animation: dominoEnd3 6s ease-in-out infinite; transform-origin: 5px 90px; }
+      .animated-end-1 { animation: dominoEnd1 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-end-2 { animation: dominoEnd2 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      .animated-end-3 { animation: dominoEnd3 6s ease-in-out infinite; transform-origin: 34px 90px; }
+      
+      .finish-star { animation: pulseFinish 3s ease-in-out infinite; transform-origin: 1110px 320px; }
       
       .finish-star { animation: pulseFinish 3s ease-in-out infinite; transform-origin: 1110px 320px; }
     </style>
