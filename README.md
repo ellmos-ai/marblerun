@@ -14,7 +14,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 and not a marble-run game toolkit; it is a Python/Claude Code automation
 framework for autonomous LLM agent chains.
 
-[![Pytest](https://img.shields.io/badge/Pytest-83%20passed-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-87%20passed-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
