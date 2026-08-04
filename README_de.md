@@ -14,9 +14,11 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt
 `edgelesssys/marblerun` und kein Marble-Run-Spielbaukasten, sondern ein
 Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
-[![Pytest](https://img.shields.io/badge/Pytest-87%20passed-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-90%20passed%2C%203%20skipped-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)]()
+[![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
+[![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 > [!NOTE]
@@ -192,15 +194,20 @@ python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 
 ### Wie Marble Runs funktionieren
 
-```
-Round N:
-  [Link 1: Worker]  --executes tasks-->  writes handoff.md
-                                              |
-  [Link 2: Reviewer] --reads handoff-->  reviews + fixes --> writes handoff.md
-                                              |
-  [Link 3: Controller] --reads handoff-->  coordinates --> writes handoff.md
-                                              |
-                                        Round N+1 ...
+```mermaid
+graph TD
+    subgraph Round["Runde N Ausführungsschleife"]
+        W["Link 1: Worker-Agent"] -->|"Führt Aufgaben aus"| H1["state/handoff.md"]
+        H1 --> R["Link 2: Reviewer-Agent"]
+        R -->|"Prüft & korrigiert"| H2["state/handoff.md"]
+        H2 --> C["Link 3: Controller-Agent"]
+        C -->|"Koordiniert & aktualisiert"| H3["state/handoff.md"]
+    end
+    H3 -->|"Erhöhe Rundenzähler (N+1)"| W
+    C -->|"Fertig / Max Runden / Stopp"| END["Chain Abgeschlossen / Gestoppt"]
+
+    style Round fill:#1f2937,stroke:#3b82f6,color:#fff
+    style END fill:#111827,stroke:#10b981,color:#fff
 ```
 
 ### Abbruchbedingungen

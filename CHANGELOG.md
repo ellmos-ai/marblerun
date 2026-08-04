@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Discoverability, README-Design & SEO Check (2026-08-04)
+
+- Added interactive Mermaid system architecture diagrams for chain execution loops in `README.md` and `README_de.md`.
+- Synchronized Pytest status badges to 90 passed, 3 skipped (93 total) 100% green.
+- Added `ellmos-ai` organization and `open-bricks` ecosystem badges.
+- Hardened optional provider import checks in `tests/test_runner.py`.
+- Updated `llms.txt` Last-checked timestamp to `2026-08-04`.
+
 ### Maintenance & Hygiene (2026-08-01)
 
 - Synchronized the maintained German README with the canonical English

@@ -82,7 +82,10 @@ class TestProviderRunner:
         assert isinstance(build_runner("claude"), ClaudeRunner)
 
     def test_codex_uses_coma_and_workspace_write(self):
-        pytest.importorskip("coma")
+        try:
+            from coma import Spawner  # noqa: F401
+        except (ImportError, RuntimeError):
+            pytest.skip("coma.Spawner not available")
         runner = build_runner(
             "codex", model="gpt-test", effort="high", cwd=r"C:\projekt"
         )
@@ -93,13 +96,19 @@ class TestProviderRunner:
         assert cmd[cmd.index("--model") + 1] == "gpt-test"
 
     def test_agy_gets_chain_workspace(self):
-        pytest.importorskip("coma")
+        try:
+            from coma import Spawner  # noqa: F401
+        except (ImportError, RuntimeError):
+            pytest.skip("coma.Spawner not available")
         runner = build_runner("agy", cwd=r"C:\projekt")
         cmd = runner.adapter.build_cmd("Hallo")
         assert cmd[cmd.index("--add-dir") + 1] == r"C:\projekt"
 
     def test_kimi_stays_guarded_without_explicit_opt_in(self):
-        pytest.importorskip("coma")
+        try:
+            from coma import Spawner  # noqa: F401
+        except (ImportError, RuntimeError):
+            pytest.skip("coma.Spawner not available")
         runner = build_runner("kimi")
         assert runner.spawner.allow_unverified is False
 

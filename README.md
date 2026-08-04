@@ -14,9 +14,11 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 and not a marble-run game toolkit; it is a Python/Claude Code automation
 framework for autonomous LLM agent chains.
 
-[![Pytest](https://img.shields.io/badge/Pytest-87%20passed-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-90%20passed%2C%203%20skipped-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
+[![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
+[![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 > [!NOTE]
@@ -191,15 +193,20 @@ python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 
 ### How Marble Runs Work
 
-```
-Round N:
-  [Link 1: Worker]  --executes tasks-->  writes handoff.md
-                                              |
-  [Link 2: Reviewer] --reads handoff-->  reviews + fixes --> writes handoff.md
-                                              |
-  [Link 3: Controller] --reads handoff-->  coordinates --> writes handoff.md
-                                              |
-                                        Round N+1 ...
+```mermaid
+graph TD
+    subgraph Round["Round N Execution Loop"]
+        W["Link 1: Worker Agent"] -->|"Executes tasks"| H1["state/handoff.md"]
+        H1 --> R["Link 2: Reviewer Agent"]
+        R -->|"Reviews & fixes"| H2["state/handoff.md"]
+        H2 --> C["Link 3: Controller Agent"]
+        C -->|"Coordinates & updates"| H3["state/handoff.md"]
+    end
+    H3 -->|"Advance Round Counter (N+1)"| W
+    C -->|"All Done / Max Rounds / Stop"| END["Chain Completed / Stopped"]
+
+    style Round fill:#1f2937,stroke:#3b82f6,color:#fff
+    style END fill:#111827,stroke:#10b981,color:#fff
 ```
 
 ### Shutdown Conditions
