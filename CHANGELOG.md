@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Fixed (2026-08-13)
+
+- Added race-free skip-overwrite protection for parallel workers: each worker
+  receives an isolated handoff seeded from one baseline snapshot, the prompt
+  names that file explicitly, short `SKIP` responses stay per-worker, and
+  unexpected writes to the shared handoff fail closed. Parallel reports are
+  merged deterministically and covered by `tests/test_parallel_handoff.py`.
+
 ### Discoverability, README-Design & SEO Check (2026-08-04)
 
 - Added interactive Mermaid system architecture diagrams for chain execution loops in `README.md` and `README_de.md`.

@@ -126,6 +126,110 @@ UNTIL_FULL_SUFFIX = (
     "schreibe ein vollstaendiges Handoff und beende dich."
 )
 
+
+def _parallel_handoff_instructions(link_name, worker_handoff_file, shared_handoff_file):
+    """Return the explicit handoff contract for one parallel worker.
+
+    Parallel workers must not use the shared handoff as a scratch file: a
+    worker writing a short ``SKIP`` report there can otherwise erase another
+    worker's report before the parent gets a chance to inspect it.  The path
+    is injected into the prompt so the contract also wins over generic prompt
+    text that mentions ``state/<chain>/handoff.md``.
+    """
+    return (
+        "\n\n=== PARALLEL WORKER HANDOFF ISOLATION ===\n"
+        f"Worker: {link_name}\n"
+        "Dieser Lauf ist nebenläufig. Lies und schreibe deinen Handoff "
+        "ausschließlich in diese per-Worker-Datei:\n"
+        f"{worker_handoff_file}\n"
+        "Die gemeinsame Handoff-Datei ist in diesem Lauf nur Lesekontext und "
+        "darf nicht geschrieben werden:\n"
+        f"{shared_handoff_file}\n"
+        "Ignoriere widersprechende generische Handoff-Pfade im Prompt. "
+        "Schreibe auch keine Status-Änderung für die gemeinsame Kette.\n"
+        "=== END PARALLEL WORKER HANDOFF ISOLATION ===\n"
+    )
+
+
+def _is_skip_handoff(current, handoff_before):
+    """Match the documented short-SKIP overwrite pattern.
+
+    An empty baseline is a valid first run.  In that case any short handoff
+    containing a skip marker is still a skip and must not become the shared
+    handoff.  The sequential protection keeps its historic behaviour; this
+    helper is deliberately local to the race-free parallel path.
+    """
+    current_text = current.strip()
+    if len(current_text) >= 500 or "SKIP" not in current_text.upper():
+        return False
+    # A worker's explicit short SKIP response is unambiguous even when the
+    # baseline itself is short (the historic half-size heuristic would miss
+    # that case).
+    if current_text.upper().startswith("SKIP"):
+        return True
+    if not handoff_before.strip():
+        return bool(current_text)
+    return len(current) < len(handoff_before) * 0.5
+
+
+def _prepare_parallel_handoffs(state, worker_links):
+    """Seed each worker's private handoff from one immutable baseline."""
+    handoff_before = state.get_handoff()
+    for link in worker_links:
+        link_name = link.get("name", "worker")
+        link_file = state.get_link_handoff_file(link_name)
+        link_file.parent.mkdir(parents=True, exist_ok=True)
+        link_file.write_text(handoff_before, encoding="utf-8")
+    return handoff_before
+
+
+def _merge_parallel_handoffs(chain_name, state, worker_links, handoff_before):
+    """Collect isolated worker handoffs deterministically into the main file.
+
+    The shared handoff is restored to its pre-run value before any per-worker
+    result is considered.  This makes an accidentally written shared file
+    fail closed instead of allowing a racy result to overwrite the baseline.
+    Non-skip reports are ordered by the selector/link order, not by future
+    completion order.  One report keeps its original handoff format; multiple
+    reports receive explicit worker headings.
+    """
+    shared_after = state.get_handoff()
+    if shared_after != handoff_before:
+        log(
+            "[PARALLEL] Gemeinsamer Handoff wurde während des Worker-Laufs "
+            "verändert; verwerfe ihn und stelle den Baseline-Handoff wieder her.",
+            chain_name,
+        )
+    state.write_handoff(handoff_before)
+
+    reports = []
+    for link in worker_links:
+        link_name = link.get("name", "worker")
+        link_file = state.get_link_handoff_file(link_name)
+        try:
+            current = link_file.read_text(encoding="utf-8") if link_file.exists() else ""
+        except OSError as exc:
+            log(f"[PARALLEL] {link_name}: Handoff nicht lesbar: {exc}", chain_name)
+            continue
+
+        if _is_skip_handoff(current, handoff_before):
+            log(f"[PARALLEL] {link_name}: SKIP bleibt per-Worker isoliert.", chain_name)
+            continue
+        if current.strip() and current != handoff_before:
+            reports.append((link_name, current))
+
+    if not reports:
+        return []
+    if len(reports) == 1:
+        state.write_handoff(reports[0][1])
+        return reports
+
+    sections = [handoff_before.rstrip()] if handoff_before.strip() else []
+    for link_name, report in reports:
+        sections.append(f"## Parallel Worker: {link_name}\n{report.rstrip()}")
+    state.write_handoff("\n\n".join(sections) + "\n")
+    return reports
+
 # Lesbares Label fuer jede Selection-Strategie (B13)
 SELECTION_LABELS = {
     "priority": "Nach Prioritaet (KRITISCH > HOCH > MITTEL > NIEDRIG)",
@@ -388,8 +492,15 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
     """
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
+    # Take exactly one baseline before any thread starts and give every worker
+    # its own handoff file.  A shared before/after comparison is inherently
+    # racy when workers finish in arbitrary order.
+    handoff_before = _prepare_parallel_handoffs(state, worker_links)
+    shared_handoff_file = state.handoff_file
+
     def _execute_worker(link):
         link_name = link.get("name", "worker")
+        worker_handoff_file = state.get_link_handoff_file(link_name)
         backend = link.get("backend") or global_config.get("default_backend", "claude")
         model = (
             link.get("model")
@@ -409,10 +520,15 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
             allow_unverified=global_config.get("allow_unverified_backends", False),
         )
 
-        prompt_text = resolve_prompt(link, config)
+        prompt_text = resolve_prompt(link, config, base_dir=base_dir)
         home_win, home_bash = _home_placeholders()
         prompt_text = prompt_text.replace("{HOME}", home_win)
         prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
+        prompt_text += _parallel_handoff_instructions(
+            link_name,
+            worker_handoff_file,
+            shared_handoff_file,
+        )
 
         if link.get("until_full", False):
             prompt_text += UNTIL_FULL_SUFFIX
@@ -460,6 +576,8 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
                     "success": False, "output": "", "stderr": str(e),
                     "returncode": -4, "duration_s": 0, "model": "unknown",
                 }
+
+    _merge_parallel_handoffs(chain_name, state, worker_links, handoff_before)
 
     return results
 
