@@ -1,20 +1,16 @@
 """Tests fuer llmauto.core.config -- Konfigurationsmanagement."""
 import json
-import tempfile
-from pathlib import Path
-from unittest.mock import patch
 
 import pytest
-
 from llmauto.core.config import (
-    load_global_config,
-    load_chain,
-    list_chains,
-    new_link,
-    save_chain,
-    _normalize_paths,
     DEFAULT_GLOBAL_CONFIG,
     DEFAULT_LINK,
+    _normalize_paths,
+    list_chains,
+    load_chain,
+    load_global_config,
+    new_link,
+    save_chain,
 )
 
 

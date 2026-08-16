@@ -1,9 +1,6 @@
 """Tests fuer llmauto.core.state -- ChainState Management."""
-import tempfile
-from pathlib import Path
 
 import pytest
-
 from llmauto.core.state import ChainState
 
 
@@ -37,7 +34,7 @@ class TestRounds:
         assert state.get_round() == 1
 
     def test_multiple_increments(self, state):
-        for i in range(5):
+        for _ in range(5):
             state.increment_round()
         assert state.get_round() == 5
 

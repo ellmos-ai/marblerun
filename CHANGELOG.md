@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Discoverability, README-Design & Pytest Status Check (2026-08-16)
+
+- Synchronized Pytest status badges across `README.md` and `README_de.md` to 98 passed, 3 skipped (101 total) 100% green.
+- Added version badge (v0.1.0) and cross-linking matrix for sibling tools (`coma`, `policy-registry`, `system-explorer`, `sqlite-transit-sync`, `automation-master`, `DevCenter`, `CodeBox`).
+- Integrated automated metadata & manifest test suite in `tests/test_metadata.py` (verifying `pyproject.toml`, `ellmos-module.v2.json`, documentation files, version consistency, and `llms.txt` ecosystem markers).
+- Configured `[tool.ruff]` and `[tool.ruff.lint]` in `pyproject.toml` (target-version = "py310", line-length = 120; ruff check 100% clean).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-08-16` and test metrics.
+
 ### Fixed (2026-08-13)
 
 - Added race-free skip-overwrite protection for parallel workers: each worker

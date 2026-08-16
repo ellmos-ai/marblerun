@@ -14,7 +14,8 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt
 `edgelesssys/marblerun` und kein Marble-Run-Spielbaukasten, sondern ein
 Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
-[![Pytest](https://img.shields.io/badge/Pytest-93%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
+[![Pytest](https://img.shields.io/badge/Pytest-98%20passed%2C%203%20skipped-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)]()
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
@@ -350,6 +351,24 @@ MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Wor
 | **Lizenz** | MIT | MIT |
 
 **Kurzfassung:** OpenClaw verbindet LLMs mit Konversationen. MarbleRun verbindet LLMs miteinander -- und erschafft autonome Arbeitsschleifen, in denen Agenten zusammenarbeiten, prüfen und iterieren, ohne menschliches Eingreifen.
+
+---
+
+## Geschwisterwerkzeuge & Ökosystem
+
+MarbleRun ist Teil der modularen Entwicklerwerkzeuge und Agent-Orchestrierungskomponenten von `ellmos-ai` und `open-bricks`:
+
+| Werkzeug | Ökosystem | Zweck |
+|---|---|---|
+| [COMA](https://github.com/ellmos-ai/coma) | `ellmos-ai` | Multi-Provider LLM CLI Orchestrator & Adapter-Framework |
+| [policy-registry](https://github.com/ellmos-ai/policy-registry) | `ellmos-ai` | Governance-Richtlinien-Engine und signierte Agenten-Delegation |
+| [system-explorer](https://github.com/ellmos-ai/system-explorer) | `ellmos-ai` | Multi-Agenten-Systemtopologie & Runtime-Inspektion |
+| [sqlite-transit-sync](https://github.com/ellmos-ai/sqlite-transit-sync) | `ellmos-ai` | Lokaler SQLite Status-Synchronisierer für verteilte Agenten |
+| [automation-master](https://github.com/dev-bricks/automation-master) | `dev-bricks` | Local-First Credit-Reservierung & Hintergrund-Automatisierungsdienst |
+| [DevCenter](https://github.com/dev-bricks/DevCenter) | `dev-bricks` | Multi-Repo Entwickler-Werkbank & Agent-Telemetrie-Cockpit |
+| [CodeBox](https://github.com/dev-bricks/CodeBox) | `dev-bricks` | Sandboxed Multi-Sprachen Code-Ausführungs-Engine |
+
+---
 
 ## Lizenz
 

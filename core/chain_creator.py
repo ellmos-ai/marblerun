@@ -4,9 +4,8 @@ llmauto.core.chain_creator -- Interaktiver Dialog zum Erstellen neuer Ketten.
 Wird aufgerufen ueber: python -m llmauto chain create
 """
 import json
-import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from llmauto.core.config import BASE_DIR
 
@@ -154,7 +153,7 @@ def create_chain():
             print("  Gespeicherte Vorlagen:")
             for i, t in enumerate(templates, 1):
                 print(f"    [{i}] {t.stem}")
-            print(f"    [0] Neuen Prompt eingeben")
+            print("    [0] Neuen Prompt eingeben")
             tpl_choice = ask("Vorlage waehlen oder 0 fuer neu", "0")
             if tpl_choice != "0":
                 try:
@@ -184,10 +183,10 @@ def create_chain():
 
     for i in range(1, num_links + 1):
         print(f"\n  --- Glied {i}/{num_links} ---")
-        link_name = ask(f"  Name", f"link-{i}")
+        link_name = ask("  Name", f"link-{i}")
 
-        print(f"  Rolle:")
-        print(f"    [1] worker    [2] reviewer    [3] controller")
+        print("  Rolle:")
+        print("    [1] worker    [2] reviewer    [3] controller")
         role_choice = ask("  Rolle", "1")
         role_map = {"1": "worker", "2": "reviewer", "3": "controller"}
         role = role_map.get(role_choice, "worker")
@@ -199,7 +198,7 @@ def create_chain():
             "name": link_name,
             "role": role,
             "model": model_id,
-            "description": ask(f"  Beschreibung (kurz)", f"{role} Glied {i}"),
+            "description": ask("  Beschreibung (kurz)", f"{role} Glied {i}"),
         }
 
         if role == "worker":
@@ -217,7 +216,7 @@ def create_chain():
             use_template = False
             if templates:
                 print(f"  Prompt fuer '{link_name}':")
-                print(f"    [0] Neuen Prompt eingeben")
+                print("    [0] Neuen Prompt eingeben")
                 for j, t in enumerate(templates, 1):
                     print(f"    [{j}] Vorlage: {t.stem}")
                 tpl_choice = ask("  Auswahl", "0")
@@ -332,10 +331,9 @@ def create_chain():
     # --- Speichern ---
     CHAINS_DIR.mkdir(parents=True, exist_ok=True)
     chain_file = CHAINS_DIR / f"{chain_name}.json"
-    if chain_file.exists():
-        if not ask_yn(f"  '{chain_name}' existiert bereits. Ueberschreiben?", False):
-            print("  Abgebrochen.")
-            return None
+    if chain_file.exists() and not ask_yn(f"  '{chain_name}' existiert bereits. Ueberschreiben?", False):
+        print("  Abgebrochen.")
+        return None
 
     chain_file.write_text(
         json.dumps(chain, indent=4, ensure_ascii=False),

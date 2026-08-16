@@ -4,10 +4,8 @@ llmauto.core.runner -- Multi-Provider CLI Wrapper
 Zentraler Baustein: Startet Claude direkt und weitere Provider über COMA.
 Handhabt Environment, Fallback, Timeout, Output-Capture.
 """
-import subprocess
 import os
-import sys
-from pathlib import Path
+import subprocess
 from datetime import datetime
 
 

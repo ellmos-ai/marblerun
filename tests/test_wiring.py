@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Verdrahtungs-Regressionstests (Quelltext-Ebene).
 
 Hintergrund: Der Skip-Overwrite-Schutz (state.protect_handoff_from_skip)
@@ -50,8 +49,9 @@ class TestCliActions(unittest.TestCase):
                       "chain-Aktion 'create' muss in den argparse-choices stehen")
 
     def test_version_single_source(self):
-        from llmauto import __version__
         import llmauto.llmauto as cli
+
+        from llmauto import __version__
         self.assertEqual(cli.VERSION, __version__)
 
 

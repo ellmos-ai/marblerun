@@ -4,8 +4,8 @@ llmauto.core.state -- State-Management
 Verwaltet Laufzeit-State pro aktiver Kette: Runden, Handoff, Shutdown.
 """
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 
 class ChainState:

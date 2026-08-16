@@ -1,6 +1,5 @@
 """Tests fuer llmauto.modes.chain -- Hilfsfunktionen."""
 import pytest
-
 from llmauto.modes.chain import _home_placeholders, resolve_prompt
 
 

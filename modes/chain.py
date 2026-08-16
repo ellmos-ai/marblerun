@@ -5,16 +5,15 @@ Sequentielle Agent-Ketten: Link1 -> Link2 -> ... -> LinkN -> (loop)
 Portiert aus einem internen BACH-Prototyp (marble_run), nutzt core-Module.
 """
 import os
+import subprocess
 import sys
 import time
-import subprocess
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
+from ..core.config import _ACTUAL_HOME, BACH_AVAILABLE, BACH_ROOT, load_chain, load_global_config
 from ..core.runner import build_runner
-from ..core.config import load_chain, list_chains, load_global_config, _ACTUAL_HOME, BACH_AVAILABLE, BACH_ROOT
 from ..core.state import ChainState
-
 
 LOG_DIR = Path(__file__).parent.parent / "logs"
 
@@ -112,10 +111,7 @@ def _home_placeholders(home=None):
     # ist os.sep == "/" -- ein abschliessender Backslash blieb dann stehen).
     home_native = home.rstrip("\\/")
     drive, sep, rest = home_native.partition(":")
-    if sep:
-        home_bash = "/" + drive.lower() + rest.replace("\\", "/")
-    else:
-        home_bash = home_native
+    home_bash = "/" + drive.lower() + rest.replace("\\", "/") if sep else home_native
     return home_native, home_bash
 
 
@@ -255,8 +251,8 @@ def send_telegram_update(chain_name, state):
         if not telegram.get("enabled", False):
             return
 
-        import urllib.request
         import json
+        import urllib.request
 
         bot_token = os.environ.get(
             telegram.get("bot_token_env", "LLMAUTO_TELEGRAM_BOT_TOKEN"), ""
@@ -409,7 +405,7 @@ def generate_active_chain_md(chain_name, config, state, base_dir):
         "### Handoff-Format:",
         "",
         "```",
-        f"# Handoff - Runde [N]",
+        "# Handoff - Runde [N]",
         f"## Kette: {chain_name}",
         "## Rolle: [WORKER / REVIEWER]",
         "## Status: [DONE / NEEDS_REVIEW / BLOCKED]",
@@ -922,11 +918,7 @@ def show_status(chain_name=None, base_dir=None):
     if chain_name:
         names = [chain_name]
     else:
-        # Alle Ketten mit State-Verzeichnis
-        if state_dir.exists():
-            names = [d.name for d in state_dir.iterdir() if d.is_dir()]
-        else:
-            names = []
+        names = [d.name for d in state_dir.iterdir() if d.is_dir()] if state_dir.exists() else []
 
     if not names:
         print("Keine laufenden oder beendeten Ketten gefunden.")
@@ -994,7 +986,7 @@ def stop_chain(chain_name, reason=None):
     reason = reason or "Manuell gestoppt via llmauto"
     state.request_stop(reason)
     print(f"STOP-Datei erstellt fuer '{chain_name}'.")
-    print(f"Pipeline stoppt nach aktuellem Glied.")
+    print("Pipeline stoppt nach aktuellem Glied.")
     print(f"Grund: {reason}")
     return 0
 

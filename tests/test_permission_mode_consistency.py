@@ -6,7 +6,6 @@ from pathlib import Path
 from llmauto.core.config import DEFAULT_GLOBAL_CONFIG
 from llmauto.core.runner import ClaudeRunner
 
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_PERMISSION_MODE = "dontAsk"
 

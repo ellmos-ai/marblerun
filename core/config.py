@@ -5,8 +5,8 @@ Laedt, validiert und speichert Chain-Configs und globale Einstellungen.
 """
 import json
 import os
-from pathlib import Path
 from copy import deepcopy
+from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent
 
@@ -82,7 +82,7 @@ def load_global_config():
     global _KNOWN_USER_HOMES
     config_file = BASE_DIR / "config.json"
     if config_file.exists():
-        with open(config_file, "r", encoding="utf-8") as f:
+        with open(config_file, encoding="utf-8") as f:
             user_config = json.load(f)
         # Zusaetzliche User-Homes aus Config laden
         extra_homes = user_config.pop("known_user_homes", [])
@@ -137,7 +137,7 @@ def load_chain(name):
         raise FileNotFoundError(
             f"Kette '{name}' nicht gefunden: {' / '.join(str(c) for c in candidates)}"
         )
-    with open(chain_file, "r", encoding="utf-8") as f:
+    with open(chain_file, encoding="utf-8") as f:
         chain = json.load(f)
     # Pfade an aktuelles System anpassen
     chain = _normalize_paths(chain)

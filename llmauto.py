@@ -59,11 +59,17 @@ from llmauto import __version__ as VERSION  # Single Source: __init__.py
 
 def cmd_chain(args):
     """Chain-Modus Subkommandos."""
-    from llmauto.modes.chain import (
-        run_chain, show_status, stop_chain, pause_chain, resume_chain,
-        steer_chain, show_log, reset_chain
-    )
     from llmauto.core.config import list_chains
+    from llmauto.modes.chain import (
+        pause_chain,
+        reset_chain,
+        resume_chain,
+        run_chain,
+        show_log,
+        show_status,
+        steer_chain,
+        stop_chain,
+    )
 
     action = args.chain_action
 
@@ -150,8 +156,8 @@ def cmd_chain(args):
 
 def cmd_pipe(args):
     """Pipe-Modus: Einzelner Claude-Aufruf."""
-    from llmauto.core.runner import ClaudeRunner
     from llmauto.core.config import load_global_config
+    from llmauto.core.runner import ClaudeRunner
 
     global_config = load_global_config()
 

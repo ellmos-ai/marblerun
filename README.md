@@ -14,7 +14,8 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 and not a marble-run game toolkit; it is a Python/Claude Code automation
 framework for autonomous LLM agent chains.
 
-[![Pytest](https://img.shields.io/badge/Pytest-93%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
+[![Pytest](https://img.shields.io/badge/Pytest-98%20passed%2C%203%20skipped-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
@@ -349,6 +350,24 @@ MarbleRun makes LLMs act -- autonomous multi-agent chains where workers, reviewe
 | **License** | MIT | MIT |
 
 **In short:** OpenClaw connects LLMs to conversations. MarbleRun connects LLMs to each other -- creating autonomous work loops where agents collaborate, review, and iterate without human intervention.
+
+---
+
+## Sibling Tools & Ecosystem
+
+MarbleRun is part of the `ellmos-ai` and `open-bricks` ecosystem of modular developer tools and agent orchestration components:
+
+| Tool | Ecosystem | Purpose |
+|---|---|---|
+| [COMA](https://github.com/ellmos-ai/coma) | `ellmos-ai` | Multi-provider LLM CLI orchestrator & adapter framework |
+| [policy-registry](https://github.com/ellmos-ai/policy-registry) | `ellmos-ai` | Governance policy engine and signed agent delegation framework |
+| [system-explorer](https://github.com/ellmos-ai/system-explorer) | `ellmos-ai` | Multi-agent system topology explorer & runtime inspector |
+| [sqlite-transit-sync](https://github.com/ellmos-ai/sqlite-transit-sync) | `ellmos-ai` | Local SQLite state synchronizer for distributed agent workflows |
+| [automation-master](https://github.com/dev-bricks/automation-master) | `dev-bricks` | Local-first credit reservation & background automation daemon |
+| [DevCenter](https://github.com/dev-bricks/DevCenter) | `dev-bricks` | Multi-repo developer workbench & agent telemetry cockpit |
+| [CodeBox](https://github.com/dev-bricks/CodeBox) | `dev-bricks` | Sandboxed multi-language code execution engine |
+
+---
 
 ## License
 
