@@ -17,6 +17,7 @@ ein Editable-Install vorhanden ist.
 
 import importlib.util
 import sys
+from contextlib import suppress
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parent
@@ -38,3 +39,19 @@ def _load_package_as_llmauto():
 
 
 _load_package_as_llmauto()
+
+_PARENT_PATH = _ROOT.parent.resolve()
+sys.path = [p for p in sys.path if Path(p).resolve() != _PARENT_PATH]
+for _name in list(sys.modules.keys()):
+    _mod = sys.modules[_name]
+    if getattr(_mod, "__file__", None) is None and _name in (
+        "coma",
+        "comas",
+        "gardener",
+        "devcenter",
+        "softwarecenter",
+    ):
+        del sys.modules[_name]
+
+with suppress(ImportError):
+    importlib.import_module("coma")
