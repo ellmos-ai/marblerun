@@ -77,7 +77,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-08-16" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-08-21" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert "https://github.com/ellmos-ai/MarbleRun" in llms_text
     assert "llmauto" in llms_text
 

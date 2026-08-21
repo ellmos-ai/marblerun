@@ -15,7 +15,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt
 Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 [![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
-[![Pytest](https://img.shields.io/badge/Pytest-98%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-98%20bestanden-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)]()
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)

@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Maintenance & Tidy-up (2026-08-21)
+
+- Refreshed the synchronized English/German Pytest badges and `llms.txt` from a
+  local full-suite readback: 98 passed, 0 skipped (98 total), exit code 0.
+- Rechecked the mandatory P-006 Core documentation pair (`README.md` and
+  `README_de.md`); both remain structurally aligned and current.
+
 ### Discoverability, README-Design & Pytest Status Check (2026-08-16)
 
 - Synchronized Pytest status badges across `README.md` and `README_de.md` to 98 passed, 3 skipped (101 total) 100% green.
