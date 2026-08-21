@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Maintenance, CI-Matrix & Security Hardening (2026-08-21)
+
+- Modernized GitHub Actions CI workflow (`.github/workflows/tests.yml`) to multi-OS matrix (`ubuntu-latest`, `windows-latest`, `macos-latest`), Python 3.10-3.13 support, pip caching, automated `ruff check .` linting gate, and pytest test suite.
+- Enhanced `pyproject.toml` with PEP 621 Standard Classifiers (`Operating System :: OS Independent`, `Microsoft :: Windows`, `POSIX :: Linux`, `MacOS`, `Environment :: Console`, `Topic :: System :: Monitoring`) and project URLs (`Documentation`, `Changelog`).
+- Upgraded `SECURITY.md` to comprehensive bilingual (English & German) security policy including Local-First & Zero-Egress guarantees, Subprocess execution safety, Non-Elevation (User-Mode operation), and direct security contacts (`security@ellmos.ai`, `support@lukasgeiger.com`).
+- Extended automated metadata contract test suite in `tests/test_metadata.py` with CI matrix validation, PEP 621 metadata checks, and bilingual security policy validation (100 passed, 3 skipped, 103 total, 100% green).
+- Synchronized Shields.io badges in `README.md` and `README_de.md` (CI badge, Pytest 100 passed, Python 3.10-3.13, Platform Linux | Windows | macOS, Privacy 100% Offline | Zero-Egress, Security Local-First).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-08-21` and verified test counts.
+
 ### Discoverability, README-Design & Pytest Status Check (2026-08-16)
 
 - Synchronized Pytest status badges across `README.md` and `README_de.md` to 98 passed, 3 skipped (101 total) 100% green.

@@ -1,4 +1,4 @@
-"""Metadata, manifest, and discoverability parity tests for MarbleRun / llmauto."""
+"""Metadata, manifest, CI workflow, and discoverability parity tests for MarbleRun / llmauto."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ def test_package_version_consistency():
 
 
 def test_pyproject_metadata_integrity():
-    """Verify pyproject.toml contains mandatory project metadata and ruff settings."""
+    """Verify pyproject.toml contains mandatory project metadata, PEP 621 classifiers, and ruff settings."""
     pyproject_file = REPO_ROOT / "pyproject.toml"
     assert pyproject_file.exists(), "pyproject.toml must exist"
 
@@ -35,9 +35,48 @@ def test_pyproject_metadata_integrity():
     assert "urls" in project
     assert project["urls"].get("Homepage") == "https://github.com/ellmos-ai/MarbleRun"
     assert project["urls"].get("Repository") == "https://github.com/ellmos-ai/MarbleRun"
+    assert project["urls"].get("Issues") == "https://github.com/ellmos-ai/MarbleRun/issues"
+    assert project["urls"].get("Documentation") == "https://github.com/ellmos-ai/MarbleRun#readme"
+    assert project["urls"].get("Changelog") == "https://github.com/ellmos-ai/MarbleRun/blob/main/CHANGELOG.md"
+
+    classifiers = project.get("classifiers", [])
+    assert "Operating System :: OS Independent" in classifiers
+    assert "Operating System :: Microsoft :: Windows" in classifiers
+    assert "Operating System :: POSIX :: Linux" in classifiers
+    assert "Operating System :: MacOS" in classifiers
+    assert "Programming Language :: Python :: 3.13" in classifiers
 
     # Ruff section
     assert "tool" in data and "ruff" in data["tool"], "pyproject.toml must configure [tool.ruff]"
+
+
+def test_ci_workflow_integrity():
+    """Verify .github/workflows/tests.yml runs multi-OS, multi-version matrix and ruff lint gate."""
+    workflow_file = REPO_ROOT / ".github" / "workflows" / "tests.yml"
+    assert workflow_file.is_file(), "CI tests workflow must exist"
+    content = workflow_file.read_text(encoding="utf-8")
+
+    assert "ubuntu-latest" in content
+    assert "windows-latest" in content
+    assert "macos-latest" in content
+    assert "3.10" in content and "3.11" in content and "3.12" in content and "3.13" in content
+    assert "ruff check" in content
+    assert "python -m pytest" in content
+
+
+def test_security_policy_bilingual_integrity():
+    """Verify SECURITY.md contains bilingual policy with zero-egress and contacts."""
+    security_file = REPO_ROOT / "SECURITY.md"
+    assert security_file.is_file(), "SECURITY.md must exist"
+    sec_text = security_file.read_text(encoding="utf-8")
+
+    assert "## English" in sec_text
+    assert "## Deutsch" in sec_text
+    assert "Zero-Egress" in sec_text or "zero-egress" in sec_text.lower()
+    assert "Non-Elevation" in sec_text
+    assert "security@ellmos.ai" in sec_text
+    assert "support@lukasgeiger.com" in sec_text
+    assert "https://github.com/ellmos-ai/MarbleRun/security/advisories/new" in sec_text
 
 
 def test_ellmos_module_manifest_validity():
@@ -77,7 +116,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-08-16" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-08-21" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert "https://github.com/ellmos-ai/MarbleRun" in llms_text
     assert "llmauto" in llms_text
 
@@ -88,3 +127,4 @@ def test_llms_txt_and_badge_discovery_parity():
         assert "ellmos--ai-blue.svg" in readme or "ellmos-ai" in readme
         assert "open--bricks-orange.svg" in readme or "open-bricks" in readme
         assert "llms.txt" in readme
+

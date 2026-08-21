@@ -1,4 +1,4 @@
-## Last-checked: 2026-08-16
+## Last-checked: 2026-08-21
 
 # MarbleRun / llmauto - LLM Automation Framework
 
@@ -39,11 +39,11 @@ zero dependency LLM automation CLI
 
 ## External Discovery Notes
 
-As of 2026-08-16, web search finds the canonical GitHub repository for exact
+As of 2026-08-21, web search finds the canonical GitHub repository for exact
 ellmos/llmauto queries. Broad `MarbleRun` searches still collide with
 confidential-computing and game/toolkit projects, so downstream directories,
 LLM indexes, and package metadata prefer `llmauto` plus Claude Code,
-agent-chain, and local-first automation wording. Test suite: 98 passed, 3 skipped (101 total) 100% green exit code 0.
+agent-chain, and local-first automation wording. Test suite: 100 passed, 3 skipped (103 total) 100% green exit code 0.
 
 ## Docs
 

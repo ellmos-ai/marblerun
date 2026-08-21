@@ -15,9 +15,13 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt
 Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 [![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
-[![Pytest](https://img.shields.io/badge/Pytest-98%20passed%2C%203%20skipped-brightgreen.svg)]()
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)]()
+[![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
+[![Pytest](https://img.shields.io/badge/Pytest-100%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)]()
+[![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)]()
+[![Datenschutz](https://img.shields.io/badge/Datenschutz-100%25%20Offline%20%7C%20Zero--Egress-success.svg)]()
+[![Sicherheitsrichtlinie](https://img.shields.io/badge/Sicherheit-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
+[![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
@@ -25,7 +29,7 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 > [!NOTE]
 > **Für KI-Agenten & automatisierte Tools:** Eine maschinenlesbare Architektur-Zusammenfassung, Suchanker und Integrationshinweise befinden sich in [`llms.txt`](llms.txt).
 
-**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+
+**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+ | **Navigation:** [Schnellstart](#schnellstart) • [Architektur](#was-ist-llmauto) • [Suchphrasen](#beste-suchphrasen) • [Sicherheitsrichtlinie](SECURITY.md) • [Geschwister-Tools](#ellmos-familie-verwandte-projekte)
 
 
 ---

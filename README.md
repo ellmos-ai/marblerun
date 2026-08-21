@@ -15,9 +15,13 @@ and not a marble-run game toolkit; it is a Python/Claude Code automation
 framework for autonomous LLM agent chains.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
-[![Pytest](https://img.shields.io/badge/Pytest-98%20passed%2C%203%20skipped-brightgreen.svg)]()
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)]()
-[![License](https://img.shields.io/badge/License-MIT-green.svg)]()
+[![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
+[![Pytest](https://img.shields.io/badge/Pytest-100%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)]()
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)]()
+[![Privacy](https://img.shields.io/badge/privacy-100%25%20Offline%20%7C%20Zero--Egress-success.svg)]()
+[![Security Policy](https://img.shields.io/badge/security-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
@@ -25,7 +29,7 @@ framework for autonomous LLM agent chains.
 > [!NOTE]
 > **For AI Agents & Automated Tools:** Machine-readable architecture summary, discovery anchors, and usage guidelines are available in [`llms.txt`](llms.txt).
 
-**Author:** Lukas Geiger | **License:** MIT | **Python:** 3.10+
+**Author:** Lukas Geiger | **License:** MIT | **Python:** 3.10+ | **Navigation:** [Quick Start](#quick-start) • [Architecture](#what-is-llmauto) • [Search Phrases](#best-search-phrases) • [Security Policy](SECURITY.md) • [Sibling Tools](#ellmos-family-related-projects)
 
 
 ---
