@@ -31,7 +31,9 @@ def test_pyproject_metadata_integrity():
 
     assert project.get("name") == "llmauto"
     assert "MarbleRun" in project.get("description", "")
-    assert project.get("license", {}).get("text") == "MIT"
+    # PEP 639: license is an SPDX expression string, license files are declared separately
+    assert project.get("license") == "MIT"
+    assert project.get("license-files") == ["LICENSE"]
     assert "urls" in project
     assert project["urls"].get("Homepage") == "https://github.com/ellmos-ai/MarbleRun"
     assert project["urls"].get("Repository") == "https://github.com/ellmos-ai/MarbleRun"
