@@ -53,7 +53,7 @@ def test_pyproject_metadata_integrity():
 
 
 def test_ci_workflow_integrity():
-    """Verify .github/workflows/tests.yml runs multi-OS, multi-version matrix and ruff lint gate."""
+    """Verify .github/workflows/tests.yml runs multi-OS, multi-version matrix, ruff lint gate, and concurrency gate."""
     workflow_file = REPO_ROOT / ".github" / "workflows" / "tests.yml"
     assert workflow_file.is_file(), "CI tests workflow must exist"
     content = workflow_file.read_text(encoding="utf-8")
@@ -64,6 +64,8 @@ def test_ci_workflow_integrity():
     assert "3.10" in content and "3.11" in content and "3.12" in content and "3.13" in content
     assert "ruff check" in content
     assert "python -m pytest" in content
+    assert "concurrency:" in content
+    assert "cancel-in-progress: true" in content
 
 
 def test_security_policy_bilingual_integrity():
@@ -118,7 +120,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-08-21" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-08-25" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert "https://github.com/ellmos-ai/MarbleRun" in llms_text
     assert "llmauto" in llms_text
 
@@ -130,3 +132,67 @@ def test_llms_txt_and_badge_discovery_parity():
         assert "open--bricks-orange.svg" in readme or "open-bricks" in readme
         assert "llms.txt" in readme
 
+
+def test_readme_visual_showcase_and_sequence_diagram():
+    """Verify both English and German READMEs feature Mermaid visual showcase and tactical sequence diagram."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    for readme in [readme_en, readme_de]:
+        assert "```mermaid" in readme
+        assert "graph TD" in readme
+        assert "sequenceDiagram" in readme
+        assert "autonumber" in readme
+        assert "handoff.md" in readme
+        assert "Runner" in readme or "Runner as" in readme
+
+
+def test_readme_capabilities_and_invariants_matrix():
+    """Verify both English and German READMEs define the core security invariants."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    # Invariants in English README
+    assert "Zero-Egress" in readme_en
+    assert "Non-Elevation" in readme_en
+    assert "Multi-Provider Fail-Closed" in readme_en
+    assert "Race-Free Parallel Workers" in readme_en
+    assert "Skip-Overwrite Guard" in readme_en
+    assert "Persistent State Machine" in readme_en
+    assert "Multi-OS CI Matrix" in readme_en
+    assert "Strict Concurrency Gate" in readme_en
+
+    # Invariants in German README
+    assert "Zero-Egress" in readme_de
+    assert "Privilegienfreie Ausführung" in readme_de
+    assert "Multi-Provider Fail-Closed" in readme_de
+    assert "Race-Free Parallel-Worker" in readme_de
+    assert "Skip-Überschreibschutz" in readme_de
+    assert "Persistente Zustandsmaschine" in readme_de
+    assert "Multi-OS CI-Matrix" in readme_de
+    assert "Strikter Concurrency-Gate" in readme_de
+
+
+def test_readme_sibling_ecosystem_matrix():
+    """Verify both READMEs reference all 12 partner tools in the ecosystem table."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    expected_tools = [
+        "COMA",
+        "policy-registry",
+        "system-explorer",
+        "sqlite-transit-sync",
+        "ellmos-clatcher-mcp",
+        "automation-master",
+        "DevCenter",
+        "CodeBox",
+        "FileCommander",
+        "ProFiler",
+        "CuteStrike",
+        "open-bricks",
+    ]
+
+    for tool in expected_tools:
+        assert tool in readme_en, f"Missing sibling tool '{tool}' in README.md"
+        assert tool in readme_de, f"Missing sibling tool '{tool}' in README_de.md"

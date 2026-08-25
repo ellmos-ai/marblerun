@@ -4,10 +4,10 @@
 
 **🇬🇧 [English Version](README.md)**
 
-*Automatisierungs- & Workflow-System von [ellmos-ai](https://github.com/ellmos-ai).*
+*Lokales Multi-Agenten-Orchestrierungs- & Chain-Execution-Framework von [ellmos-ai](https://github.com/ellmos-ai).*
 
-Universelles Automatisierungstool für LLM-Agenten.
-Chain-Ausführung, Prompt-Verwaltung, autonome Arbeitsschleifen.
+Universelles Automatisierungstool für autonome LLM-Agenten-Ketten ("Marble Runs" / Kugelbahnen).
+Sequentielle Agentenschleifen, Prompt-Management, Zustandspersistenz und unbeaufsichtigte Arbeitszyklen.
 
 **Kanonischer Suchname:** `ellmos MarbleRun` oder `llmauto`.
 Dieses Repository ist nicht das Confidential-Computing-Projekt
@@ -16,7 +16,7 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 [![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-100%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-103%20passed%2C%203%20skipped-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)]()
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)]()
 [![Datenschutz](https://img.shields.io/badge/Datenschutz-100%25%20Offline%20%7C%20Zero--Egress-success.svg)]()
@@ -29,7 +29,7 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 > [!NOTE]
 > **Für KI-Agenten & automatisierte Tools:** Eine maschinenlesbare Architektur-Zusammenfassung, Suchanker und Integrationshinweise befinden sich in [`llms.txt`](llms.txt).
 
-**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+ | **Navigation:** [Schnellstart](#schnellstart) • [Architektur](#was-ist-llmauto) • [Suchphrasen](#beste-suchphrasen) • [Sicherheitsrichtlinie](SECURITY.md) • [Geschwister-Tools](#ellmos-familie-verwandte-projekte)
+**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+ | **Navigation:** [Übersicht](#was-ist-llmauto) • [Schnellstart](#schnellstart) • [Visuelle Galerie](#visuelle-galerie--ausfuehrungsfluss) • [Sequenzablauf](#taktischer-rundenablauf--sequenzdiagramm) • [Kernfähigkeiten & Sicherheit](#kernfaehigkeiten--sicherheitsinvarianten) • [Chain-Muster & Rollen](#chain-muster--rollenmatrix) • [CLI-Referenz](#cli-referenz) • [Suchphrasen](#beste-suchphrasen) • [Vergleich](#siehe-auch-openclaw) • [Geschwister-Ökosystem](#geschwister-tools--oekosystem) • [Sicherheitsrichtlinie](SECURITY.md) • [Haftung](#haftung)
 
 
 ---
@@ -195,25 +195,88 @@ python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 
 ---
 
-## Chain-Architektur
+## Visuelle Galerie & Ausführungsfluss
 
-### Wie Marble Runs funktionieren
+Die Kernarchitektur folgt einer zyklischen Kugelbahn-Pipeline, bei der jeder Agent einen autonomen Schritt ausführt und verifizierten Zustand weiterreicht:
 
 ```mermaid
 graph TD
     subgraph Round["Runde N Ausführungsschleife"]
-        W["Link 1: Worker-Agent"] -->|"Führt Aufgaben aus"| H1["state/handoff.md"]
-        H1 --> R["Link 2: Reviewer-Agent"]
-        R -->|"Prüft & korrigiert"| H2["state/handoff.md"]
-        H2 --> C["Link 3: Controller-Agent"]
-        C -->|"Koordiniert & aktualisiert"| H3["state/handoff.md"]
+        W["Link 1: Worker-Agent (Opus/Sonnet)"] -->|"Führt Aufgaben aus & entwirft Handoff"| H1["state/handoff.md (Snapshot-Isolation)"]
+        H1 --> R["Link 2: Reviewer-Agent (Opus)"]
+        R -->|"Prüft, testet & korrigiert"| H2["state/handoff.md (Geschütztes Update)"]
+        H2 --> C["Link 3: Controller-Agent (Sonnet/Haiku)"]
+        C -->|"Koordiniert & weist nächsten Schritt zu"| H3["state/handoff.md (Committed State)"]
     end
     H3 -->|"Erhöhe Rundenzähler (N+1)"| W
-    C -->|"Fertig / Max Runden / Stopp"| END["Chain Abgeschlossen / Gestoppt"]
+    C -->|"Fertig / Max Runden / Deadline"| END["Chain Abgeschlossen / Kontrollierter Stopp"]
 
     style Round fill:#1f2937,stroke:#3b82f6,color:#fff
     style END fill:#111827,stroke:#10b981,color:#fff
 ```
+
+---
+
+## Taktischer Rundenablauf & Sequenzdiagramm
+
+Der Ausführungszyklus koordiniert Prozessisolation, Baseline-Snapshotting, Überschreibschutz und persistente Zustandsübergänge:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Entwickler / Operator
+    participant Runner as MarbleRun Engine (llmauto)
+    participant State as State-Manager (SQLite/MD)
+    participant Worker as Worker-Agent (Link 1)
+    participant Guard as Skip-/Handoff-Guard
+    participant Reviewer as Reviewer-Agent (Link 2)
+    participant Controller as Controller-Agent (Link 3)
+
+    User->>Runner: Starte Chain (z.B. python -m llmauto chain start my-chain)
+    Runner->>State: Initialisiere / Lese Zustand (status.txt, round_counter, handoff.md)
+    loop Rundenausführung (1 .. max_rounds)
+        Runner->>Guard: Snapshot der Baseline-Handoff-Datei
+        Runner->>Worker: Führe Worker-Link mit Prompt & Kontext aus
+        Worker-->>Guard: Schreibe Aufgabenergebnis / Diff / Handoff
+        Guard->>Guard: Prüfe Inhalt / Erkenne Skip-Überschreibung
+        Guard->>State: Sichere Worker-Handoff committen
+        Runner->>Reviewer: Führe Reviewer-Link aus (--continue Session)
+        Reviewer-->>Guard: Review-Befunde, Tests & Korrekturen
+        Guard->>State: Reviewte Handoff committen
+        Runner->>Controller: Führe Controller-Link aus (Fertigstellung bewerten)
+        Controller-->>State: Schreibe nächste Zuweisung oder ALL_DONE
+        State->>Runner: Prüfe Abbruchbedingungen (Max Runden, Deadline, Status)
+    end
+    Runner->>State: Setze Status = ALL_DONE / STOPPED
+    Runner->>User: Finale Handoff-Zusammenfassung & Laufzeitbericht
+```
+
+---
+
+## Kernfähigkeiten & Sicherheitsinvarianten
+
+MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Ausfallsicherheitsgarantien:
+
+| Fähigkeit / Invariante | Implementierungsmechanismus | Sicherheits- & Zuverlässigkeitsgarantie |
+|---|---|---|
+| **100% Offline / Zero-Egress** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | Zero Data Egress; Agentenkontext und Prompts verbleiben vollständig lokal |
+| **Privilegienfreie Ausführung** | Standard-Python-Laufzeit ohne Administrator-/Root-Rechte (User-Mode) | Verhindert unberechtigte Systemänderungen; sichere Sandboxed-CLI-Ausführung |
+| **Multi-Provider Fail-Closed** | Strikte Backend-Auswahl (Claude CLI, optional COMA-Adapter für Codex/Agy) | Unkonfigurierte Backends schlagen fehlgeschlossen fehl; kein stiller unsicherer Fallback |
+| **Race-Free Parallel-Worker** | Isolierte Handoff-Snapshots pro Worker (`tests/test_parallel_handoff.py`) | Verhindert Nebenläufigkeitskollisionen bei parallelen Schreibzugriffen |
+| **Skip-Überschreibschutz** | Automatische Baseline-Wiederherstellung bei kurzen `SKIPPED`-Antworten | Verhindert Kontexthunger; bewahrt wertvollen vorgelagerten Kontext über Links hinweg |
+| **Persistente Zustandsmaschine** | Transparente Dateisystem-Artefakte (`status.txt`, `round_counter.txt`, `handoff.md`) | Wiederaufnahmesicher über Reboots hinweg; kein proprietärer Binary-Lock-in |
+| **Multi-OS CI-Matrix** | Automatisierte GitHub Actions Tests unter Ubuntu, Windows und macOS | Garantierte plattformübergreifende Konsistenz unter Python 3.10, 3.11, 3.12 und 3.13 |
+| **Strikter Concurrency-Gate** | Workflow-weite `concurrency` mit automatischem `cancel-in-progress: true` | Verhindert veraltete CI-Race-Conditions und unnötigen Ressourcenverbrauch |
+
+---
+
+## Chain-Muster & Rollenmatrix
+
+| Rolle | Hauptverantwortung | Empfohlenes Modell | Kontext-Retention |
+|---|---|---|---|
+| `worker` | Implementiert Features, Fehlerbehebungen, Dokumentation, Refactorings | `claude-sonnet-4-6` | Frische Session pro Runde oder isolierte Handoff |
+| `reviewer` | Prüft Codequalität, führt Testsuiten aus, identifiziert Regressionen | `claude-opus-4-6` | `continue: true` für persistenten Projektkontext |
+| `controller` | Bewertet Meilenstein-Fortschritt, steuert Zuweisungen, löst Stopp aus | `claude-sonnet-4-6` / `haiku` | Bewertet Kriterien gegen `max_rounds` & Deadline |
 
 ### Abbruchbedingungen
 
@@ -316,24 +379,38 @@ llmauto/
 
 ---
 
+## CLI-Referenz
+
+| Befehl | Argumente | Beschreibung |
+|---|---|---|
+| `python -m llmauto chain start <name>` | `[--bg]` | Startet eine Chain im Vordergrund oder separaten Terminalfenster |
+| `python -m llmauto chain status <name>` | | Zeigt aktuelle Runde, Ausführungsstatus und aktiven Link an |
+| `python -m llmauto chain stop <name>` | `[reason]` | Stoppt Chain kontrolliert nach Abschluss des aktuellen Links |
+| `python -m llmauto chain log <name>` | `[lines]` | Zeigt jüngste Protokollausgaben (Standard: 50 Zeilen) |
+| `python -m llmauto chain reset <name>` | | Setzt Rundenzähler und Zustand auf Runde 0 zurück |
+| `python -m llmauto chain create` | | Interaktiver CLI-Assistent zur Erstellung neuer Chain-Konfigurationen |
+| `python -m llmauto pipe <prompt>` | `[-f file] [--model ID]` | Führt einen einzelnen Prompt direkt über die CLI aus |
+
+---
+
 ## Globale Konfiguration (config.json)
 
-| Einstellung | Standard |
-|-------------|----------|
-| `default_model` | `claude-sonnet-4-6` |
-| `default_permission_mode` | `dontAsk` |
-| `default_allowed_tools` | Read, Edit, Write, Bash, Glob, Grep |
-| `default_timeout_seconds` | 7200 (2 Std.) |
-| `telegram.enabled` | false |
+| Einstellung | Standard | Beschreibung |
+|---|---|---|
+| `default_model` | `claude-sonnet-4-6` | Primäre Modell-ID für Links ohne expliziten Override |
+| `default_permission_mode` | `dontAsk` | Berechtigungsstufe für unbeaufsichtigte Ausführung |
+| `default_allowed_tools` | `Read, Edit, Write, Bash, Glob, Grep` | Freigegebene Claude-Code-Werkzeuge |
+| `default_timeout_seconds` | `7200` (2 Std.) | Maximaler Ausführungs-Timeout pro Link |
+| `telegram.enabled` | `false` | Optionale Telegram-Statusbenachrichtigung |
 
 ---
 
 ## Enthaltene Beispiel-Chains
 
-llmauto wird mit mehreren produktionserprobten Chain-Konfigurationen ausgeliefert:
+llmauto wird mit produktionserprobten Chain-Konfigurationen ausgeliefert:
 
 | Chain | Muster | Beschreibung |
-|-------|--------|-------------|
+|---|---|---|
 | `worker-reviewer-loop` | Vorlage | Einfaches 2-Link Worker/Reviewer-Muster |
 
 Siehe `chains/` für die vollständige Liste der enthaltenen Chain-Definitionen.
@@ -344,7 +421,7 @@ Siehe `chains/` für die vollständige Liste der enthaltenen Chain-Definitionen.
 
 MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Worker, Reviewer und Controller in Schleifen zusammenarbeiten. Wie steht es im Vergleich zu [OpenClaw](https://github.com/openclaw/openclaw)?
 
-| | **MarbleRun** | **OpenClaw** |
+| Dimension | **MarbleRun (llmauto)** | **OpenClaw** |
 |---|---|---|
 | **Fokus** | Autonome Multi-Agenten-Orchestrierung -- LLMs zum Handeln bringen | Persönlicher KI-Assistent -- konversationelles Gateway |
 | **Ausführung** | Multi-Agenten-Ketten: Worker -> Reviewer -> Controller Schleifen | Einzel-Agent, der auf Nachrichten reagiert |
@@ -358,9 +435,9 @@ MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Wor
 
 ---
 
-## Geschwisterwerkzeuge & Ökosystem
+## Geschwister-Tools & Ökosystem
 
-MarbleRun ist Teil der modularen Entwicklerwerkzeuge und Agent-Orchestrierungskomponenten von `ellmos-ai` und `open-bricks`:
+MarbleRun ist Teil der modularen Entwicklerwerkzeuge und Agent-Orchestrierungskomponenten von `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-and-more` und `open-bricks`:
 
 | Werkzeug | Ökosystem | Zweck |
 |---|---|---|
@@ -368,9 +445,14 @@ MarbleRun ist Teil der modularen Entwicklerwerkzeuge und Agent-Orchestrierungsko
 | [policy-registry](https://github.com/ellmos-ai/policy-registry) | `ellmos-ai` | Governance-Richtlinien-Engine und signierte Agenten-Delegation |
 | [system-explorer](https://github.com/ellmos-ai/system-explorer) | `ellmos-ai` | Multi-Agenten-Systemtopologie & Runtime-Inspektion |
 | [sqlite-transit-sync](https://github.com/ellmos-ai/sqlite-transit-sync) | `ellmos-ai` | Lokaler SQLite Status-Synchronisierer für verteilte Agenten |
+| [ellmos-clatcher-mcp](https://github.com/ellmos-ai/ellmos-clatcher-mcp) | `ellmos-ai` | Multi-Agenten Kontext-Caching & Snapshot-Brücken-MCP-Server |
 | [automation-master](https://github.com/dev-bricks/automation-master) | `dev-bricks` | Local-First Credit-Reservierung & Hintergrund-Automatisierungsdienst |
 | [DevCenter](https://github.com/dev-bricks/DevCenter) | `dev-bricks` | Multi-Repo Entwickler-Werkbank & Agent-Telemetrie-Cockpit |
 | [CodeBox](https://github.com/dev-bricks/CodeBox) | `dev-bricks` | Sandboxed Multi-Sprachen Code-Ausführungs-Engine |
+| [FileCommander](https://github.com/file-bricks/FileCommander) | `file-bricks` | Dateioperationen, Batch-Verarbeitung & Datei-Metadatenverwaltung |
+| [ProFiler](https://github.com/file-bricks/ProFiler) | `file-bricks` | Dateisystem-Analysen, Duplikaterkennung & Forensik |
+| [CuteStrike](https://github.com/entertain-and-more/CuteStrike) | `entertain-and-more` | Lokales gewaltfreies taktisches Arena-Spiel mit autonomen KI-Bots |
+| [open-bricks](https://github.com/open-bricks) | `open-bricks` | Dachorganisation & Architekturstandards für Open-Source-Tools |
 
 ---
 
@@ -386,7 +468,7 @@ Lukas Geiger -- [github.com/lukisch](https://github.com/lukisch)
 
 ---
 
-## Haftung / Liability
+## Haftung
 
 Dieses Projekt ist eine **unentgeltliche Open-Source-Schenkung** im Sinne der §§ 516 ff. BGB. Die Haftung des Urhebers ist gemäß **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die Haftungsausschlüsse der MIT-Lizenz.
 
