@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+### Discoverability, Visual Showcase, Tactical Sequence Diagram & Ecosystem Expansion (2026-08-25)
+
+- Enhanced bilingual README architecture (`README.md` & `README_de.md`) with structured 12-item quick navigation jump marks and 100% German/English parity.
+- Embedded tactical Mermaid `sequenceDiagram` with autonumbering to visualize baseline handoff snapshotting, safe commit cycles, and controller completion checks.
+- Formalized Core Capabilities & Security Invariants matrix (100% Offline / Zero-Egress, Non-Elevation User Mode, Multi-Provider Fail-Closed, Race-Free Parallel Workers, Skip-Overwrite Guard, Persistent State Machine, Multi-OS CI Matrix, Strict Concurrency Gate) across bilingual READMEs.
+- Structured Chain Patterns & Role Matrix table detailing `worker`, `reviewer`, and `controller` responsibilities and context retention strategies.
+- Added comprehensive CLI Reference table covering `start`, `status`, `stop`, `log`, `reset`, `create`, and `pipe` commands.
+- Expanded Sibling Tools & Ecosystem table to 12 partner repositories across `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-and-more`, and `open-bricks` (`COMA`, `policy-registry`, `system-explorer`, `sqlite-transit-sync`, `ellmos-clatcher-mcp`, `automation-master`, `DevCenter`, `CodeBox`, `FileCommander`, `ProFiler`, `CuteStrike`, `open-bricks`).
+- Hardened CI workflow (`.github/workflows/tests.yml`) with workflow-level `concurrency` and automatic cancellation of superseded runs (`cancel-in-progress: true`).
+- Extended automated contract tests in `tests/test_metadata.py` with 3 new contract test suites (`test_readme_visual_showcase_and_sequence_diagram`, `test_readme_capabilities_and_invariants_matrix`, `test_readme_sibling_ecosystem_matrix`, and CI concurrency check; 103 passed, 3 skipped, 100% green).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-08-25` and updated test status metrics.
+
+### Maintenance, CI-Matrix & Security Hardening (2026-08-21)
+
+- Modernized GitHub Actions CI workflow (`.github/workflows/tests.yml`) to multi-OS matrix (`ubuntu-latest`, `windows-latest`, `macos-latest`), Python 3.10-3.13 support, pip caching, automated `ruff check .` linting gate, and pytest test suite.
+- Enhanced `pyproject.toml` with PEP 621 Standard Classifiers (`Operating System :: OS Independent`, `Microsoft :: Windows`, `POSIX :: Linux`, `MacOS`, `Environment :: Console`, `Topic :: System :: Monitoring`) and project URLs (`Documentation`, `Changelog`).
+- Upgraded `SECURITY.md` to comprehensive bilingual (English & German) security policy including Local-First & Zero-Egress guarantees, Subprocess execution safety, Non-Elevation (User-Mode operation), and direct security contacts (`security@ellmos.ai`, `support@lukasgeiger.com`).
+- Extended automated metadata contract test suite in `tests/test_metadata.py` with CI matrix validation, PEP 621 metadata checks, and bilingual security policy validation (100 passed, 3 skipped, 103 total, 100% green).
+- Synchronized Shields.io badges in `README.md` and `README_de.md` (CI badge, Pytest 100 passed, Python 3.10-3.13, Platform Linux | Windows | macOS, Privacy 100% Offline | Zero-Egress, Security Local-First).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-08-21` and verified test counts.
+
 ### Maintenance & Tidy-up (2026-08-21)
 
 - Refreshed the synchronized English/German Pytest badges and `llms.txt` from a

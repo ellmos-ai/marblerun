@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools-scm"]
+requires = ["setuptools>=77.0", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,8 @@ name = "llmauto"
 dynamic = ["version"]
 description = "MarbleRun / llmauto: local-first LLM automation framework for Claude Code agent chains"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
     {name = "Lukas Geiger", email = "lukisch@users.noreply.github.com"},
@@ -15,8 +16,12 @@ authors = [
 keywords = ["llm", "automation", "claude", "claude-code", "claude-cli", "agent", "agent-chains", "multi-agent", "orchestration", "autonomous-agents", "handoff", "chain-runner", "llmauto", "marblerun", "local-first"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Environment :: Console",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -24,12 +29,15 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: System :: Monitoring",
 ]
 
 [project.urls]
 Homepage = "https://github.com/ellmos-ai/MarbleRun"
 Repository = "https://github.com/ellmos-ai/MarbleRun"
 Issues = "https://github.com/ellmos-ai/MarbleRun/issues"
+Documentation = "https://github.com/ellmos-ai/MarbleRun#readme"
+Changelog = "https://github.com/ellmos-ai/MarbleRun/blob/main/CHANGELOG.md"
 
 [project.scripts]
 llmauto = "llmauto.llmauto:main"
