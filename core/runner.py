@@ -14,18 +14,24 @@ class ClaudeRunner:
 
     def __init__(self, model="claude-sonnet-4-6", fallback_model=None,
                  permission_mode="dontAsk", allowed_tools=None, timeout=7200,
-                 cwd=None):
+                 cwd=None, env=None):
         self.model = model
         self.fallback_model = fallback_model
         self.permission_mode = permission_mode
         self.allowed_tools = allowed_tools or ["Read", "Edit", "Write", "Bash", "Glob", "Grep"]
         self.timeout = timeout
         self.cwd = cwd
+        self.env = dict(env or {})
 
     def _build_env(self):
         """Environment vorbereiten: CLAUDECODE entfernen, Encoding setzen."""
         env = os.environ.copy()
         env.pop("CLAUDECODE", None)
+        env.update({
+            str(key): str(value)
+            for key, value in self.env.items()
+            if str(key).upper() != "CLAUDECODE"
+        })
         env["PYTHONIOENCODING"] = "utf-8"
         return env
 
@@ -186,6 +192,7 @@ def build_runner(
     allowed_tools=None,
     timeout=7200,
     cwd=None,
+    env=None,
     allow_unverified=False,
     **options,
 ):
@@ -199,6 +206,7 @@ def build_runner(
             allowed_tools=allowed_tools,
             timeout=timeout,
             cwd=cwd,
+            env=env,
         )
     return ProviderRunner(
         backend,

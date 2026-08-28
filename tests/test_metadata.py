@@ -120,9 +120,22 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-08-25" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-08-28" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert "https://github.com/ellmos-ai/MarbleRun" in llms_text
     assert "llmauto" in llms_text
+
+
+def test_gui_live_test_template_has_tools_and_persistent_evidence():
+    template = json.loads(
+        (REPO_ROOT / "templates" / "gui-live-test.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    defaults = template["defaults"]
+    assert "mcp__open_compute__capture" in defaults["allowed_tools"]
+    assert "mcp__open_compute__do" in defaults["allowed_tools"]
+    assert defaults["env"]["OC_SESSION_DIR"]
+    assert (REPO_ROOT / "prompts" / "gui_live_tester.txt").exists()
 
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")

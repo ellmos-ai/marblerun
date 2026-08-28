@@ -16,7 +16,7 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 [![Version](https://img.shields.io/badge/Version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-103%20passed%2C%203%20skipped-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-114%20bestanden-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)]()
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)]()
 [![Datenschutz](https://img.shields.io/badge/Datenschutz-100%25%20Offline%20%7C%20Zero--Egress-success.svg)]()
@@ -308,6 +308,7 @@ Jede Chain pflegt einen persistenten Zustand in `state/<chain-name>/`:
 | `max_rounds` | int | Maximale Anzahl vollständiger Zyklen |
 | `runtime_hours` | float | Maximale Laufzeit in Stunden |
 | `deadline` | string | Feste Deadline (ISO-Datum) |
+| `defaults` | object | Kettenweite Runner-Defaults für Rechte, Werkzeuge, Timeout und Umgebung |
 | `links` | array | Geordnete Liste der Chain-Links |
 
 ### Link-Konfiguration
@@ -322,6 +323,30 @@ Jede Chain pflegt einen persistenten Zustand in `state/<chain-name>/`:
 | `fallback_model` | string | Fallback-Model bei Fehler des primären |
 | `until_full` | bool | Kontextlimit-Suffix hinzufügen |
 | `telegram_update` | bool | Telegram-Benachrichtigung nach diesem Link senden |
+| `permission_mode` | string | Optionale Abweichung vom kettenweiten/globalen Rechtemodus |
+| `allowed_tools` | array | Optionale Werkzeugliste pro Link, einschließlich MCP-Tools |
+| `timeout_seconds` | int | Optionaler Timeout pro Link |
+| `env` | object | Optionale Link-Umgebung, zusammengeführt mit Ketten- und globalen Werten |
+
+Runner-Einstellungen werden einheitlich in dieser Reihenfolge aufgelöst:
+Link-Abweichung, Ketten-`defaults`, dann globale `config.json`. Umgebungsobjekte
+werden in derselben Reihenfolge zusammengeführt und unterstützen die
+Platzhalter `{HOME}` und `{BASH_HOME}`.
+
+### Live-GUI- und Roblox-Nachweise
+
+Für Desktop-Tests dient `templates/gui-live-test.json`. Open Compute schreibt
+Aufnahmen in `OC_SESSION_DIR`. Für Roblox Studio wird der lifecycle-sichere
+Wrapper einmal registriert:
+
+```powershell
+claude mcp add --scope user Roblox_Studio -- python C:/_Local_DEV/repos/marblerun/scripts/roblox_mcp_wrapper.py
+```
+
+Setze `MARBLERUN_EVIDENCE_ROOT` in den Ketten-Defaults auf das
+`docs/playtests`-Verzeichnis des Projekts. Der Wrapper speichert jedes Bild samt
+JSON-Provenienz in einem datierten Ordner und beendet beim Trennen des Clients
+seinen vollständigen Kindprozessbaum.
 
 ---
 
@@ -412,6 +437,7 @@ llmauto wird mit produktionserprobten Chain-Konfigurationen ausgeliefert:
 | Chain | Muster | Beschreibung |
 |---|---|---|
 | `worker-reviewer-loop` | Vorlage | Einfaches 2-Link Worker/Reviewer-Muster |
+| `gui-live-test` | Vorlage | Einmaliger Open-Compute-Desktop-Test mit persistentem Nachweis |
 
 Siehe `chains/` für die vollständige Liste der enthaltenen Chain-Definitionen.
 

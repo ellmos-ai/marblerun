@@ -115,6 +115,70 @@ def _home_placeholders(home=None):
     return home_native, home_bash
 
 
+def _runner_settings(link, chain_config, global_config, home=None):
+    """Resolve runner settings with link > chain defaults > global precedence.
+
+    Chain files have documented ``defaults`` and per-link overrides.  Keeping
+    this resolution in one function prevents parallel and sequential paths
+    from silently using different permissions, tools, timeouts, or evidence
+    environments.
+    """
+    defaults = chain_config.get("defaults", {})
+
+    def resolve(key, global_key, fallback):
+        if key in link:
+            return link[key]
+        if key in defaults:
+            return defaults[key]
+        return global_config.get(global_key, fallback)
+
+    merged_env = {}
+    for source in (
+        global_config.get("default_env", {}),
+        defaults.get("env", {}),
+        link.get("env", {}),
+    ):
+        if isinstance(source, dict):
+            merged_env.update(source)
+
+    home_win, home_bash = _home_placeholders(home)
+    expanded_env = {
+        str(key): str(value)
+        .replace("{HOME}", home_win)
+        .replace("{BASH_HOME}", home_bash)
+        for key, value in merged_env.items()
+    }
+
+    return {
+        "permission_mode": resolve(
+            "permission_mode", "default_permission_mode", "dontAsk"
+        ),
+        "allowed_tools": resolve(
+            "allowed_tools", "default_allowed_tools", None
+        ),
+        "timeout": resolve("timeout_seconds", "default_timeout_seconds", 7200),
+        "env": expanded_env,
+    }
+
+
+def _append_evidence_contract(prompt_text, runner_settings):
+    """Tell live-test agents where their automatically captured evidence lands."""
+    evidence_root = runner_settings.get("env", {}).get(
+        "MARBLERUN_EVIDENCE_ROOT"
+    )
+    if not evidence_root:
+        return prompt_text
+    return (
+        prompt_text
+        + "\n\n=== PERSISTENTER LIVE-TEST-NACHWEIS ===\n"
+        + "Der Roblox-MCP-Wrapper speichert Bildantworten automatisch unter "
+        + f"{evidence_root}\\YYYY-MM-DD_marblerun. "
+        + "Nenne im Handoff die tatsächlich erzeugten Bild- und JSON-Pfade. "
+        + "Ein Screenshot nur im Modellkontext gilt nicht als Nachweis.\n"
+        + "=== ENDE LIVE-TEST-NACHWEIS ===\n"
+    )
+
+
 UNTIL_FULL_SUFFIX = (
     "\n\nWICHTIG: Dein Kontext ist deine Begrenzung. Arbeite so viele Aufgaben ab "
     "wie moeglich. Erst wenn du merkst, dass dein Kontext knapp wird oder eine "
@@ -505,21 +569,21 @@ def run_parallel_workers(chain_name, worker_links, config, state, global_config,
         )
         fallback = link.get("fallback_model")
 
+        runner_settings = _runner_settings(link, config, global_config)
         runner = build_runner(
             backend,
             model=model,
             fallback_model=fallback,
-            permission_mode=global_config.get("default_permission_mode", "dontAsk"),
-            allowed_tools=global_config.get("default_allowed_tools"),
-            timeout=global_config.get("default_timeout_seconds", 7200),
             cwd=str(base_dir),
             allow_unverified=global_config.get("allow_unverified_backends", False),
+            **runner_settings,
         )
 
         prompt_text = resolve_prompt(link, config, base_dir=base_dir)
         home_win, home_bash = _home_placeholders()
         prompt_text = prompt_text.replace("{HOME}", home_win)
         prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
+        prompt_text = _append_evidence_contract(prompt_text, runner_settings)
         prompt_text += _parallel_handoff_instructions(
             link_name,
             worker_handoff_file,
@@ -698,21 +762,23 @@ def run_chain(chain_name, background=False):
                         )
                         fallback = link.get("fallback_model")
 
+                        runner_settings = _runner_settings(link, config, global_config)
                         runner = build_runner(
                             backend,
                             model=model,
                             fallback_model=fallback,
-                            permission_mode=global_config.get("default_permission_mode", "dontAsk"),
-                            allowed_tools=global_config.get("default_allowed_tools"),
-                            timeout=global_config.get("default_timeout_seconds", 7200),
                             cwd=str(base_dir),
                             allow_unverified=global_config.get("allow_unverified_backends", False),
+                            **runner_settings,
                         )
 
                         prompt_text = resolve_prompt(link, config)
                         home_win, home_bash = _home_placeholders()
                         prompt_text = prompt_text.replace("{HOME}", home_win)
                         prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
+                        prompt_text = _append_evidence_contract(
+                            prompt_text, runner_settings
+                        )
 
                         if link.get("until_full", False):
                             prompt_text += UNTIL_FULL_SUFFIX
@@ -814,15 +880,14 @@ def run_chain(chain_name, background=False):
                     runner_cwd = str(base_dir)
 
                 # Runner erstellen
+                runner_settings = _runner_settings(link, config, global_config)
                 runner = build_runner(
                     backend,
                     model=model,
                     fallback_model=fallback,
-                    permission_mode=global_config.get("default_permission_mode", "dontAsk"),
-                    allowed_tools=global_config.get("default_allowed_tools"),
-                    timeout=global_config.get("default_timeout_seconds", 7200),
                     cwd=runner_cwd,
                     allow_unverified=global_config.get("allow_unverified_backends", False),
+                    **runner_settings,
                 )
 
                 # Prompt aufloesen + {HOME} durch tatsaechliches User-Home ersetzen
@@ -830,6 +895,9 @@ def run_chain(chain_name, background=False):
                 home_win, home_bash = _home_placeholders()
                 prompt_text = prompt_text.replace("{HOME}", home_win)
                 prompt_text = prompt_text.replace("{BASH_HOME}", home_bash)
+                prompt_text = _append_evidence_contract(
+                    prompt_text, runner_settings
+                )
 
                 # until_full: Kontext-Begrenzungs-Hinweis anhaengen
                 if link.get("until_full", False):

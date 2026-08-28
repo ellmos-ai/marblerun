@@ -127,7 +127,10 @@ Chains liegen in `chains/<name>.json`. Vollstaendiges Schema:
     "defaults": {
         "permission_mode": "dontAsk",
         "allowed_tools": ["Read", "Edit", "Write", "Bash", "Glob", "Grep"],
-        "timeout_seconds": 3600
+        "timeout_seconds": 3600,
+        "env": {
+            "OC_SESSION_DIR": "{HOME}\\OneDrive\\Projekt\\docs\\playtests"
+        }
     },
 
     "links": [
@@ -149,6 +152,14 @@ Chains liegen in `chains/<name>.json`. Vollstaendiges Schema:
     }
 }
 ```
+
+Die Laufzeit wertet Einstellungen in der Reihenfolge Link, `defaults`, globale
+`config.json` aus. Das gilt auch für MCP-Werkzeugrechte; ein Link darf seine
+benötigten Werkzeuge daher enger oder weiter als die Ketten-Defaults angeben.
+Umgebungswerte werden zusammengeführt und ersetzen `{HOME}` sowie
+`{BASH_HOME}`. Für echte GUI-Nachweise muss `OC_SESSION_DIR`, bei Roblox
+zusätzlich `MARBLERUN_EVIDENCE_ROOT`, auf ein dauerhaftes
+`docs/playtests`-Verzeichnis zeigen.
 
 ### 4.1 Top-Level Parameter
 
@@ -477,7 +488,8 @@ llmauto/
 │   ├── example_*.txt                   # Beispiel-Prompts
 │   └── _private/                       # Projektspezifische Prompts
 ├── templates/
-│   └── worker-reviewer-loop.json       # Chain-Template
+│   ├── worker-reviewer-loop.json       # Chain-Template
+│   └── gui-live-test.json              # Desktop-Livetest mit Open Compute
 ├── state/                              # Runtime-State (nicht committed)
 │   └── <chain-name>/
 │       ├── status.txt

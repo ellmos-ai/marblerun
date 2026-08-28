@@ -1,6 +1,11 @@
 """Tests fuer llmauto.modes.chain -- Hilfsfunktionen."""
 import pytest
-from llmauto.modes.chain import _home_placeholders, resolve_prompt
+from llmauto.modes.chain import (
+    _append_evidence_contract,
+    _home_placeholders,
+    _runner_settings,
+    resolve_prompt,
+)
 
 
 class TestHomePlaceholders:
@@ -66,3 +71,79 @@ class TestResolvePromptPrivate:
     def test_unknown_prompt_falls_back_to_inline(self, prompt_base):
         result = resolve_prompt({"prompt": "Mach Aufgabe X"}, {}, base_dir=prompt_base)
         assert result == "Mach Aufgabe X"
+
+
+class TestRunnerSettings:
+    def test_link_overrides_chain_and_global_settings(self):
+        result = _runner_settings(
+            {
+                "permission_mode": "acceptEdits",
+                "allowed_tools": ["Read", "mcp__Roblox_Studio__screen_capture"],
+                "timeout_seconds": 30,
+            },
+            {
+                "defaults": {
+                    "permission_mode": "dontAsk",
+                    "allowed_tools": ["Read", "ToolSearch"],
+                    "timeout_seconds": 60,
+                }
+            },
+            {
+                "default_permission_mode": "plan",
+                "default_allowed_tools": ["Read"],
+                "default_timeout_seconds": 90,
+            },
+        )
+
+        assert result["permission_mode"] == "acceptEdits"
+        assert result["allowed_tools"] == [
+            "Read",
+            "mcp__Roblox_Studio__screen_capture",
+        ]
+        assert result["timeout"] == 30
+
+    def test_chain_defaults_override_global_settings(self):
+        result = _runner_settings(
+            {},
+            {
+                "defaults": {
+                    "permission_mode": "dontAsk",
+                    "allowed_tools": ["Read", "ToolSearch"],
+                    "timeout_seconds": 120,
+                }
+            },
+            {
+                "default_permission_mode": "plan",
+                "default_allowed_tools": ["Read"],
+                "default_timeout_seconds": 90,
+            },
+        )
+
+        assert result["permission_mode"] == "dontAsk"
+        assert result["allowed_tools"] == ["Read", "ToolSearch"]
+        assert result["timeout"] == 120
+
+    def test_environment_layers_and_expands_home_placeholders(self):
+        result = _runner_settings(
+            {"env": {"LEVEL": "link", "EVIDENCE": "{HOME}\\evidence"}},
+            {"defaults": {"env": {"LEVEL": "chain", "CHAIN_ONLY": "yes"}}},
+            {"default_env": {"LEVEL": "global", "GLOBAL_ONLY": "yes"}},
+            home="C:\\Users\\Tester",
+        )
+
+        assert result["env"] == {
+            "LEVEL": "link",
+            "GLOBAL_ONLY": "yes",
+            "CHAIN_ONLY": "yes",
+            "EVIDENCE": "C:\\Users\\Tester\\evidence",
+        }
+
+    def test_evidence_contract_is_appended_only_when_configured(self):
+        settings = {
+            "env": {"MARBLERUN_EVIDENCE_ROOT": "C:\\Game\\docs\\playtests"}
+        }
+        result = _append_evidence_contract("Teste das Spiel.", settings)
+        assert "PERSISTENTER LIVE-TEST-NACHWEIS" in result
+        assert "C:\\Game\\docs\\playtests\\YYYY-MM-DD_marblerun" in result
+        assert "Bild- und JSON-Pfade" in result
+        assert _append_evidence_contract("Nur Code-Test.", {"env": {}}) == "Nur Code-Test."

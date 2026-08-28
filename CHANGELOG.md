@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Live-Test-Automation Repair (2026-08-28)
+
+- Restored documented link and chain-default precedence for permission mode,
+  allowed tools, timeout, and environment in all execution paths.
+- Added a lifecycle-safe Roblox Studio MCP wrapper with dated image/JSON evidence
+  persistence and verified child-tree cleanup on client disconnect.
+- Added a reusable Open Compute GUI live-test template and evidence contract.
+- Re-certified the merged upstream changes and this repair with `ruff check .`
+  and the full suite: 114 passed, 0 skipped, exit code 0.
+
 ### Discoverability, Visual Showcase, Tactical Sequence Diagram & Ecosystem Expansion (2026-08-25)
 
 - Enhanced bilingual README architecture (`README.md` & `README_de.md`) with structured 12-item quick navigation jump marks and 100% German/English parity.

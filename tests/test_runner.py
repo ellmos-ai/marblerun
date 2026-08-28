@@ -75,6 +75,13 @@ class TestBuildEnv:
         env = runner._build_env()
         assert env.get("PYTHONIOENCODING") == "utf-8"
 
+    def test_merges_chain_environment_without_restoring_claudecode(self):
+        runner = ClaudeRunner(env={"MARBLERUN_EVIDENCE_ROOT": "evidence", "CLAUDECODE": "nested"})
+        env = runner._build_env()
+        assert env["MARBLERUN_EVIDENCE_ROOT"] == "evidence"
+        assert env["PYTHONIOENCODING"] == "utf-8"
+        assert "CLAUDECODE" not in env
+
 
 class TestProviderRunner:
     def test_factory_keeps_claude_compatible(self):

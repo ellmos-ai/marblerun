@@ -1,0 +1,41 @@
+{
+  "chain_name": "gui-live-test",
+  "description": "Einmaliger, nachweisbarer Desktop-GUI-Test mit Open Compute",
+  "mode": "once",
+  "max_rounds": 1,
+  "runtime_hours": 1,
+  "defaults": {
+    "permission_mode": "dontAsk",
+    "allowed_tools": [
+      "Read",
+      "Write",
+      "Bash",
+      "ToolSearch",
+      "mcp__open_compute__capture",
+      "mcp__open_compute__list_windows",
+      "mcp__open_compute__tree",
+      "mcp__open_compute__click_name",
+      "mcp__open_compute__invoke",
+      "mcp__open_compute__do"
+    ],
+    "timeout_seconds": 3600,
+    "env": {
+      "OC_SESSION_DIR": "{HOME}\\OneDrive\\MarbleRun-Evidence\\gui-live-test"
+    }
+  },
+  "links": [
+    {
+      "name": "gui-tester",
+      "role": "worker",
+      "model": "claude-sonnet-4-6",
+      "prompt": "gui_live_tester",
+      "continue": false
+    }
+  ],
+  "prompts": {
+    "gui_live_tester": {
+      "type": "file",
+      "path": "prompts/gui_live_tester.txt"
+    }
+  }
+}
