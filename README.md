@@ -16,20 +16,40 @@ framework for autonomous LLM agent chains.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-114%20passed-brightgreen.svg)]()
-[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)]()
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)]()
-[![Privacy](https://img.shields.io/badge/privacy-100%25%20Offline%20%7C%20Zero--Egress-success.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-122%20passed-brightgreen.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
+[![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Privacy](https://img.shields.io/badge/privacy-100%25%20Offline%20%7C%20Zero--Egress-success.svg)](SECURITY.md)
 [![Security Policy](https://img.shields.io/badge/security-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
+[English](README.md) | [Deutsch](README_de.md)
+
+## Quick Navigation
+
+- [1. What is llmauto?](#what-is-llmauto)
+- [2. Visual Showcase & System Architecture](#visual-showcase--execution-flow)
+- [3. Tactical Round Execution & Sequence Flow](#tactical-round-execution--sequence-flow)
+- [4. Governance & Runtime Invariants](#core-capabilities--security-invariants)
+- [5. Chain Patterns & Role Matrix](#chain-patterns--role-matrix)
+- [6. Installation & Requirements](#installation)
+- [7. Step-by-Step Quick Start](#1-define-a-chain)
+- [8. Pipe Mode](#4-pipe-mode-single-calls)
+- [9. CLI Reference](#cli-reference)
+- [10. Discovery & Search Phrases](#best-search-phrases)
+- [11. Comparison with OpenClaw](#see-also-openclaw)
+- [12. Sibling Tools & Ecosystem](#sibling-tools--ecosystem)
+- [13. Security Policy](SECURITY.md)
+- [14. License & Liability](#license)
+
 > [!NOTE]
 > **For AI Agents & Automated Tools:** Machine-readable architecture summary, discovery anchors, and usage guidelines are available in [`llms.txt`](llms.txt).
 
-**Author:** Lukas Geiger | **License:** MIT | **Python:** 3.10+ | **Navigation:** [Overview](#what-is-llmauto) • [Quick Start](#quick-start) • [Visual Showcase](#visual-showcase--execution-flow) • [Sequence Flow](#tactical-round-execution--sequence-flow) • [Core Capabilities & Security](#core-capabilities--security-invariants) • [Chain Patterns & Roles](#chain-patterns--role-matrix) • [CLI Reference](#cli-reference) • [Search Phrases](#best-search-phrases) • [Comparison](#see-also-openclaw) • [Sibling Ecosystem](#sibling-tools--ecosystem) • [Security Policy](SECURITY.md) • [Liability](#liability)
+**Author:** Lukas Geiger | **License:** MIT | **Python:** 3.10+ | **Status:** Production-Ready
 
 
 ---
@@ -264,8 +284,10 @@ MarbleRun is built on strict local-first, zero-egress, and resilient execution g
 | **Race-Free Parallel Workers** | Per-worker isolated handoff snapshots (`tests/test_parallel_handoff.py`) | Prevents concurrency collisions when parallel agents write simultaneous outputs |
 | **Skip-Overwrite Guard** | Automated baseline snapshot restoration on short `SKIPPED` responses | Prevents context starvation; preserves valuable upstream context across links |
 | **Persistent State Machine** | Transparent filesystem artifacts (`status.txt`, `round_counter.txt`, `handoff.md`) | Resumable across reboots; zero proprietary binary lock-in; human-inspectable |
+| **Safe Process Scoping & Shell-Free Execution** | Direct `argv` execution (`shell=False`) with sanitized environment maps | Eliminates shell-injection vectors, command injection, and untracked side-effects |
 | **Multi-OS CI Matrix** | Automated GitHub Actions testing across Ubuntu, Windows, and macOS | Guaranteed cross-platform consistency on Python 3.10, 3.11, 3.12, and 3.13 |
 | **Strict Concurrency Gate** | Workflow-level `concurrency` with `cancel-in-progress: true` | Prevents stale CI race conditions and wasted compute resources |
+| **Cryptographic Receipt Integrity & Auditability** | Timestamped state transitions and deterministic metadata test assertions | Provides tamper-evident audit trails and verified invariant compliance |
 
 ---
 
