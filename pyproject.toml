@@ -38,6 +38,9 @@ Repository = "https://github.com/ellmos-ai/MarbleRun"
 Issues = "https://github.com/ellmos-ai/MarbleRun/issues"
 Documentation = "https://github.com/ellmos-ai/MarbleRun#readme"
 Changelog = "https://github.com/ellmos-ai/MarbleRun/blob/main/CHANGELOG.md"
+Security = "https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md"
+"Parent Organization" = "https://github.com/ellmos-ai"
+"Umbrella Ecosystem" = "https://github.com/open-bricks"
 
 [project.scripts]
 llmauto = "llmauto.llmauto:main"

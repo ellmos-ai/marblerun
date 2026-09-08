@@ -28,20 +28,27 @@ MarbleRun (`llmauto`) is an open-source, local-first LLM automation and agent-ch
 4. **Deterministic State & Data Integrity:**
    - Local sqlite state databases and handoff files use transactional writes with rollback safeguards on execution aborts.
 
+### Supported Versions / Unterstützte Versionen
+
+| Version | Supported / Unterstützt | Status |
+|---|---|---|
+| 0.1.x | :white_check_mark: Yes / Ja | Active Maintenance / Aktive Wartung |
+| < 0.1.0 | :x: No / Nein | Deprecated / Veraltet |
+
 ### Reporting a Vulnerability
 
 If you discover a security vulnerability or potential privacy leak in MarbleRun, please report it responsibly:
 
 1. **Do NOT open a public issue.**
 2. **Preferred:** Submit a confidential advisory via [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
-3. **Alternative:** Email the security team directly at `security@ellmos.ai` with a CC to `support@lukasgeiger.com`.
+3. **Alternative:** Email the security team directly at `security@ellmos.ai` with CC to `security@open-bricks.org` and `support@lukasgeiger.com`.
 
 Please include in your report:
 - A detailed description of the vulnerability and its potential impact.
 - Step-by-step reproduction steps or a minimal proof-of-concept.
 - Affected versions, OS environment, and provider configuration.
 
-We will acknowledge receipt within 48 hours and provide a timeline for triage, remediation, and coordinated disclosure.
+We will acknowledge receipt within 48 hours and provide a triage assessment within 5 business days along with a coordinated disclosure timeline.
 
 ---
 
@@ -75,6 +82,6 @@ Falls Sie eine Sicherheitslücke oder ein Datenschutzproblem entdecken:
 
 1. **Eröffnen Sie KEIN öffentliches GitHub-Issue.**
 2. **Bevorzugt:** Nutzen Sie das vertrauliche [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
-3. **Alternativ:** Senden Sie eine E-Mail an `security@ellmos.ai` (CC: `support@lukasgeiger.com`).
+3. **Alternativ:** Senden Sie eine E-Mail an `security@ellmos.ai` (CC: `security@open-bricks.org` und `support@lukasgeiger.com`).
 
-Bitte geben Sie eine genaue Fehlerbeschreibung, Reproduktionsschritte sowie die betroffenen Versionen und Betriebssystemumgebungen an. Wir bestätigen den Eingang innerhalb von 48 Stunden.
+Bitte geben Sie eine genaue Fehlerbeschreibung, Reproduktionsschritte sowie die betroffenen Versionen und Betriebssystemumgebungen an. Wir bestätigen den Eingang innerhalb von 48 Stunden und liefern eine Triage-Bewertung innerhalb von 5 Werktagen.

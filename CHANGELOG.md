@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Marketing, Discoverability, 14-Point Quick Navigation & Invariants Expansion (2026-09-08)
+
+- Modernized Shields.io badges across `README.md` and `README_de.md` (Code Style: Ruff, Pytest 122 passed, Python 3.10-3.13, Platform Linux | Windows | macOS, Privacy Zero-Egress, Security Local-First, MIT License, ellmos-ai, open-bricks, llms.txt).
+- Introduced standardized 14-point bilingual Quick Navigation (`## Quick Navigation` / `## Schnellnavigation`) with 100% German/English parity across all architectural sections.
+- Reconciled canonical lowercase remote URL (`https://github.com/ellmos-ai/marblerun`) across repository manifests and metadata contracts.
+- Expanded Governance & Runtime Invariants table to 10 comprehensive security and reliability invariants: 100% Offline / Zero-Egress, Non-Elevation User Mode, Multi-Provider Fail-Closed, Race-Free Parallel Workers, Skip-Overwrite Guard, Persistent State Machine, Safe Process Scoping & Shell-Free Execution, Multi-OS CI Matrix, Strict Concurrency Gate, and Cryptographic Receipt Integrity & Auditability.
+- Hardened `SECURITY.md` with supported versions table (0.1.x), dual SLAs (48h initial response, 5 business days triage assessment), and added `security@open-bricks.org`.
+- Hardened CI workflow (`.github/workflows/tests.yml`) with automated `python -m compileall -q .` bytecode compilation step alongside pip caching and ruff linter.
+- Updated `pyproject.toml` URLs to declare `Security`, `Parent Organization` (`ellmos-ai`), and `Umbrella Ecosystem` (`open-bricks`).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-09-08` and verified test metrics.
+- Created root `MARKETING-LOG.txt` tracking discoverability audits and non-automated community outreach recommendations.
+- Expanded automated contract test suite in `tests/test_metadata.py` with 5 new validation tests ensuring navigation integrity, invariant completeness, security SLAs, bytecode compilation, and log recency.
+
 ### Live-Test-Automation Repair (2026-08-28)
 
 - Restored documented link and chain-default precedence for permission mode,

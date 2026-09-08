@@ -39,7 +39,11 @@ jobs:
     - name: Lint with ruff
       run: |
         ruff check .
-        
+
+    - name: Validate bytecode compilation
+      run: |
+        python -m compileall -q .
+
     - name: Run tests
       run: |
         python -m pytest
