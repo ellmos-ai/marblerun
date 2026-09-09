@@ -124,7 +124,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-08" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-09-09" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -265,7 +265,7 @@ def test_security_policy_slas_and_contacts():
 
 
 def test_marketing_log_and_changelog_recency():
-    """Verify MARKETING-LOG.txt exists and CHANGELOG.md has 2026-09-08 entry."""
+    """Verify MARKETING-LOG.txt exists and CHANGELOG.md has 2026-09-09 entry."""
     m_log = REPO_ROOT / "MARKETING-LOG.txt"
     assert m_log.is_file(), "MARKETING-LOG.txt must exist in repo root"
     m_text = m_log.read_text(encoding="utf-8")
@@ -273,7 +273,7 @@ def test_marketing_log_and_changelog_recency():
     assert "ellmos-ai/marblerun" in m_text
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    assert "2026-09-08" in changelog_text
+    assert "2026-09-09" in changelog_text
 
 
 def test_ci_workflow_compileall_and_caching():
@@ -291,3 +291,21 @@ def test_pyproject_ecosystem_urls():
     assert "Security" in urls
     assert "Parent Organization" in urls
     assert "Umbrella Ecosystem" in urls
+
+
+def test_pytest_ini_addopts_and_gitignore_hardening():
+    """Verify pyproject.toml contains pytest addopts and .gitignore contains multi-host and lock patterns."""
+    pyproject_file = REPO_ROOT / "pyproject.toml"
+    data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
+    pytest_ini = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
+    assert pytest_ini.get("addopts") == "-ra -v", "pytest addopts must be '-ra -v'"
+
+    gitignore_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "*-conflict-*" in gitignore_text
+    assert "*.sync-conflict-*" in gitignore_text
+    assert "LOCK.permissions.json" in gitignore_text
+    assert ".pytest_cache/" in gitignore_text
+    assert "wheelhouse/" in gitignore_text
+
+    security_text = (REPO_ROOT / "SECURITY.md").read_text(encoding="utf-8")
+    assert "lukas@open-bricks.org" in security_text

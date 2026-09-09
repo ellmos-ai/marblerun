@@ -14,9 +14,9 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 and not a marble-run game toolkit; it is a Python/Claude Code automation
 framework for autonomous LLM agent chains.
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-122%20passed-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-125%20passed-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)

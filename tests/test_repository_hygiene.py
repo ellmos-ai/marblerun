@@ -62,3 +62,59 @@ def test_shareable_env_examples_remain_trackable():
 
     assert ".env.example" not in ignored
     assert ".env.sample" not in ignored
+
+
+def test_multihost_conflict_and_lock_artifacts_are_ignored():
+    ignored = _git_check_ignore(
+        "LOCK",
+        "LOCK.user.test",
+        "LOCK.permissions.json",
+        "LOCK_test.txt",
+        "nested/LOCK.txt",
+        "file-conflict-20260909.py",
+        "data.sync-conflict-abc.json",
+        "state.conflict",
+        "doc-CONFLIT-host.md",
+        "sync.sync-temp-part.tmp",
+    )
+
+    assert ignored == {
+        "LOCK",
+        "LOCK.user.test",
+        "LOCK.permissions.json",
+        "LOCK_test.txt",
+        "nested/LOCK.txt",
+        "file-conflict-20260909.py",
+        "data.sync-conflict-abc.json",
+        "state.conflict",
+        "doc-CONFLIT-host.md",
+        "sync.sync-temp-part.tmp",
+    }
+
+
+def test_test_caches_and_temp_files_are_ignored():
+    ignored = _git_check_ignore(
+        ".pytest_cache/dummy",
+        ".ruff_cache/dummy",
+        ".coverage",
+        "coverage/index.html",
+        "htmlcov/index.html",
+        "wheelhouse/pkg.whl",
+        ".wheel-smoke/output.log",
+        "scratch.tmp",
+        "old.bak",
+        "file.py~",
+    )
+
+    assert ignored == {
+        ".pytest_cache/dummy",
+        ".ruff_cache/dummy",
+        ".coverage",
+        "coverage/index.html",
+        "htmlcov/index.html",
+        "wheelhouse/pkg.whl",
+        ".wheel-smoke/output.log",
+        "scratch.tmp",
+        "old.bak",
+        "file.py~",
+    }

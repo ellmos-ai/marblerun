@@ -98,4 +98,27 @@ desktop.ini
 TODO.md
 
 # Multi-Agent Lock-System (lokal, nie committen)
+LOCK
+LOCK.*
 LOCK*.txt
+LOCK.permissions.json
+*.lock
+
+# Multi-Host Sync Conflicts (OneDrive, Syncthing, Dropbox)
+*-conflict-*
+*.sync-conflict-*
+*.conflict
+*-CONFLIT-*
+*.sync-temp-*
+
+# Test & Coverage Artifacts
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+wheelhouse/
+.wheel-smoke/
+*.tmp
+*.bak
+*~

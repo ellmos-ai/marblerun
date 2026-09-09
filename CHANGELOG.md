@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Repository Hygiene, CI Hardening, Multi-Host Sync Defense & Contract Tests (2026-09-09)
+
+- Version bump to `0.1.1` across manifest metadata, single-source package version, and CLI wiring assertions.
+- Hardened `.gitignore` with multi-host sync conflict patterns (`*-conflict-*`, `*.sync-conflict-*`, `*.conflict`, `*-CONFLIT-*`, `*.sync-temp-*`), extended multi-agent lock patterns (`LOCK`, `LOCK.*`, `*.lock`, `LOCK.permissions.json`), and test/coverage cache patterns (`.pytest_cache/`, `.ruff_cache/`, `.coverage`, `coverage/`, `htmlcov/`, `wheelhouse/`, `.wheel-smoke/`, `*.tmp`, `*.bak`, `*~`).
+- Standardized `pyproject.toml` with `addopts = "-ra -v"` under `[tool.pytest.ini_options]`.
+- Updated `SECURITY.md` contact matrix with `lukas@open-bricks.org` across English and German policy sections.
+- Expanded automated contract test suite with `test_multihost_conflict_and_lock_artifacts_are_ignored`, `test_test_caches_and_temp_files_are_ignored`, and `test_pytest_ini_addopts_and_gitignore_hardening` (suite count elevated from 122 to 125 passed, 100% green).
+- Synchronized `llms.txt` Last-checked timestamp to `2026-09-09` and updated verified test metrics.
+- Updated Shields.io badges in `README.md` and `README_de.md` (Version 0.1.1, Pytest 125 passed).
+
+
 ### Marketing, Discoverability, 14-Point Quick Navigation & Invariants Expansion (2026-09-08)
 
 - Modernized Shields.io badges across `README.md` and `README_de.md` (Code Style: Ruff, Pytest 122 passed, Python 3.10-3.13, Platform Linux | Windows | macOS, Privacy Zero-Egress, Security Local-First, MIT License, ellmos-ai, open-bricks, llms.txt).
