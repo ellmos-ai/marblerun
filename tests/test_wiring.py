@@ -40,8 +40,9 @@ class TestCliActions(unittest.TestCase):
             text=True,
             timeout=15,
         )
+        import llmauto
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.strip(), "llmauto v0.1.0")
+        self.assertEqual(result.stdout.strip(), f"llmauto v{llmauto.__version__}")
 
     def test_chain_create_registered(self):
         src = (REPO_ROOT / "llmauto.py").read_text(encoding="utf-8")

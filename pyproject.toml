@@ -72,6 +72,8 @@ minversion = "7.0"
 testpaths = ["tests"]
 norecursedirs = ["_archive", "build", "dist", ".git", ".pytest_cache", "legacy"]
 python_files = ["test_*.py", "*_test.py"]
+addopts = "-ra -v"
+
 
 [tool.ruff]
 target-version = "py310"
