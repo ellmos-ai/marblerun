@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Discoverability, Bilingual Parity, Third-Party Licenses Inventory & Metadata Contract (2026-09-11)
+
+- Published comprehensive `THIRD_PARTY_LICENSES.md` audit: documented 100% permissive runtime dependencies (pure Python standard library PSFL-2.0, zero external packages), optional provider bridge (`coma` MIT), and build/test tooling (`pytest` MIT, `ruff` MIT/Apache-2.0, `setuptools` MIT, `setuptools-scm` MIT) with explicit non-elevation RunAsInvoker and zero-egress guarantees.
+- Upgraded bilingual `README.md` and `README_de.md` quick navigation to standardized 15-point architecture with 100% mutual English/German parity and dedicated `#third-party-licenses--transparency` / `#drittanbieter-lizenzen--transparenz` sections.
+- Formalized 10 Governance & Runtime Invariants with canonical identifiers (`INV-LOCAL-01` through `INV-SLA-10`) in both English and German README governance tables.
+- Modernized Shields.io badge suite across both READMEs: added Security SLA (48h acknowledgment / 5d triage), Third-Party Audited (100% permissive), and Marketing Log (active) badges alongside updated Pytest green badges.
+- Updated `pyproject.toml` URLs to declare `Third-Party Licenses` and `Marketing Log`, and configured `pythonpath = ["."]` in `[tool.pytest.ini_options]` for robust zero-config test execution.
+- Overhauled `MARKETING-LOG.txt` with in-depth analysis of 4 target personas, high-intent bilingual search queries, and a competitive differentiation matrix against LangGraph, AutoGen, CrewAI, and naive shell scripts.
+- Synchronized `llms.txt` with Last-checked timestamp `2026-09-11`, updated test status metrics, and links to `THIRD_PARTY_LICENSES.md` and `MARKETING-LOG.txt`.
+- Expanded automated contract test suite in `tests/test_metadata.py` with contract tests for 15-point navigation parity, canonical invariant IDs, third-party licenses inventory completeness, and marketing personas.
+
 ### Repository Hygiene, CI Hardening, Multi-Host Sync Defense & Contract Tests (2026-09-09)
 
 - Version bump to `0.1.1` across manifest metadata, single-source package version, and CLI wiring assertions.

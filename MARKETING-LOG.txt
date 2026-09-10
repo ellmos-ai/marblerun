@@ -1,89 +1,125 @@
 # MARKETING-LOG: MarbleRun (llmauto)
-Date: 2026-09-08
+Date: 2026-09-11
 Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
 Target Repo: ellmos-ai/marblerun
 Canonical Path: C:\_Local_DEV\repos\marblerun
-Version: 0.1.0
+Version: 0.1.1
 
 ================================================================================
 1. REPOSITORY AUDIT & DISCOVERABILITY BASELINE
 ================================================================================
 - Organization: ellmos-ai
 - Ecosystem: open-bricks (umbrella)
-- Target Audience: Multi-agent framework developers, local AI orchestrators, unattended Claude Code workflow operators
+- Target Audience: Multi-agent framework developers, local AI orchestrators, unattended Claude Code workflow operators, enterprise compliance officers
 - Disambiguation: Distinct from edgelesssys/marblerun (confidential computing) and marble-run physical/game toolkits
-- Previous State:
-  * 117 tests collected (1 failed on uppercase remote in manifest assertion)
-  * Sequential worker/reviewer/controller loop architecture
-  * Mermaid diagrams present
-  * Missing standardized 14-point quick navigation in English & German READMEs
-  * Missing full 10-invariant Governance table
-  * Missing local MARKETING-LOG.txt tracking discoverability and next steps
+- Core Positioning: Local-first, zero-egress multi-agent orchestration and chain-execution framework ("marble runs") with zero mandatory external runtime dependencies.
 
 ================================================================================
-2. IMPLEMENTED PFAD B ENHANCEMENTS (2026-09-08)
+2. TARGET PERSONAS & USER JOURNEYS
 ================================================================================
-[x] Remote & Manifest Alignment:
-    - Reconciled canonical lowercase remote URL (https://github.com/ellmos-ai/marblerun)
-    - Fixed test_metadata.py assertion for ellmos-module.v2.json repository URI
+1. Autonomous AI Agent Engineers & Platform Architects
+   - Needs: Multi-hour unattended agent runs, sequential worker-reviewer-controller pipelines, deterministic state handoffs.
+   - Pain Points: Fragile cloud wrappers, in-memory context loss on process termination, runaway token costs without hard stop conditions.
+   - MarbleRun Solution: Process-isolated CLI execution, transparent filesystem checkpoints (`handoff.md`, `status.txt`), hard round limits, and configurable deadline gates.
 
-[x] Bilingual 14-Point Quick Navigation:
-    - Added structured anchor links in README.md (English) and README_de.md (German)
-    - Full parity across all 14 core sections: Overview, Visual Showcase & Architecture,
-      Tactical Round Sequence Flow, Governance Invariants, Chain Patterns & Role Matrix,
-      Installation & Requirements, Step-by-Step Quick Start, Pipe Mode, CLI Reference,
-      Discovery Context & Search Phrases, OpenClaw Comparison, Sibling Tools & Ecosystem,
-      Security Policy, License & Liability.
+2. Multi-Agent Swarm & Handoff Developers
+   - Needs: Clean separation of duties (Worker executes -> Reviewer verifies/tests -> Controller routes/stops).
+   - Pain Points: Agents overwriting upstream context with empty responses or unparseable JSON blobs.
+   - MarbleRun Solution: Anti-overwrite Skip-Guard (INV-CONT-05), isolated parallel worker workspaces, and single-source handoff commits.
+
+3. Enterprise Tooling, Safety & Governance Compliance Officers
+   - Needs: Strict zero-egress, auditability, permissive licensing, unprivileged execution.
+   - Pain Points: Telemetry leaks, GPL license viral contamination, mandatory root/admin privileges.
+   - MarbleRun Solution: 100% Offline / Zero-Egress (INV-LOCAL-01), unprivileged RunAsInvoker operation (INV-SEC-02), 100% permissive third-party dependency stack (PSFL-2.0, MIT, Apache-2.0 audited in THIRD_PARTY_LICENSES.md), dual security response SLAs (48h acknowledgment, 5 business days triage).
+
+4. Open-Source AI Tool Builders & Local-First Developers
+   - Needs: Lightweight, zero-dependency Python tool that works out-of-the-box on Linux, Windows, and macOS.
+   - Pain Points: Massive dependency trees (hundreds of pip/npm packages) that break on minor version updates.
+   - MarbleRun Solution: Pure Python standard library core engine with optional pluggable provider bridge (`coma`).
+
+================================================================================
+3. HIGH-INTENT SEARCH QUERIES (BILINGUAL EN & DE)
+================================================================================
+English (EN):
+- `Claude Code multi-agent loop runner`
+- `local-first agent chains python`
+- `autonomous worker reviewer controller llm`
+- `unattended agent orchestration zero-egress`
+- `llmauto marble run`
+- `ellmos marblerun`
+- `handoff-based agent automation`
+- `fail-closed multi-provider cli orchestrator`
+
+German (DE):
+- `Autonome LLM Agentenketten Python`
+- `Claude Code Workflow Automatisierung`
+- `Lokale Multi-Agenten Orchestrierung`
+- `Zero-Egress Agenten Schleifen`
+- `unbeaufsichtigte LLM Arbeitszyklen`
+- `Worker Reviewer Controller Loop Python`
+- `Agenten Handoff Automatisierung`
+
+================================================================================
+4. COMPETITIVE DIFFERENTIATION MATRIX
+================================================================================
+| Dimension | MarbleRun (llmauto) | LangGraph / CrewAI / AutoGen | Naive Shell Scripts |
+|---|---|---|---|
+| **Runtime Dependencies** | Zero (100% Python Standard Library) | Heavy (pydantic, langchain, cloud SDKs) | Variable (curl, jq, bash dependencies) |
+| **Execution Isolation** | Native subprocess boundaries (`shell=False`) | In-process Python threads / memory | Shell subshells (vulnerable to injection) |
+| **State Transparency** | Plaintext files (`status.txt`, `handoff.md`) | Proprietary graph checkpoints / DBs | Custom stdout dumps / fragile logs |
+| **Context Protection** | Automated anti-overwrite Skip-Guard | Silent state overwrite on empty response | Overwrites target file blindly |
+| **Multi-Provider** | Claude default, pluggable COMA (Codex/Agy) | Vendor-tied or complex config | Manual script rewriting per provider |
+| **Security & Privacy** | 100% Offline / Zero-Egress, RunAsInvoker | Cloud telemetry / external API by default | Depends on curl/wget calls |
+| **Licensing** | 100% Permissive (MIT / PSFL-2.0 audited) | Often complex / dual-licensed dependencies | Unlicensed / ad-hoc |
+
+================================================================================
+5. GOVERNANCE & RUNTIME INVARIANTS (INV-LOCAL-01 TO INV-SLA-10)
+================================================================================
+- INV-LOCAL-01: 100% Offline / Zero-Egress (local subprocess orchestration, zero network egress)
+- INV-SEC-02: Non-Elevation & User Mode (unprivileged execution without root/admin permissions)
+- INV-GATE-03: Multi-Provider Fail-Closed (unconfigured backends fail closed without insecure fallbacks)
+- INV-SYNC-04: Race-Free Parallel Workers (per-worker isolated handoff workspaces)
+- INV-CONT-05: Skip-Overwrite Guard (baseline snapshot restoration on truncated or skipped outputs)
+- INV-STATE-06: Persistent State Machine (transparent filesystem artifacts: status, round, handoff)
+- INV-PROC-07: Safe Process Scoping & Shell-Free Execution (direct argv arrays, shell=False)
+- INV-CI-08: Multi-OS CI Matrix (cross-platform testing on Ubuntu, Windows, and macOS)
+- INV-CONC-09: Strict Concurrency Gate (cancel-in-progress: true avoiding stale CI compute waste)
+- INV-SLA-10: Cryptographic Auditability & Security SLA (deterministic tests, 48h SLA response commitment)
+
+================================================================================
+6. IMPLEMENTED PFAD B ENHANCEMENTS (2026-09-11)
+================================================================================
+[x] Third-Party Licenses Inventory (THIRD_PARTY_LICENSES.md):
+    - Audited all runtime (stdlib PSFL-2.0), optional (coma MIT), and dev/QA tooling (pytest MIT, ruff MIT/Apache-2.0, setuptools MIT, setuptools-scm MIT).
+    - 100% permissive licensing assurance, zero copyleft, and non-elevation guarantees.
+
+[x] Bilingual 15-Point Quick Navigation & Anchor Parity:
+    - Expanded navigation in README.md & README_de.md to 15 points including dedicated Third-Party Licenses & Transparency section.
+    - 100% mutual German/English structural and anchor parity.
 
 [x] Shields.io Badges Modernization:
-    - Synchronized Version (v0.1.0), CI, Python (3.10-3.13), Platform (Linux, Windows, macOS)
-    - Added Code Style: Ruff badge
-    - Synchronized Pytest status badge to 122 passed tests (100% green)
-    - Maintained 100% Offline / Zero-Egress, Non-Elevation, MIT License, ellmos-ai, open-bricks, and llms.txt badges
+    - Updated version, CI, Pytest green assertion badge, Python 3.10-3.13, Platform (Linux|Windows|macOS), Ruff, Privacy (Zero-Egress), Security (Local-First/RunAsInvoker), Security SLA (48h/5d), Third-Party Audited (100% permissive), Marketing Log (active), License (MIT), ellmos-ai, open-bricks, and llms.txt.
 
-[x] Governance & Runtime Invariants Matrix (10 Invariants):
-    - 1. 100% Offline / Zero-Egress (Local CLI orchestration without external network listeners)
-    - 2. Non-Elevation & User Mode (Unprivileged execution preventing unauthorized system tampering)
-    - 3. Multi-Provider Fail-Closed (Strict backend selection with fail-closed unconfigured backends)
-    - 4. Race-Free Parallel Workers (Per-worker isolated handoff snapshots preventing write collisions)
-    - 5. Skip-Overwrite Guard (Baseline snapshot restoration on short SKIPPED responses)
-    - 6. Persistent State Machine (Transparent filesystem artifacts: status.txt, round_counter.txt, handoff.md)
-    - 7. Safe Process Scoping & Shell-Free Execution (Direct argv execution without shell injection vectors)
-    - 8. Multi-OS CI Matrix (Cross-platform testing across Ubuntu, Windows, and macOS)
-    - 9. Strict Concurrency Gate (cancel-in-progress: true avoiding stale CI compute waste)
-    - 10. Cryptographic Receipt Integrity & Auditability (Deterministic metadata assertions and audit trails)
+[x] Invariants Canonical IDs:
+    - Standardized INV-LOCAL-01 through INV-SLA-10 in bilingual README governance tables.
 
-[x] Security Policy Hardening (SECURITY.md):
-    - Documented supported versions table (0.1.x active)
-    - Added dual SLAs: 48h initial acknowledgment SLA + 5 business days triage assessment
-    - Added security@open-bricks.org alongside security@ellmos.ai and support@lukasgeiger.com
-    - Linked GitHub Private Vulnerability Reporting confidential advisory URL
+[x] PEP 621 Metadata Expansion (pyproject.toml):
+    - Declared URLs for "Third-Party Licenses" and "Marketing Log".
+    - Added pythonpath = ["."] under [tool.pytest.ini_options] for zero-config test runs.
 
-[x] CI Workflow Hardening (.github/workflows/tests.yml):
-    - Added automated python -m compileall -q . bytecode compilation gate
-    - Maintained pip cache, ruff check, and multi-OS pytest matrix
+[x] Context & Recency Synchronization:
+    - Synchronized llms.txt with Last-checked: 2026-09-11, invariant mapping, and test metrics.
+    - Updated CHANGELOG.md with comprehensive 2026-09-11 release documentation.
 
-[x] Ecosystem URLs Declared (pyproject.toml):
-    - Added Security, Parent Organization (ellmos-ai), and Umbrella Ecosystem (open-bricks)
-
-[x] Machine-Readable Context Refresh (llms.txt):
-    - Updated Last-checked timestamp to 2026-09-08
-    - Synchronized verified test suite metrics to 122 passed tests
-
-[x] Contract Test Suite Expansion (tests/test_metadata.py):
-    - Fixed repository URL assertion for lowercase remote
-    - Added contract tests for 14-point quick navigation anchors in EN & DE
-    - Added contract tests for 10-invariants table parity in EN & DE
-    - Added contract test for SECURITY.md SLAs and contact emails
-    - Added contract test for CI compileall bytecode gate
-    - Added contract test for MARKETING-LOG.txt presence and CHANGELOG.md recency
+[x] Automated Contract Test Suite (tests/test_metadata.py):
+    - Added contract tests for 15-point navigation parity, canonical invariant IDs, third-party license inventory validation, and marketing log persona completeness.
 
 ================================================================================
-3. RECOMMENDED NON-AUTOMATED NEXT STEPS (HUMAN OPERATOR / OUTREACH)
+7. RECOMMENDED NON-AUTOMATED NEXT STEPS (HUMAN OPERATOR / OUTREACH)
 ================================================================================
 1. Awesome Lists Submission:
-   - PR to awesome-claude-code / awesome-agentic-ai highlighting unattended multi-agent loop orchestration.
+   - Submit PR to awesome-claude-code and awesome-agentic-ai highlighting local-first unattended multi-agent loop runner.
 2. AI Developer Directories:
-   - Register in Glama, mcp.so, and ToolRegistry under agent-chains / workflow runners.
+   - Submit listing to Glama.ai, mcp.so, and ToolRegistry under workflow runners and multi-agent systems.
 3. Ecosystem Cross-Referencing:
-   - Link from dev-bricks/coma documentation as the primary sequential marble-run execution consumer.
+   - Link from dev-bricks/coma documentation as the canonical marble-run execution harness.

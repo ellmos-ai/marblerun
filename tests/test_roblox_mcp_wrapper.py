@@ -6,7 +6,16 @@ import subprocess
 import sys
 from datetime import datetime
 
-from scripts import roblox_mcp_wrapper as wrapper
+try:
+    import importlib.util
+    from pathlib import Path
+
+    _wrapper_path = Path(__file__).resolve().parent.parent / "scripts" / "roblox_mcp_wrapper.py"
+    _spec = importlib.util.spec_from_file_location("roblox_mcp_wrapper", _wrapper_path)
+    wrapper = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(wrapper)
+except Exception:
+    from scripts import roblox_mcp_wrapper as wrapper
 
 
 def test_evidence_dir_uses_dated_project_folder(tmp_path, monkeypatch):

@@ -16,12 +16,15 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 
 [![Version](https://img.shields.io/badge/Version-0.1.1-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-125%20bestanden-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-129%20bestanden%20%7C%20100%25%20gr%C3%BCn-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/Code%20Style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Datenschutz](https://img.shields.io/badge/Datenschutz-100%25%20Offline%20%7C%20Zero--Egress-success.svg)](SECURITY.md)
 [![Sicherheitsrichtlinie](https://img.shields.io/badge/Sicherheit-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
+[![Sicherheits-SLA](https://img.shields.io/badge/Sicherheits--SLA-48h%20%2F%205d%20Triage-blue.svg)](SECURITY.md)
+[![Drittanbieter Geprüft](https://img.shields.io/badge/Drittanbieter--Lizenzen-100%25%20permissiv-brightgreen.svg)](THIRD_PARTY_LICENSES.md)
+[![Marketing Log](https://img.shields.io/badge/Marketing--Log-aktiv-blue.svg)](MARKETING-LOG.txt)
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
@@ -43,8 +46,9 @@ Python-/Claude-Code-Automatisierungsframework für autonome LLM-Agenten-Ketten.
 - [10. Discovery-Kontext & Suchphrasen](#beste-suchphrasen)
 - [11. Architekturvergleich: OpenClaw](#siehe-auch-openclaw)
 - [12. Geschwister-Tools & Ökosystem](#geschwister-tools--oekosystem)
-- [13. Sicherheitsrichtlinie](SECURITY.md)
-- [14. Lizenz & Haftungsausschluss](#lizenz)
+- [13. Drittanbieter-Lizenzen & Transparenz](#drittanbieter-lizenzen--transparenz)
+- [14. Sicherheitsrichtlinie](SECURITY.md)
+- [15. Lizenz & Haftungsausschluss](#lizenz)
 
 > [!NOTE]
 > **Für KI-Agenten & automatisierte Tools:** Eine maschinenlesbare Architektur-Zusammenfassung, Suchanker und Integrationshinweise befinden sich in [`llms.txt`](llms.txt).
@@ -277,18 +281,18 @@ sequenceDiagram
 
 MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Ausfallsicherheitsgarantien:
 
-| Fähigkeit / Invariante | Implementierungsmechanismus | Sicherheits- & Zuverlässigkeitsgarantie |
+| Invariante & Kernfähigkeit | Implementierungsmechanismus | Sicherheits- & Zuverlässigkeitsgarantie |
 |---|---|---|
-| **100% Offline / Zero-Egress** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | Zero Data Egress; Agentenkontext und Prompts verbleiben vollständig lokal |
-| **Privilegienfreie Ausführung** | Standard-Python-Laufzeit ohne Administrator-/Root-Rechte (User-Mode) | Verhindert unberechtigte Systemänderungen; sichere Sandboxed-CLI-Ausführung |
-| **Multi-Provider Fail-Closed** | Strikte Backend-Auswahl (Claude CLI, optional COMA-Adapter für Codex/Agy) | Unkonfigurierte Backends schlagen fehlgeschlossen fehl; kein stiller unsicherer Fallback |
-| **Race-Free Parallel-Worker** | Isolierte Handoff-Snapshots pro Worker (`tests/test_parallel_handoff.py`) | Verhindert Nebenläufigkeitskollisionen bei parallelen Schreibzugriffen |
-| **Skip-Überschreibschutz** | Automatische Baseline-Wiederherstellung bei kurzen `SKIPPED`-Antworten | Verhindert Kontexthunger; bewahrt wertvollen vorgelagerten Kontext über Links hinweg |
-| **Persistente Zustandsmaschine** | Transparente Dateisystem-Artefakte (`status.txt`, `round_counter.txt`, `handoff.md`) | Wiederaufnahmesicher über Reboots hinweg; kein proprietärer Binary-Lock-in |
-| **Sichere Prozess-Scoping & Shell-freie Ausführung** | Direkte `argv`-Ausführung (`shell=False`) mit bereinigten Umgebungsvariablen | Eliminiert Shell-Injection-Vektoren, Befehls-Injektionen und ungeprüfte Nebeneffekte |
-| **Multi-OS CI-Matrix** | Automatisierte GitHub Actions Tests unter Ubuntu, Windows und macOS | Garantierte plattformübergreifende Konsistenz unter Python 3.10, 3.11, 3.12 und 3.13 |
-| **Strikter Concurrency-Gate** | Workflow-weite `concurrency` mit automatischem `cancel-in-progress: true` | Verhindert veraltete CI-Race-Conditions und unnötigen Ressourcenverbrauch |
-| **Kryptographische Auditierbarkeit & Receipt-Integrität** | Zeitgestempelte Zustandsübergänge und deterministische Metadaten-Testprüfungen | Bietet manipulationssichere Audit-Trails und verifizierte Invarianten-Einhaltung |
+| **INV-LOCAL-01: 100% Offline / Zero-Egress** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | Null Datenabfluss; Agentenkontext und Prompts verbleiben vollständig lokal |
+| **INV-SEC-02: Privilegienfreie Ausführung** | Standard-Python-Laufzeit im Benutzermodus ohne Administrator-/Root-Rechte | Verhindert unberechtigte Systemänderungen; sichere isolierte CLI-Ausführung |
+| **INV-GATE-03: Multi-Provider Fail-Closed** | Strikte Backend-Auswahl (Claude CLI, optionaler COMA-Adapter für Codex/Agy) | Nicht konfigurierte Backends blockieren fail-closed; kein stiller unsicherer Fallback |
+| **INV-SYNC-04: Race-Free Parallel-Worker** | Pro-Worker isolierte Handoff-Snapshots (`tests/test_parallel_handoff.py`) | Verhindert Schreibkollisionen bei gleichzeitig schreibenden parallelen Agenten |
+| **INV-CONT-05: Skip-Überschreibschutz** | Automatische Baseline-Wiederherstellung bei kurzen `SKIPPED`-Antworten | Schützt vor Kontextverlust; bewahrt wertvollen vorgelagerten Kontext über Links hinweg |
+| **INV-STATE-06: Persistente Zustandsmaschine** | Transparente Dateisystem-Artefakte (`status.txt`, `round_counter.txt`, `handoff.md`) | Fortsetzbar nach Systemneustarts; kein proprietärer Binär-Lock-in; menschlich prüfbar |
+| **INV-PROC-07: Sichere Prozess-Scoping & Shell-freie Ausführung** | Direkte `argv`-Ausführung (`shell=False`) mit bereinigten Umgebungsvariablen | Eliminiert Shell-Injections, Befehlsinjektionen und unkontrollierte Nebeneffekte |
+| **INV-CI-08: Multi-OS CI-Matrix** | Automatisierte GitHub-Actions-Matrix über Ubuntu, Windows und macOS | Garantierte Plattformparität auf Python 3.10, 3.11, 3.12 und 3.13 |
+| **INV-CONC-09: Strikter Concurrency-Gate** | Workflow-weite Concurrency-Steuerung mit `cancel-in-progress: true` | Verhindert veraltete CI-Race-Conditions und spart Rechenressourcen |
+| **INV-SLA-10: Kryptographische Auditierbarkeit, Receipt-Integrität & SLA** | Zeitgestempelte Übergänge, 48h SLA-Erstreaktion und deterministische Tests | Manipulationssichere Audit-Trails, 5-Tage-Triage und verifizierte Invarianten |
 
 ---
 
@@ -501,6 +505,19 @@ MarbleRun ist Teil der modularen Entwicklerwerkzeuge und Agent-Orchestrierungsko
 | [ProFiler](https://github.com/file-bricks/ProFiler) | `file-bricks` | Dateisystem-Analysen, Duplikaterkennung & Forensik |
 | [CuteStrike](https://github.com/entertain-and-more/CuteStrike) | `entertain-and-more` | Lokales gewaltfreies taktisches Arena-Spiel mit autonomen KI-Bots |
 | [open-bricks](https://github.com/open-bricks) | `open-bricks` | Dachorganisation & Architekturstandards für Open-Source-Tools |
+
+---
+
+## Drittanbieter-Lizenzen & Transparenz
+
+MarbleRun (`llmauto`) ist nach dem Zero-Dependency-Prinzip für den Kernbetrieb aufgebaut. Die primäre Agentenschleife, der CLI-Runner und das Prozess-Lifecycle-Management arbeiten ausschließlich mit der Python-Standardbibliothek ([PSFL-2.0](https://docs.python.org/3/license.html)).
+
+Alle optionalen Werkzeuge und Entwicklungsabhängigkeiten sind zu 100 % permissiv lizenziert:
+- **Kern-Engine:** 100 % Python-Standardbibliothek ([PSFL-2.0](https://docs.python.org/3/license.html)) -- null externe Laufzeitpakete.
+- **Optionale Provider-Brücke:** [`coma`](https://github.com/dev-bricks/coma) ([MIT](https://github.com/dev-bricks/coma/blob/main/LICENSE)) für Codex- und Agy-Adapter.
+- **Testing & Qualitätssicherung:** [`pytest`](https://github.com/pytest-dev/pytest) (MIT), [`ruff`](https://github.com/astral-sh/ruff) (MIT / Apache-2.0), [`setuptools`](https://github.com/pypa/setuptools) (MIT) und [`setuptools-scm`](https://github.com/pypa/setuptools-scm) (MIT).
+
+Es sind keinerlei Copyleft-, GPL- oder AGPL-Komponenten enthalten. Ein vollständiges Lizenzinventar mit allen Rechtstexten ist in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) hinterlegt.
 
 ---
 

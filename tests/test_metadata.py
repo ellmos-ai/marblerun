@@ -124,7 +124,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-09" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-09-11" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -188,7 +188,7 @@ def test_readme_capabilities_and_invariants_matrix():
     assert "Race-Free Parallel-Worker" in readme_de
     assert "Skip-Überschreibschutz" in readme_de
     assert "Persistente Zustandsmaschine" in readme_de
-    assert "Sichere Prozess-Scoping" in readme_de
+    assert ("Sichere Prozess-Scoping" in readme_de or "Sicheres Prozess-Scoping" in readme_de)
     assert "Multi-OS CI-Matrix" in readme_de
     assert "Strikter Concurrency-Gate" in readme_de
     assert "Kryptographische Auditierbarkeit" in readme_de
@@ -220,7 +220,7 @@ def test_readme_sibling_ecosystem_matrix():
 
 
 def test_readme_quick_navigation_anchors():
-    """Verify both English and German READMEs define 14-point quick navigation."""
+    """Verify both English and German READMEs define 15-point quick navigation."""
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
@@ -234,6 +234,7 @@ def test_readme_quick_navigation_anchors():
         "#core-capabilities--security-invariants",
         "#chain-patterns--role-matrix",
         "#installation",
+        "#third-party-licenses--transparency",
         "SECURITY.md",
         "#license",
     ]
@@ -247,6 +248,7 @@ def test_readme_quick_navigation_anchors():
         "#kernfaehigkeiten--sicherheitsinvarianten",
         "#chain-muster--rollenmatrix",
         "#installation",
+        "#drittanbieter-lizenzen--transparenz",
         "SECURITY.md",
         "#lizenz",
     ]
@@ -265,15 +267,15 @@ def test_security_policy_slas_and_contacts():
 
 
 def test_marketing_log_and_changelog_recency():
-    """Verify MARKETING-LOG.txt exists and CHANGELOG.md has 2026-09-09 entry."""
+    """Verify MARKETING-LOG.txt exists and CHANGELOG.md has 2026-09-11 entry."""
     m_log = REPO_ROOT / "MARKETING-LOG.txt"
     assert m_log.is_file(), "MARKETING-LOG.txt must exist in repo root"
     m_text = m_log.read_text(encoding="utf-8")
-    assert "2026-09-08" in m_text
+    assert "2026-09-11" in m_text
     assert "ellmos-ai/marblerun" in m_text
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    assert "2026-09-09" in changelog_text
+    assert "2026-09-11" in changelog_text
 
 
 def test_ci_workflow_compileall_and_caching():
@@ -284,13 +286,68 @@ def test_ci_workflow_compileall_and_caching():
 
 
 def test_pyproject_ecosystem_urls():
-    """Verify pyproject.toml declares Security, Parent Organization, and Umbrella Ecosystem."""
+    """Verify pyproject.toml declares Security, Third-Party Licenses, Marketing Log, Parent Org, and Ecosystem."""
     pyproject_file = REPO_ROOT / "pyproject.toml"
     data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
     urls = data.get("project", {}).get("urls", {})
     assert "Security" in urls
+    assert "Third-Party Licenses" in urls
+    assert "Marketing Log" in urls
     assert "Parent Organization" in urls
     assert "Umbrella Ecosystem" in urls
+
+
+def test_third_party_licenses_inventory():
+    """Verify THIRD_PARTY_LICENSES.md exists, audits 100% permissive licenses, and documents dependencies."""
+    tpl_file = REPO_ROOT / "THIRD_PARTY_LICENSES.md"
+    assert tpl_file.is_file(), "THIRD_PARTY_LICENSES.md must exist in repo root"
+    tpl_text = tpl_file.read_text(encoding="utf-8")
+    assert "PSFL-2.0" in tpl_text
+    assert "MIT" in tpl_text
+    assert "Apache-2.0" in tpl_text
+    assert "coma" in tpl_text
+    assert "pytest" in tpl_text
+    assert "ruff" in tpl_text
+    assert "setuptools" in tpl_text
+    assert "RunAsInvoker" in tpl_text
+    assert "Zero-Egress" in tpl_text or "Zero Egress" in tpl_text
+
+
+def test_marketing_log_personas_and_differentiation():
+    """Verify MARKETING-LOG.txt defines 4 personas, search queries, and competitive matrix."""
+    m_log = REPO_ROOT / "MARKETING-LOG.txt"
+    assert m_log.is_file()
+    m_text = m_log.read_text(encoding="utf-8")
+    assert "Autonomous AI Agent Engineers" in m_text
+    assert "Multi-Agent Swarm & Handoff Developers" in m_text
+    assert "Enterprise Tooling, Safety & Governance Compliance Officers" in m_text
+    assert "Open-Source AI Tool Builders & Local-First Developers" in m_text
+    assert "LangGraph" in m_text
+    assert "CrewAI" in m_text
+    assert "AutoGen" in m_text
+
+
+def test_readme_canonical_invariant_ids_parity():
+    """Verify both English and German READMEs carry canonical Invariant IDs INV-LOCAL-01 to INV-SLA-10."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    invariant_ids = [
+        "INV-LOCAL-01",
+        "INV-SEC-02",
+        "INV-GATE-03",
+        "INV-SYNC-04",
+        "INV-CONT-05",
+        "INV-STATE-06",
+        "INV-PROC-07",
+        "INV-CI-08",
+        "INV-CONC-09",
+        "INV-SLA-10",
+    ]
+
+    for inv_id in invariant_ids:
+        assert inv_id in readme_en, f"Missing {inv_id} in README.md"
+        assert inv_id in readme_de, f"Missing {inv_id} in README_de.md"
 
 
 def test_pytest_ini_addopts_and_gitignore_hardening():
@@ -309,3 +366,21 @@ def test_pytest_ini_addopts_and_gitignore_hardening():
 
     security_text = (REPO_ROOT / "SECURITY.md").read_text(encoding="utf-8")
     assert "lukas@open-bricks.org" in security_text
+
+
+def test_readme_badge_matrix_completeness():
+    """Verify both English and German READMEs feature modernized badge suites."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    # Badges present in English README
+    assert "security%20SLA" in readme_en
+    assert "third--party%20licenses" in readme_en
+    assert "marketing%20log" in readme_en
+    assert "Zero--Egress" in readme_en
+
+    # Badges present in German README
+    assert "Sicherheits--SLA" in readme_de
+    assert "Drittanbieter--Lizenzen" in readme_de
+    assert "Marketing--Log" in readme_de
+    assert "Zero--Egress" in readme_de

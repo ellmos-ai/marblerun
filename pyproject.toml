@@ -39,6 +39,8 @@ Issues = "https://github.com/ellmos-ai/MarbleRun/issues"
 Documentation = "https://github.com/ellmos-ai/MarbleRun#readme"
 Changelog = "https://github.com/ellmos-ai/MarbleRun/blob/main/CHANGELOG.md"
 Security = "https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md"
+"Third-Party Licenses" = "https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.md"
+"Marketing Log" = "https://github.com/ellmos-ai/MarbleRun/blob/main/MARKETING-LOG.txt"
 "Parent Organization" = "https://github.com/ellmos-ai"
 "Umbrella Ecosystem" = "https://github.com/open-bricks"
 
@@ -70,6 +72,7 @@ version = { attr = "llmauto.__version__" }
 [tool.pytest.ini_options]
 minversion = "7.0"
 testpaths = ["tests"]
+pythonpath = ["."]
 norecursedirs = ["_archive", "build", "dist", ".git", ".pytest_cache", "legacy"]
 python_files = ["test_*.py", "*_test.py"]
 addopts = "-ra -v"
