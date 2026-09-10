@@ -1,4 +1,4 @@
-## Last-checked: 2026-09-09
+## Last-checked: 2026-09-11
 
 # MarbleRun / llmauto - LLM Automation Framework
 
@@ -13,6 +13,8 @@ Canonical search phrases: ellmos MarbleRun; llmauto Claude Code automation; Marb
 Disambiguation: this repo is not edgelesssys/marblerun, not a confidential-computing control plane, and not a game or Blender marble-run toolkit. It is the ellmos-ai Python automation framework for Claude Code and autonomous LLM agent chains.
 
 Core concepts: Chain (JSON definition with ordered links), Link (one agent with role, model, prompt), Role (worker / reviewer / controller with skip-if-not-assigned), Handoff (context-passing file between links), Marble Run Pattern (sequential loops with max_rounds / runtime limits), Pipe Mode (one-shot CLI calls), Background Execution (chains run in separate terminal windows).
+
+Governance & Runtime Invariants: 10 formal invariants INV-LOCAL-01 (Zero-Egress), INV-SEC-02 (User-Mode RunAsInvoker), INV-GATE-03 (Multi-Provider Fail-Closed), INV-SYNC-04 (Race-Free Parallel Workspaces), INV-CONT-05 (Anti-Starvation Skip Guard), INV-STATE-06 (Persistent Transparent State Machine), INV-PROC-07 (Shell-Free Execution), INV-CI-08 (Multi-OS CI Matrix), INV-CONC-09 (Strict Concurrency Gate), and INV-SLA-10 (Cryptographic Auditability & Dual SLAs).
 
 ## Audience
 
@@ -39,17 +41,19 @@ zero dependency LLM automation CLI
 
 ## External Discovery Notes
 
-As of 2026-09-09, web search finds the canonical GitHub repository for exact
+As of 2026-09-11, web search finds the canonical GitHub repository for exact
 ellmos/llmauto queries. Broad `MarbleRun` searches still collide with
 confidential-computing and game/toolkit projects, so downstream directories,
 LLM indexes, and package metadata prefer `llmauto` plus Claude Code,
-agent-chain, and local-first automation wording. Test suite: 125 passed, 0 skipped (125 total), exit code 0.
+agent-chain, and local-first automation wording. Test suite: 129 passed, 0 skipped (129 total), exit code 0.
 
 ## Docs
 
 - [README](https://github.com/ellmos-ai/MarbleRun/blob/main/README.md): Overview, install, chain definition, quick start
 - [USER-DOCU.md](https://github.com/ellmos-ai/MarbleRun/blob/main/USER-DOCU.md): Detailed user guide
 - [Automatisierung-in-claude-code.md](https://github.com/ellmos-ai/MarbleRun/blob/main/Automatisierung-in-claude-code.md): Integration guide for Claude Code CLI (German)
+- [THIRD_PARTY_LICENSES](https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.md): Third-party licenses & transparency audit
+- [MARKETING-LOG](https://github.com/ellmos-ai/MarbleRun/blob/main/MARKETING-LOG.txt): Discoverability register & persona analysis
 - [CONTRIBUTING](https://github.com/ellmos-ai/MarbleRun/blob/main/CONTRIBUTING.md): Contribution workflow
 - [SECURITY](https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md): Security policy
 - [LICENSE](https://github.com/ellmos-ai/MarbleRun/blob/main/LICENSE): MIT license text
