@@ -118,3 +118,18 @@ def test_test_caches_and_temp_files_are_ignored():
         "old.bak",
         "file.py~",
     }
+
+
+def test_multihost_workstation_patterns_ignored():
+    ignored = _git_check_ignore(
+        "CHECK-REG-WORKSTATION-LG-44.txt",
+        "PUSH-LOG-ASUS-GEI-1.txt",
+        "README (kopie).md",
+        "CHANGELOG (copy).md",
+    )
+    assert ignored == {
+        "CHECK-REG-WORKSTATION-LG-44.txt",
+        "PUSH-LOG-ASUS-GEI-1.txt",
+        "README (kopie).md",
+        "CHANGELOG (copy).md",
+    }

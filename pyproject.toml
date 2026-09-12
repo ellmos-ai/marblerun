@@ -48,6 +48,11 @@ Security = "https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md"
 llmauto = "llmauto.llmauto:main"
 
 [project.optional-dependencies]
+test = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.5.0",
+]
 providers = ["coma @ git+https://github.com/dev-bricks/coma.git"]
 
 # Das Repo-Root IST das Paket (kein llmauto/-Unterordner, kein src-Layout):

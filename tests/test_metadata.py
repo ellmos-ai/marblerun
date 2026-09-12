@@ -48,6 +48,12 @@ def test_pyproject_metadata_integrity():
     assert "Operating System :: MacOS" in classifiers
     assert "Programming Language :: Python :: 3.13" in classifiers
 
+    # Optional dependencies
+    optional_deps = project.get("optional-dependencies", {})
+    assert "test" in optional_deps
+    assert any("pytest" in dep for dep in optional_deps["test"])
+    assert any("ruff" in dep for dep in optional_deps["test"])
+
     # Ruff section
     assert "tool" in data and "ruff" in data["tool"], "pyproject.toml must configure [tool.ruff]"
 
@@ -64,6 +70,7 @@ def test_ci_workflow_integrity():
     assert "3.10" in content and "3.11" in content and "3.12" in content and "3.13" in content
     assert "ruff check" in content
     assert "python -m pytest" in content
+    assert "timeout-minutes: 15" in content
     assert "concurrency:" in content
     assert "cancel-in-progress: true" in content
 
@@ -124,7 +131,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-11" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-09-12" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -360,6 +367,8 @@ def test_pytest_ini_addopts_and_gitignore_hardening():
     gitignore_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
     assert "*-conflict-*" in gitignore_text
     assert "*.sync-conflict-*" in gitignore_text
+    assert "*-WORKSTATION*" in gitignore_text
+    assert "*-ASUS-GEI*" in gitignore_text
     assert "LOCK.permissions.json" in gitignore_text
     assert ".pytest_cache/" in gitignore_text
     assert "wheelhouse/" in gitignore_text
@@ -384,3 +393,17 @@ def test_readme_badge_matrix_completeness():
     assert "Drittanbieter--Lizenzen" in readme_de
     assert "Marketing--Log" in readme_de
     assert "Zero--Egress" in readme_de
+
+
+def test_package_version_and_documentation_parity():
+    """Verify single-source version 0.1.2 is consistent across __init__, pyproject, CHANGELOG, and README badges."""
+    version = getattr(llmauto, "__version__", None)
+    assert version == "0.1.2"
+
+    changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "## [0.1.2] - 2026-09-12" in changelog_text
+
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    assert "badge/version-0.1.2-blue.svg" in readme_en
+    assert "badge/Version-0.1.2-blue.svg" in readme_de
