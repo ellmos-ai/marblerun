@@ -1,6 +1,17 @@
 # Changelog
 
-## [Unreleased]
+## [0.1.2] - 2026-09-12
+
+### Pfad A Hygiene, CI Timeout Guard, Test Dependencies, Multi-Host Sync Defense & Contract Tests (2026-09-12)
+
+- Hardened CI matrix workflow in `.github/workflows/tests.yml`: added `timeout-minutes: 15` execution guardrail to test job preventing runaway hung runner minutes.
+- Configured PEP 621 `[project.optional-dependencies]` with standardized `test` extras (`pytest>=8.0.0`, `pytest-asyncio>=0.23.0`, `ruff>=0.5.0`) in `pyproject.toml`.
+- Hardened `.gitignore` with multi-host synchronization tokens and replica patterns (`*-WORKSTATION*`, `*-ASUS-GEI*`, `* (kopie)*`, `* (copy)*`, `*-[0-9][0-9].*`).
+- Version harmonized across single-source package version in `__init__.py`, `pyproject.toml`, `README.md`, `README_de.md`, and `llms.txt` to `0.1.2`.
+- Synchronized `llms.txt` with Last-checked timestamp `2026-09-12` and updated test status metrics.
+- Expanded automated contract test suite in `tests/test_metadata.py` and `tests/test_repository_hygiene.py` with CI timeout bounds, optional test dependency declarations, multi-host ignore rules, and single-source version consistency.
+
+## [0.1.1] - 2026-09-11
 
 ### Discoverability, Bilingual Parity, Third-Party Licenses Inventory & Metadata Contract (2026-09-11)
 
