@@ -127,3 +127,14 @@ wheelhouse/
 *.tmp
 *.bak
 *~
+
+# Host-lokale Live-Test-Nachweise (Screenshots/Receipts eines konkreten Rechners:
+# Hostname, Fensterinhalte, Konto-Avatare). Gehoeren nicht in ein oeffentliches Repo.
+docs/live-tests/
+
+# Laufprotokoll und Rechtscheck der Pflegerunden (Pipeline-Material, kein Repo-Inhalt)
+_after-care/
+
+# Temporaere Sondier-Skripte der Pflegerunden
+_ac_*.cmd
+_ac_*.log
