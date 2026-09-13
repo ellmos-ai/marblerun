@@ -1,0 +1,20 @@
+# Normalize all text files to LF in the repository.
+# Without this pin, checkouts on Windows (core.autocrlf=true) show every text
+# file as modified against the LF index -- a "phantom diff" that hides real
+# changes and makes `git status` useless as a review tool.
+* text=auto eol=lf
+
+# Binary assets must never be touched by EOL normalization.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.rbxl binary
+
+# Windows-only scripts need CRLF to stay executable in cmd.exe.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
