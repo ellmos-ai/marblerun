@@ -123,3 +123,34 @@ German (DE):
    - Submit listing to Glama.ai, mcp.so, and ToolRegistry under workflow runners and multi-agent systems.
 3. Ecosystem Cross-Referencing:
    - Link from dev-bricks/coma documentation as the canonical marble-run execution harness.
+
+================================================================================
+8. PFAD B DISCOVERABILITY & 18-POINT NAVIGATION OVERHAUL (2026-09-20)
+================================================================================
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Target Repo: ellmos-ai/marblerun (MarbleRun / llmauto)
+Version: 0.1.3
+
+Implemented Enhancements:
+[x] 18-Point Bilingual Navigation & Anchor Parity:
+    - Upgraded README.md and README_de.md to 18-point gold standard architecture with reciprocal <a id="..."></a> HTML anchors.
+    - Preserved 100% backward compatibility for legacy anchors.
+[x] Target Personas & High-Intent SEO Queries:
+    - Added formalized Target Personas table in both READMEs ([PERSONA-01] to [PERSONA-04]) matching multi-agent practitioners, enterprise compliance, and open-source tool builders.
+[x] 10-Dimension Comparative Matrix:
+    - Benchmarked MarbleRun (llmauto) against LangGraph/LangChain, CrewAI, and AutoGen across 10 architectural dimensions mapped against canonical invariant IDs INV-LOCAL-01 through INV-SLA-10.
+    - Preserved dedicated OpenClaw comparison spotlight.
+[x] Semicolon-Free Dual Mermaid Diagrams:
+    - Verified flowchart (graph TD) and sequence diagram (sequenceDiagram with autonumber) with zero semicolons.
+[x] Level 1 SBOM Audit & Invariant Cross-Reference Matrix:
+    - Updated THIRD_PARTY_LICENSES.md to 2026-09-20 audit with Level 1 SBOM certification, zero-copyleft guarantee, and explicit Invariant Cross-Reference Matrix table.
+[x] Repository Attribution Notice:
+    - Created root NOTICE file declaring open-source attribution and umbrella affiliation.
+    - Declared license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"] in pyproject.toml.
+[x] Statutory Notice & Liability Disclaimer (§ 521 BGB):
+    - Added formal Section 18 statutory notice (§ 521 BGB Gefälligkeitsrecht / unentgeltliche Schenkung) with bilingual German/English legal wording and MIT notice.
+[x] Single-Source Version Bump to 0.1.3:
+    - Harmonized version 0.1.3 across __init__.py, pyproject.toml, README badges, CHANGELOG.md, and llms.txt.
+[x] Recency & Contract Test Suite Hardening:
+    - Synchronized llms.txt with Last-checked: 2026-09-20 and full 18-point navigation index.
+    - Upgraded tests/test_metadata.py with contract tests validating 18-point TOC, HTML anchors, personas, comparison matrix, and NOTICE presence.

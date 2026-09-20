@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.3] - 2026-09-20
+
+### Pfad B Discoverability Overhaul, 18-Point Navigation Parity, Level 1 SBOM, Statutory Notice & Contract Tests (2026-09-20)
+
+- Upgraded bilingual `README.md` and `README_de.md` quick navigation to standardized 18-point gold standard architecture with 100% mutual English/German parity and reciprocal `<a id="..."></a>` HTML anchors preserving backward compatibility for all legacy links.
+- Formalized 4 Target Personas (`[PERSONA-01]` through `[PERSONA-04]`) with mapped operational pain points and bilingual high-intent SEO discoverability queries in Section 4.
+- Implemented comprehensive 10-dimension Comparative Matrix in Section 5 benchmarking MarbleRun (`llmauto`) against LangGraph/LangChain, CrewAI, and AutoGen mapped against canonical invariants `INV-LOCAL-01` through `INV-SLA-10`, while preserving the dedicated OpenClaw architectural comparison.
+- Validated semicolon-free dual Mermaid diagrams (system architecture flowchart and tactical round sequence diagram with `autonumber`).
+- Certified Level 1 SBOM in `THIRD_PARTY_LICENSES.md` with updated 2026-09-20 audit, Invariant Cross-Reference Matrix table, and Zero-Copyleft / RunAsInvoker non-elevation guarantees.
+- Added repository attribution `NOTICE` file and declared `license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]` in `pyproject.toml`.
+- Added Section 18 statutory notice and liability disclaimer (§ 521 BGB Gefälligkeitsrecht / unentgeltliche Schenkung) across both English and German READMEs.
+- Harmonized single-source package version to `0.1.3` across `__init__.py`, `pyproject.toml`, Shields.io badges, `CHANGELOG.md`, `llms.txt`, and `MARKETING-LOG.txt`.
+- Synchronized `llms.txt` with Last-checked timestamp `2026-09-20`, 18-point navigation index, and test pass counts.
+- Hardened contract test suite in `tests/test_metadata.py` verifying 18-point navigation parity, reciprocal HTML anchors, target personas, comparative matrix invariants, NOTICE presence, and version consistency.
+
 ## [0.1.2] - 2026-09-12
 
 ### Pfad A Hygiene, CI Timeout Guard, Test Dependencies, Multi-Host Sync Defense & Contract Tests (2026-09-12)

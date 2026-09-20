@@ -1,26 +1,41 @@
-# Third-Party Licenses & Transparency Notice
+# Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
-> **Project:** `ellmos-ai/marblerun` (llmauto)  
-> **Audited:** 2026-09-11  
-> **Repository License:** [MIT License](LICENSE)  
+> **Project:** `ellmos-ai/marblerun` (llmauto)
+> **Audited:** 2026-09-20
+> **Repository License:** [MIT License](LICENSE)
+> **Repository Attribution Notice:** [NOTICE](NOTICE)
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
 ---
 
 ## Executive Summary & Compliance Assurance
 
-`MarbleRun` (`llmauto`) is engineered with an uncompromising architectural principle: **zero mandatory runtime dependencies**. The entire core agent loop, chain runner, handoff snapshotting, and process lifecycle operate solely on Python standard library modules (`subprocess`, `json`, `pathlib`, `argparse`, `sys`, `time`, `os`, `signal`, `datetime`, `re`, `shutil`, `importlib`).
+`MarbleRun` (`llmauto`) is engineered with an uncompromising architectural principle: **zero mandatory external runtime dependencies**. The entire core agent loop, chain runner, handoff snapshotting, and process lifecycle operate solely on Python standard library modules (`subprocess`, `json`, `pathlib`, `argparse`, `sys`, `time`, `os`, `signal`, `datetime`, `re`, `shutil`, `importlib`).
 
-All direct, optional, and development dependencies utilized across `MarbleRun` are distributed under strictly **permissive open-source licenses** (MIT, Apache-2.0, PSFL). There are **zero copyleft, GPL, or AGPL dependencies**, ensuring maximum flexibility for local development, enterprise automation pipelines, and multi-agent systems.
+All direct, optional, and development dependencies utilized across `MarbleRun` are distributed under strictly **permissive open-source licenses** (MIT, Apache-2.0, PSFL). There are **zero copyleft, GPL, or AGPL dependencies**, ensuring unrestricted freedom for local development, enterprise automation pipelines, and multi-agent systems.
 
-Furthermore, `MarbleRun` guarantees:
-1. **100% Local-First & Zero Egress (INV-LOCAL-01):** Agent orchestration and state handoffs occur entirely within local process boundaries. Zero telemetry, zero external tracking, and zero remote data transmission.
-2. **Unprivileged User-Mode (`RunAsInvoker` / INV-SEC-02):** Executes safely in user space without requiring root or administrator elevation.
-3. **Multi-Provider Fail-Closed (INV-GATE-03):** Unconfigured external backends fail closed without falling back to insecure endpoints.
-4. **Race-Free Parallel Isolation (INV-SYNC-04):** Parallel worker runs use isolated snapshot workspaces to prevent state corruption.
-5. **Anti-Starvation Skip Guard (INV-CONT-05):** Protects handoff files from accidental truncation or context overwriting.
-6. **Transparent State Persistence (INV-STATE-06):** Human-readable plain text and Markdown state files (`status.txt`, `handoff.md`, `round_counter.txt`) eliminate proprietary lock-in.
-7. **Shell-Free Invocation (INV-PROC-07):** Direct argument array execution (`shell=False`) eliminates command injection vulnerabilities.
+### Invariant Cross-Reference Matrix
+
+| Invariant ID | Security & Operational Mandate | Technical Enforcement Mechanism | License & Isolation Scope |
+|:---|:---|:---|:---|
+| `INV-LOCAL-01` | **100% Offline / Zero-Egress** | Pure local execution via stdlib, zero outbound network sockets, zero telemetry | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-SEC-02` | **Non-Elevation (`RunAsInvoker`)** | Executes entirely in unprivileged user space; forbids root or administrator elevation | [MIT](LICENSE) |
+| `INV-GATE-03` | **Multi-Provider Fail-Closed** | Strict backend validation; unconfigured providers fail closed immediately | [MIT](https://github.com/dev-bricks/coma) |
+| `INV-SYNC-04` | **Race-Free Parallel Workers** | Isolated per-link workspaces prevent concurrent handoff file collisions | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-CONT-05` | **Anti-Starvation Skip Guard** | Automatic handoff restoration if an agent produces an empty or degenerate output | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-STATE-06` | **Transparent State Machine** | Human-readable Markdown and plain-text state files (`status.txt`, `handoff.md`) | [MIT](LICENSE) |
+| `INV-PROC-07` | **Safe Process Scoping** | Subprocesses spawned via argument vectors (`shell=False`), preventing shell injection | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-CI-08` | **Multi-OS CI Matrix** | Automated GitHub Actions testing across Linux, Windows, macOS, Python 3.10-3.13 | [MIT / Apache-2.0](https://github.com/astral-sh/ruff) |
+| `INV-CONC-09` | **Strict Concurrency Gate** | `concurrency: cancel-in-progress` prevents overlapping or race-conditioned CI builds | [MIT](https://github.com/ellmos-ai/MarbleRun) |
+| `INV-SLA-10` | **Cryptographic Audit & SLA** | Dual vulnerability SLA: 48h acknowledgment, 5 business days triage assessment | [SECURITY.md](SECURITY.md) |
+
+---
+
+## Zero-Copyleft Isolation Guarantee & RunAsInvoker Certification
+
+1. **Zero-Copyleft Guarantee:** No component of `MarbleRun` links against, invokes, or vendors any code under GPLv2, GPLv3, AGPLv3, LGPL, SSPL, or CC-BY-SA licenses. All dependencies are verified permissive (MIT, Apache-2.0, PSFL-2.0).
+2. **Unprivileged Execution (`RunAsInvoker`):** The package requires no administrative rights, no daemon installation, and no root credentials. It conforms to strict enterprise privilege isolation.
+3. **Zero-Egress Perimeter:** By default, no network traffic is generated by `llmauto`. When external LLM CLI tools (such as `claude`) are invoked by user configuration, network interaction is confined solely to the user-authenticated CLI process according to the user's explicit policy.
 
 ---
 
@@ -45,6 +60,7 @@ Furthermore, `MarbleRun` guarantees:
 | Package | Usage & Purpose | License | Source / Upstream |
 |:---|:---|:---|:---|
 | **pytest** | Automated test runner, contract verification suites, mock fixtures | [MIT](https://github.com/pytest-dev/pytest/blob/main/LICENSE) | [pytest-dev/pytest](https://github.com/pytest-dev/pytest) |
+| **pytest-asyncio** | Async test execution support for pytest test runner | [Apache-2.0](https://github.com/pytest-dev/pytest-asyncio/blob/master/LICENSE) | [pytest-dev/pytest-asyncio](https://github.com/pytest-dev/pytest-asyncio) |
 | **ruff** | High-performance Python linter and code formatting enforcement | [MIT / Apache-2.0](https://github.com/astral-sh/ruff/blob/main/LICENSE-MIT) | [astral-sh/ruff](https://github.com/astral-sh/ruff) |
 | **setuptools** | Standard package build backend (PEP 517 / PEP 621 compliant) | [MIT](https://github.com/pypa/setuptools/blob/main/LICENSE) | [pypa/setuptools](https://github.com/pypa/setuptools) |
 | **setuptools-scm** | Dynamic version extraction from Git tags / attributes | [MIT](https://github.com/pypa/setuptools-scm/blob/main/LICENSE) | [pypa/setuptools-scm](https://github.com/pypa/setuptools-scm) |
@@ -67,7 +83,7 @@ Used by `coma`, `pytest`, `ruff`, `setuptools`, and `setuptools-scm`.
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### 3. Apache License Version 2.0 (Apache-2.0)
-Co-licensed by `ruff`.
+Co-licensed by `ruff` and `pytest-asyncio`.
 
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at:  
 > http://www.apache.org/licenses/LICENSE-2.0  

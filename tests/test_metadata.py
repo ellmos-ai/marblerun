@@ -33,7 +33,7 @@ def test_pyproject_metadata_integrity():
     assert "MarbleRun" in project.get("description", "")
     # PEP 639: license is an SPDX expression string, license files are declared separately
     assert project.get("license") == "MIT"
-    assert project.get("license-files") == ["LICENSE"]
+    assert project.get("license-files") == ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
     assert "urls" in project
     assert project["urls"].get("Homepage") == "https://github.com/ellmos-ai/MarbleRun"
     assert project["urls"].get("Repository") == "https://github.com/ellmos-ai/MarbleRun"
@@ -131,7 +131,7 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-12" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert "Last-checked: 2026-09-20" in llms_text, "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -227,40 +227,71 @@ def test_readme_sibling_ecosystem_matrix():
 
 
 def test_readme_quick_navigation_anchors():
-    """Verify both English and German READMEs define 15-point quick navigation."""
+    """Verify both English and German READMEs define 18-point quick navigation with explicit HTML anchors."""
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
     assert "## Quick Navigation" in readme_en
     assert "## Schnellnavigation" in readme_de
 
+    # Verify all 18 numbered items in Quick Navigation
+    for i in range(1, 19):
+        assert f"- [{i}. " in readme_en, f"Missing item {i} in README.md Quick Navigation"
+        assert f"- [{i}. " in readme_de, f"Missing item {i} in README_de.md Schnellnavigation"
+
     anchors_en = [
         "#what-is-llmauto",
-        "#visual-showcase--execution-flow",
+        "#visual-showcase--system-architecture",
         "#tactical-round-execution--sequence-flow",
-        "#core-capabilities--security-invariants",
+        "#target-personas--discoverability-queries",
+        "#comparative-matrix--alternatives",
+        "#governance--runtime-invariants-matrix",
         "#chain-patterns--role-matrix",
-        "#installation",
+        "#installation--prerequisites",
+        "#step-by-step-quickstart",
+        "#pipe-mode--ad-hoc-execution",
+        "#cli-reference--global-configuration",
+        "#sibling-tools--ecosystem-matrix",
         "#third-party-licenses--transparency",
-        "SECURITY.md",
-        "#license",
+        "#security-policy--operational-limits",
+        "#repository-structure--key-assets",
+        "#development--test-matrix",
+        "#discovery--keywords--disambiguation",
+        "#statutory-notice--liability-limitation",
     ]
     for anchor in anchors_en:
         assert anchor in readme_en, f"Missing anchor '{anchor}' in README.md"
+        target_id = anchor.lstrip("#")
+        assert f'id="{target_id}"' in readme_en or f'name="{target_id}"' in readme_en, (
+            f"Missing HTML target id='{target_id}' in README.md"
+        )
 
     anchors_de = [
         "#was-ist-llmauto",
-        "#visuelle-galerie--ausfuehrungsfluss",
+        "#visuelle-galerie--systemarchitektur",
         "#taktischer-rundenablauf--sequenzdiagramm",
-        "#kernfaehigkeiten--sicherheitsinvarianten",
+        "#zielgruppen--discoverability-suchanfragen",
+        "#vergleichsmatrix--alternativen",
+        "#governance--laufzeit-invariantenmatrix",
         "#chain-muster--rollenmatrix",
-        "#installation",
+        "#installation--voraussetzungen",
+        "#schritt-fuer-schritt-schnellstart",
+        "#pipe-modus--ad-hoc-ausfuehrung",
+        "#cli-referenz--globale-konfiguration",
+        "#geschwister-tools--oekosystemmatrix",
         "#drittanbieter-lizenzen--transparenz",
-        "SECURITY.md",
-        "#lizenz",
+        "#sicherheitsrichtlinie--betriebsgrenzen",
+        "#repository-struktur--kernkomponenten",
+        "#entwicklung--testmatrix",
+        "#discovery-kontext--suchphrasen",
+        "#haftungsausschluss--lizenz",
     ]
     for anchor in anchors_de:
         assert anchor in readme_de, f"Missing anchor '{anchor}' in README_de.md"
+        target_id = anchor.lstrip("#")
+        assert f'id="{target_id}"' in readme_de or f'name="{target_id}"' in readme_de, (
+            f"Missing HTML target id='{target_id}' in README_de.md"
+        )
 
 
 def test_security_policy_slas_and_contacts():
@@ -396,14 +427,70 @@ def test_readme_badge_matrix_completeness():
 
 
 def test_package_version_and_documentation_parity():
-    """Verify single-source version 0.1.2 is consistent across __init__, pyproject, CHANGELOG, and README badges."""
+    """Verify single-source version 0.1.3 is consistent across __init__, pyproject, CHANGELOG, and README badges."""
     version = getattr(llmauto, "__version__", None)
-    assert version == "0.1.2"
+    assert version == "0.1.3"
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    assert "## [0.1.2] - 2026-09-12" in changelog_text
+    assert "## [0.1.3] - 2026-09-20" in changelog_text
 
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
-    assert "badge/version-0.1.2-blue.svg" in readme_en
-    assert "badge/Version-0.1.2-blue.svg" in readme_de
+    assert "badge/version-0.1.3-blue.svg" in readme_en
+    assert "badge/Version-0.1.3-blue.svg" in readme_de
+
+
+def test_statutory_notice_bgb_521_and_license():
+    """Verify § 521 BGB statutory disclaimer and MIT notice are present in both READMEs."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    for readme in [readme_en, readme_de]:
+        assert "521 BGB" in readme
+        assert "Vorsatz und grobe Fahrlässigkeit" in readme
+        assert "MIT License" in readme or "MIT-Lizenz" in readme
+
+    assert (REPO_ROOT / "NOTICE").is_file(), "NOTICE file must exist in repo root"
+    notice_text = (REPO_ROOT / "NOTICE").read_text(encoding="utf-8")
+    assert "Lukas Geiger" in notice_text
+    assert "ellmos-ai" in notice_text
+    assert "open-bricks" in notice_text
+
+    pyproject_file = REPO_ROOT / "pyproject.toml"
+    data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
+    license_files = data.get("project", {}).get("license-files", [])
+    assert "NOTICE" in license_files
+    assert "THIRD_PARTY_LICENSES.md" in license_files
+
+
+def test_readme_target_personas_and_comparative_matrix():
+    """Verify Section 4 personas [PERSONA-01]..[PERSONA-04] and Section 5 comparative matrix."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    for p_id in ["[PERSONA-01]", "[PERSONA-02]", "[PERSONA-03]", "[PERSONA-04]"]:
+        assert p_id in readme_en, f"Missing {p_id} in README.md"
+        assert p_id in readme_de, f"Missing {p_id} in README_de.md"
+
+    for tool in ["LangGraph", "CrewAI", "AutoGen", "OpenClaw"]:
+        assert tool in readme_en, f"Missing {tool} comparison in README.md"
+        assert tool in readme_de, f"Missing {tool} comparison in README_de.md"
+
+
+def test_mermaid_diagrams_no_semicolons():
+    """Verify Mermaid diagrams in README.md and README_de.md contain no semicolons at end of lines."""
+    for path in [REPO_ROOT / "README.md", REPO_ROOT / "README_de.md"]:
+        text = path.read_text(encoding="utf-8")
+        in_mermaid = False
+        for line_no, line in enumerate(text.splitlines(), start=1):
+            stripped = line.strip()
+            if stripped.startswith("```mermaid"):
+                in_mermaid = True
+                continue
+            if in_mermaid and stripped.startswith("```"):
+                in_mermaid = False
+                continue
+            if in_mermaid:
+                assert not stripped.endswith(";"), (
+                    f"Semicolon found at end of mermaid line {line_no} in {path.name}: {stripped}"
+                )

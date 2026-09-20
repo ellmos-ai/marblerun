@@ -1,10 +1,10 @@
-## Last-checked: 2026-09-12
+## Last-checked: 2026-09-20
 
 # MarbleRun / llmauto - LLM Automation Framework
 
-> MarbleRun (package name: llmauto) is a chain-execution framework for autonomous LLM agent loops. Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context from link to link via handoff files. Named after a marble run: the context rolls through the chain, agent by agent.
+> MarbleRun (package name: llmauto, version 0.1.3) is a chain-execution framework for autonomous LLM agent loops. Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context from link to link via handoff files. Named after a marble run: the context rolls through the chain, agent by agent.
 
-llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external dependencies (Python stdlib + Claude Code CLI). Python 3.10+, MIT.
+llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external runtime dependencies (pure Python standard library + Claude Code CLI, with optional COMA provider adapter for Codex and Agy). Python 3.10+, MIT, Level 1 SBOM audited.
 
 Canonical repository: https://github.com/ellmos-ai/MarbleRun
 Canonical package / CLI name: llmauto
@@ -16,13 +16,12 @@ Core concepts: Chain (JSON definition with ordered links), Link (one agent with 
 
 Governance & Runtime Invariants: 10 formal invariants INV-LOCAL-01 (Zero-Egress), INV-SEC-02 (User-Mode RunAsInvoker), INV-GATE-03 (Multi-Provider Fail-Closed), INV-SYNC-04 (Race-Free Parallel Workspaces), INV-CONT-05 (Anti-Starvation Skip Guard), INV-STATE-06 (Persistent Transparent State Machine), INV-PROC-07 (Shell-Free Execution), INV-CI-08 (Multi-OS CI Matrix), INV-CONC-09 (Strict Concurrency Gate), and INV-SLA-10 (Cryptographic Auditability & Dual SLAs).
 
-## Audience
+## Target Personas
 
-- Developers building unattended Claude Code automation loops
-- LLM-agent operators who need worker/reviewer/controller chains
-- Local-first automation users who prefer Python stdlib tooling
-- Maintainers comparing lightweight chain runners and agent orchestrators
-- ellmos/BACH/Rinnsal users looking for the standalone automation layer
+- `[PERSONA-01]`: Autonomous AI Agent Engineers & Chain Builders (unattended multi-agent execution loops)
+- `[PERSONA-02]`: Multi-Agent Swarm & Handoff Architects (deterministic context handoffs & anti-starvation skip protection)
+- `[PERSONA-03]`: Enterprise Tooling, Safety & Governance Compliance Officers (zero-egress, RunAsInvoker, Level 1 SBOM, dual SLAs)
+- `[PERSONA-04]`: Open-Source AI Tool Builders & Local-First Developers (zero-dependency Python stdlib tooling)
 
 ## Search Phrases
 
@@ -41,21 +40,19 @@ zero dependency LLM automation CLI
 
 ## External Discovery Notes
 
-As of 2026-09-12, web search finds the canonical GitHub repository for exact
-ellmos/llmauto queries. Broad `MarbleRun` searches still collide with
-confidential-computing and game/toolkit projects, so downstream directories,
-LLM indexes, and package metadata prefer `llmauto` plus Claude Code,
-agent-chain, and local-first automation wording. Test suite: 131 passed, 0 skipped (131 total), exit code 0.
+As of 2026-09-20, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 134 passed, 0 skipped (134 total), exit code 0.
 
-## Docs
+## Docs & Architecture
 
-- [README](https://github.com/ellmos-ai/MarbleRun/blob/main/README.md): Overview, install, chain definition, quick start
+- [README](https://github.com/ellmos-ai/MarbleRun/blob/main/README.md): 18-point quick navigation, architecture, install, chain definition, quick start
+- [README_de](https://github.com/ellmos-ai/MarbleRun/blob/main/README_de.md): Vollständige deutsche Parität mit 18-Punkte Schnellnavigation
 - [USER-DOCU.md](https://github.com/ellmos-ai/MarbleRun/blob/main/USER-DOCU.md): Detailed user guide
 - [Automatisierung-in-claude-code.md](https://github.com/ellmos-ai/MarbleRun/blob/main/Automatisierung-in-claude-code.md): Integration guide for Claude Code CLI (German)
-- [THIRD_PARTY_LICENSES](https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.md): Third-party licenses & transparency audit
+- [THIRD_PARTY_LICENSES](https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.md): Level 1 SBOM, invariant cross-reference matrix & transparency audit
+- [NOTICE](https://github.com/ellmos-ai/MarbleRun/blob/main/NOTICE): Formal product copyright and attribution declaration
 - [MARKETING-LOG](https://github.com/ellmos-ai/MarbleRun/blob/main/MARKETING-LOG.txt): Discoverability register & persona analysis
 - [CONTRIBUTING](https://github.com/ellmos-ai/MarbleRun/blob/main/CONTRIBUTING.md): Contribution workflow
-- [SECURITY](https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md): Security policy
+- [SECURITY](https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md): Security policy and dual response SLAs
 - [LICENSE](https://github.com/ellmos-ai/MarbleRun/blob/main/LICENSE): MIT license text
 
 ## ellmos family (related projects)
