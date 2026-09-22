@@ -97,16 +97,25 @@ desktop.ini
 # Interne Aufgabenliste (zitiert private Pfade)
 TODO.md
 
-# Multi-Agent Lock-System (lokal, nie committen)
+# Multi-Agent & Canonical Lock-System (lokal, nie committen)
 LOCK
 LOCK.*
+LOCK.user.*
+LOCK.until.*
+LOCK.condition.*
 LOCK*.txt
 LOCK.permissions.json
+.automation-lock
 *.lock
 
 # Multi-Host Sync Conflicts (OneDrive, Syncthing, Dropbox)
 *-WORKSTATION*
+*-WORKSTATION-LG*
+*-ASUS*
 *-ASUS-GEI*
+*-LAPTOP*
+*-Mac Studio*
+*-MacBook*
 * (kopie)*
 * (copy)*
 *-[0-9][0-9].*
@@ -124,6 +133,11 @@ coverage/
 htmlcov/
 wheelhouse/
 .wheel-smoke/
+.hypothesis/
+.turbo/
+.nyc_output/
+*.rej
+*.orig
 *.tmp
 *.bak
 *~

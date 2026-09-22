@@ -131,7 +131,9 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-20" in llms_text, "llms.txt must have current Last-checked timestamp"
+    assert any(
+        stamp in llms_text for stamp in ("Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+    ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -494,3 +496,63 @@ def test_mermaid_diagrams_no_semicolons():
                 assert not stripped.endswith(";"), (
                     f"Semicolon found at end of mermaid line {line_no} in {path.name}: {stripped}"
                 )
+
+
+def test_all_ci_workflows_timeout_and_concurrency():
+    """Verify all GitHub Actions workflows define concurrency controls and job timeouts."""
+    workflows_dir = REPO_ROOT / ".github" / "workflows"
+    workflow_files = list(workflows_dir.glob("*.yml"))
+    assert len(workflow_files) >= 5, "Must have at least 5 workflow definitions"
+
+    for wf_file in workflow_files:
+        content = wf_file.read_text(encoding="utf-8")
+        assert "concurrency:" in content, f"Workflow {wf_file.name} missing concurrency block"
+        assert "cancel-in-progress: true" in content, f"Workflow {wf_file.name} missing cancel-in-progress"
+        assert "timeout-minutes:" in content, f"Workflow {wf_file.name} missing timeout-minutes"
+
+
+def test_welcome_workflow_version():
+    """Verify welcome.yml uses first-interaction@v3."""
+    wf_text = (REPO_ROOT / ".github" / "workflows" / "welcome.yml").read_text(encoding="utf-8")
+    assert "actions/first-interaction@v3" in wf_text
+
+
+def test_pyproject_notice_url_and_norecursedirs():
+    """Verify pyproject.toml declares Notice URL and protects test directories in norecursedirs."""
+    pyproject_file = REPO_ROOT / "pyproject.toml"
+    data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
+    urls = data.get("project", {}).get("urls", {})
+    assert "Notice" in urls
+    assert urls["Notice"] == "https://github.com/ellmos-ai/MarbleRun/blob/main/NOTICE"
+
+    pytest_ini = data.get("tool", {}).get("pytest", {}).get("ini_options", {})
+    norecursedirs = pytest_ini.get("norecursedirs", [])
+    assert "__pycache__" in norecursedirs
+    assert ".venv" in norecursedirs
+
+
+def test_third_party_licenses_audit_recency():
+    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-22 audit."""
+    tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
+    assert "**Audited:** 2026-09-22" in tpl_text
+
+
+def test_changelog_unreleased_hygiene_entry():
+    """Verify CHANGELOG.md contains unreleased section for Pfad A hygiene hardening."""
+    changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "## [Unreleased]" in changelog_text
+    assert "Pfad A Repository Hygiene" in changelog_text
+
+
+def test_gitignore_hardened_tokens():
+    """Verify .gitignore contains canonical lock and multi-host device tokens."""
+    gitignore_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "LOCK.condition.*" in gitignore_text
+    assert ".automation-lock" in gitignore_text
+    assert "*-WORKSTATION-LG*" in gitignore_text
+    assert "*-ASUS*" in gitignore_text
+    assert "*-LAPTOP*" in gitignore_text
+    assert "*-Mac Studio*" in gitignore_text
+    assert "*-MacBook*" in gitignore_text
+    assert "*.rej" in gitignore_text
+    assert ".hypothesis/" in gitignore_text

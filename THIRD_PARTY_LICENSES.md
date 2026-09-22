@@ -1,7 +1,7 @@
 # Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
 > **Project:** `ellmos-ai/marblerun` (llmauto)
-> **Audited:** 2026-09-20
+> **Audited:** 2026-09-22
 > **Repository License:** [MIT License](LICENSE)
 > **Repository Attribution Notice:** [NOTICE](NOTICE)
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)

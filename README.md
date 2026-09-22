@@ -13,7 +13,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 
 [![Version](https://img.shields.io/badge/version-0.1.3-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-134%20passed%20%7C%20100%25%20green-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-140%20passed%20%7C%20100%25%20green-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)

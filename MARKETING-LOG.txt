@@ -154,3 +154,33 @@ Implemented Enhancements:
 [x] Recency & Contract Test Suite Hardening:
     - Synchronized llms.txt with Last-checked: 2026-09-20 and full 18-point navigation index.
     - Upgraded tests/test_metadata.py with contract tests validating 18-point TOC, HTML anchors, personas, comparison matrix, and NOTICE presence.
+
+================================================================================
+9. PFAD A REPOSITORY HYGIENE & CI LIFECYCLE HARDENING (2026-09-22)
+================================================================================
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Target Repo: ellmos-ai/marblerun (MarbleRun / llmauto)
+Version: 0.1.3 (Version-Freeze per T-20260920-167562623)
+
+Implemented Hygiene Actions:
+[x] Version-Freeze Discipline (T-20260920-167562623):
+    - Maintained version 0.1.3 strictly frozen; release bumps prohibited during hygiene runs.
+[x] CI/CD Workflow & Lifecycle Hardening:
+    - .github/workflows/stale.yml: added concurrency (cancel-in-progress: true) and timeout-minutes: 10.
+    - .github/workflows/welcome.yml: upgraded to actions/first-interaction@v3, added concurrency (cancel-in-progress: true) and timeout-minutes: 5.
+    - .github/workflows/auto-assign.yml: added concurrency (cancel-in-progress: true) and timeout-minutes: 5.
+    - .github/workflows/label-sync.yml: added concurrency (cancel-in-progress: true) and timeout-minutes: 5.
+[x] Multi-Host Cloud-Sync, Lock, and Cache Defense in .gitignore:
+    - Added host tokens: *-ASUS*, *-WORKSTATION-LG*, *-LAPTOP*, *-Mac Studio*, *-MacBook*.
+    - Added canonical lock protection: LOCK.user.*, LOCK.until.*, LOCK.condition.*, .automation-lock.
+    - Added patch and test cache rules: *.rej, *.orig, .hypothesis/, .turbo/, .nyc_output/.
+[x] PEP 621 Standard & pyproject.toml:
+    - Added "Notice" URL pointing to repository NOTICE file in [project.urls].
+    - Protected test runner directories in [tool.pytest.ini_options] norecursedirs.
+[x] Level 1 SBOM Audit & Transparency:
+    - Re-audited THIRD_PARTY_LICENSES.md as of 2026-09-22 confirming 100% permissive dependencies and RunAsInvoker unprivileged execution.
+[x] Documentation & RAG Manifest Sync:
+    - Synchronized llms.txt Last-checked timestamp to 2026-09-22 and verified passing test metrics.
+    - Added [Unreleased] hygiene maintenance section in CHANGELOG.md.
+[x] Automated Contract Verification:
+    - Expanded tests/test_metadata.py and tests/test_repository_hygiene.py with contract tests verifying CI timeouts, concurrency controls, multi-host ignore rules, canonical lock defenses, and metadata URLs.

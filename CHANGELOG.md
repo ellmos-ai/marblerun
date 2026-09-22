@@ -1,5 +1,30 @@
 # Changelog
 
+## [Unreleased]
+
+### Pfad A Repository Hygiene, CI Lifecycle Hardening, Multi-Host Sync Defense & Contract Tests (2026-09-22)
+
+- **Version-Freeze Preservation (`T-20260920-167562623`):** Maintained package version `0.1.3` strictly frozen; all hygiene changes captured in unreleased staging.
+- **CI/CD Lifecycle Hardening:**
+  - Hardened `.github/workflows/stale.yml`: added `concurrency` with `cancel-in-progress: true` and `timeout-minutes: 10`.
+  - Upgraded `.github/workflows/welcome.yml`: bumped `actions/first-interaction@v1` to `actions/first-interaction@v3`, added `concurrency` with `cancel-in-progress: true` and `timeout-minutes: 5`.
+  - Hardened `.github/workflows/auto-assign.yml`: added `concurrency` with `cancel-in-progress: true` and `timeout-minutes: 5`.
+  - Hardened `.github/workflows/label-sync.yml`: added `concurrency` with `cancel-in-progress: true` and `timeout-minutes: 5`.
+- **Multi-Host Cloud-Sync, Lock & Cache Defense (`.gitignore`):**
+  - Added multi-host sync tokens: `*-ASUS*`, `*-WORKSTATION-LG*`, `*-LAPTOP*`, `*-Mac Studio*`, and `*-MacBook*`.
+  - Added canonical lock protection: `LOCK.user.*`, `LOCK.until.*`, `LOCK.condition.*`, and `.automation-lock`.
+  - Added git patch rejects and cache directories: `*.rej`, `*.orig`, `.hypothesis/`, `.turbo/`, `.nyc_output/`.
+- **PEP 621 Standard & pyproject.toml:**
+  - Added `Notice` URL pointing to repository `NOTICE` file in `[project.urls]`.
+  - Hardened `[tool.pytest.ini_options]` with `norecursedirs` protecting `.git`, `.pytest_cache`, `__pycache__`, `build`, `dist`, `.venv`, and `venv`.
+- **Level 1 SBOM Audit & Transparency:**
+  - Re-audited `THIRD_PARTY_LICENSES.md` as of 2026-09-22 confirming 100% permissive runtime dependencies (pure Python standard library PSFL-2.0, zero external packages), optional provider bridge (`coma` MIT), build/test tooling (MIT, Apache-2.0), zero copyleft, and unprivileged `RunAsInvoker` mode.
+- **Documentation & RAG Manifest Sync:**
+  - Synchronized `llms.txt` with Last-checked timestamp `2026-09-22` and test pass count.
+  - Added Section 9 to `MARKETING-LOG.txt` recording 2026-09-22 Pfad A hygiene maintenance.
+- **Automated Contract Tests:**
+  - Expanded `tests/test_metadata.py` and `tests/test_repository_hygiene.py` with contract tests verifying CI timeouts, concurrency controls, multi-host ignore rules, canonical lock defenses, and metadata URLs.
+
 ## [0.1.3] - 2026-09-20
 
 ### Pfad B Discoverability Overhaul, 18-Point Navigation Parity, Level 1 SBOM, Statutory Notice & Contract Tests (2026-09-20)
