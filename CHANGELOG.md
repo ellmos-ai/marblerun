@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Pfad A Repository Hygiene, Multi-Host Sync Shielding (IDEAPAD), PEP 621 Metadata & Contract Tests (2026-09-28)
+
+- **Version-Freeze Preservation (`T-20260920-167562623`):** Maintained package version `0.1.3` strictly frozen; all hygiene changes captured in unreleased staging.
+- **Multi-Host Cloud-Sync Hardening (`.gitignore`):** Hardened multi-device sync conflict defense by adding `*-IDEAPAD*` and `*-IDEAPAD-GEI*` exclusion patterns.
+- **PEP 621 Standard & pyproject.toml:** Added explicit `Contributing` URL under `[project.urls]` referencing `CONTRIBUTING.md`.
+- **Level 1 SBOM Audit & Transparency:** Re-audited `THIRD_PARTY_LICENSES.md` as of 2026-09-28 confirming 100% permissive runtime dependencies, unprivileged user mode (`RunAsInvoker`), and zero copyleft.
+- **Documentation & RAG Manifest Sync:** Refreshed `llms.txt` with Last-checked timestamp `2026-09-28`.
+- **Automated Contract Tests:** Expanded contract tests in `tests/test_repository_hygiene.py` and `tests/test_metadata.py` verifying IDEAPAD tokens, Contributing URL in metadata, and license audit recency.
+
 ### Pfad A Repository Hygiene, CI Lifecycle Hardening, Multi-Host Sync Defense & Contract Tests (2026-09-22)
 
 - **Version-Freeze Preservation (`T-20260920-167562623`):** Maintained package version `0.1.3` strictly frozen; all hygiene changes captured in unreleased staging.

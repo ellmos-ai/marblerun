@@ -132,7 +132,7 @@ def test_llms_txt_and_badge_discovery_parity():
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
     assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+        stamp in llms_text for stamp in ("Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
     ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
@@ -331,6 +331,7 @@ def test_pyproject_ecosystem_urls():
     data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
     urls = data.get("project", {}).get("urls", {})
     assert "Security" in urls
+    assert "Contributing" in urls
     assert "Third-Party Licenses" in urls
     assert "Marketing Log" in urls
     assert "Parent Organization" in urls
@@ -532,9 +533,9 @@ def test_pyproject_notice_url_and_norecursedirs():
 
 
 def test_third_party_licenses_audit_recency():
-    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-22 audit."""
+    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert "**Audited:** 2026-09-22" in tpl_text
+    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -551,6 +552,8 @@ def test_gitignore_hardened_tokens():
     assert ".automation-lock" in gitignore_text
     assert "*-WORKSTATION-LG*" in gitignore_text
     assert "*-ASUS*" in gitignore_text
+    assert "*-IDEAPAD*" in gitignore_text
+    assert "*-IDEAPAD-GEI*" in gitignore_text
     assert "*-LAPTOP*" in gitignore_text
     assert "*-Mac Studio*" in gitignore_text
     assert "*-MacBook*" in gitignore_text
