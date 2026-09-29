@@ -1,4 +1,4 @@
-## Last-checked: 2026-09-28
+## Last-checked: 2026-09-29
 
 # MarbleRun / llmauto - LLM Automation Framework
 
@@ -40,7 +40,7 @@ zero dependency LLM automation CLI
 
 ## External Discovery Notes
 
-As of 2026-09-28, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 140 passed, 0 skipped (140 total), exit code 0.
+As of 2026-09-29, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 140 passed, 0 skipped (140 total), exit code 0.
 
 ## Docs & Architecture
 
@@ -49,6 +49,7 @@ As of 2026-09-28, web search finds the canonical GitHub repository for exact ell
 - [USER-DOCU.md](https://github.com/ellmos-ai/MarbleRun/blob/main/USER-DOCU.md): Detailed user guide
 - [Automatisierung-in-claude-code.md](https://github.com/ellmos-ai/MarbleRun/blob/main/Automatisierung-in-claude-code.md): Integration guide for Claude Code CLI (German)
 - [THIRD_PARTY_LICENSES](https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.md): Level 1 SBOM, invariant cross-reference matrix & transparency audit
+- [THIRD_PARTY_LICENSES.txt](https://github.com/ellmos-ai/MarbleRun/blob/main/THIRD_PARTY_LICENSES.txt): Plain-text Level 1 SBOM companion & license texts
 - [NOTICE](https://github.com/ellmos-ai/MarbleRun/blob/main/NOTICE): Formal product copyright and attribution declaration
 - [MARKETING-LOG](https://github.com/ellmos-ai/MarbleRun/blob/main/MARKETING-LOG.txt): Discoverability register & persona analysis
 - [CONTRIBUTING](https://github.com/ellmos-ai/MarbleRun/blob/main/CONTRIBUTING.md): Contribution workflow

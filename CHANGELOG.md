@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Pfad B Discoverability, 18-Point Dual Anchors, ASCII 4-View Topology, Level 1 SBOM Text Companion & Contract Tests (2026-09-29) [G 2026-09-29]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, and manifests.
+- **Bilinguale 18-Punkte-Navigationsparität & Reziproke Dual-Anker (`sec-01`..`sec-18`):** Upgraded `README.md` and `README_de.md` with structured 18-point quick navigation table and bilateral `<a id="sec-01"></a>` through `<a id="sec-18"></a>` dual anchors while preserving legacy link anchors.
+- **Vier-Ansichten-ASCII-Topologieprojektion:** Added standardized Four-View ASCII Topology in Section 2 across both language editions mapping caller runtimes, core chain engine, runtime persistence, and air-gap defense perimeter to invariants `INV-LOCAL-01`..`INV-SLA-10`.
+- **Level 1 SBOM Plain-Text Companion (`THIRD_PARTY_LICENSES.txt`):** Created root Level 1 SBOM text companion covering stdlib, coma, pytest, pytest-asyncio, ruff, setuptools, and setuptools-scm, with formal 10-invariant verification table, unprivileged user-mode (`RunAsInvoker`) guarantee, zero-copyleft certification, § 521 BGB statutory disclaimer, and full license texts.
+- **PEP 621 Standard & 20-Topic-Sättigung in `pyproject.toml`:** Synchronized all 20 GitHub repository topics alphabetically into `project.keywords`, registered `Level 1 SBOM`, `Third-Party Licenses (Text)`, and `Plain-Text License` under `[project.urls]`, and expanded `license-files` whitelist.
+- **RAG-Manifest & Dokumentation:** Synchronized `llms.txt` to `2026-09-29` with links to `THIRD_PARTY_LICENSES.txt` and verified test suite baseline; updated Section 10 in `MARKETING-LOG.txt`.
+- **Automatisierte Vertragstests:** Extended `tests/test_metadata.py` with contract tests verifying bilateral `sec-01`..`sec-18` dual anchors, Four-View ASCII Topology, Level 1 SBOM text companion invariants, 20-keyword saturation, and audit recency.
+
 ### Pfad A Repository Hygiene, Multi-Host Sync Shielding (IDEAPAD), PEP 621 Metadata & Contract Tests (2026-09-28)
 
 - **Version-Freeze Preservation (`T-20260920-167562623`):** Maintained package version `0.1.3` strictly frozen; all hygiene changes captured in unreleased staging.

@@ -25,11 +25,35 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
+[![Level 1 SBOM: Textbegleiter](https://img.shields.io/badge/Level%201%20SBOM-Textbegleiter-success.svg)](THIRD_PARTY_LICENSES.txt)
+[![Verifiziert: 2026-09-29](https://img.shields.io/badge/Verifiziert-2026--09--29-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
 
 ## Schnellnavigation
+
+| # | Abschnitt | Nav-Anker | Beschreibung |
+|---|---|---|---|
+| 01 | [Zusammenfassung & Kernidentität](#was-ist-llmauto) | [`#sec-01`](#sec-01) | Universelles Automatisierungstool für autonome LLM-Agenten-Ketten |
+| 02 | [Visuelle Galerie & Systemarchitektur](#visuelle-galerie--systemarchitektur) | [`#sec-02`](#sec-02) | Mermaid-Schleifen und Vier-Ansichten-ASCII-Topologieprojektion |
+| 03 | [Taktischer Rundenablauf & Sequenzdiagramm](#taktischer-rundenablauf--sequenzdiagramm) | [`#sec-03`](#sec-03) | Sequenzdiagramm und Handoff-Kontext-Pipeline |
+| 04 | [Zielgruppen & Discoverability-Suchanfragen](#zielgruppen--discoverability-suchanfragen) | [`#sec-04`](#sec-04) | Kernzielgruppen [PERSONA-01]..[PERSONA-04] und High-Intent-Suchbegriffe |
+| 05 | [Vergleichsmatrix vs. Alternativen](#vergleichsmatrix--alternativen) | [`#sec-05`](#sec-05) | 10-dimensionale Differenzierung vs. LangGraph, CrewAI, AutoGen, OpenClaw |
+| 06 | [Governance- & Laufzeit-Invariantenmatrix](#governance--laufzeit-invariantenmatrix) | [`#sec-06`](#sec-06) | 10 kanonische Invarianten INV-LOCAL-01..INV-SLA-10 im Überblick |
+| 07 | [Chain-Muster & Rollenmatrix](#chain-muster--rollenmatrix) | [`#sec-07`](#sec-07) | Worker, Reviewer, Controller und Multi-Modell-Konfiguration |
+| 08 | [Installation & Voraussetzungen](#installation--voraussetzungen) | [`#sec-08`](#sec-08) | Python 3.10+ und Claude Code CLI Anforderungen |
+| 09 | [Schritt-für-Schritt Schnellstart](#schritt-fuer-schritt-schnellstart) | [`#sec-09`](#sec-09) | Chain-Definition, Initialisierung und Ausführungsbefehle |
+| 10 | [Pipe-Modus & Ad-hoc-Ausführung](#pipe-modus--ad-hoc-ausfuehrung) | [`#sec-10`](#sec-10) | CLI-Pipes für Ad-hoc-Aufgaben und Skript-Pipelines |
+| 11 | [CLI-Referenz & Globale Konfiguration](#cli-referenz--globale-konfiguration) | [`#sec-11`](#sec-11) | Umfassende Befehlsflags, Timeouts und Steueroptionen |
+| 12 | [Geschwister-Tools & Ökosystemmatrix](#geschwister-tools--oekosystemmatrix) | [`#sec-12`](#sec-12) | 12 Partner-Repositories unter ellmos-ai, dev-bricks und open-bricks |
+| 13 | [Drittanbieter-Lizenzen & Level 1 SBOM](#drittanbieter-lizenzen--transparenz) | [`#sec-13`](#sec-13) | Zero-Copyleft-Inventar, Level 1 SBOM Textbegleiter und RunAsInvoker |
+| 14 | [Sicherheitsrichtlinie & Betriebsgrenzen](#sicherheitsrichtlinie--betriebsgrenzen) | [`#sec-14`](#sec-14) | 48h Security-SLA, Zero-Egress-Perimeter und Meldewege |
+| 15 | [Repository-Struktur & Kernkomponenten](#repository-struktur--kernkomponenten) | [`#sec-15`](#sec-15) | Ordnerstruktur, Chains, Prompts, Templates und Laufzeitdateien |
+| 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (140+ grün), Ruff-Linter und Multi-OS CI-Matrix |
+| 17 | [Discovery-Kontext & Disambiguierung](#discovery-kontext--suchphrasen) | [`#sec-17`](#sec-17) | Disambiguierung zu edgelesssys/marblerun und kanonische Suchbegriffe |
+| 18 | [Gesetzlicher Haftungsausschluss, Schenkungsklausel (§ 521 BGB) & Lizenz](#haftungsausschluss--lizenz) | [`#sec-18`](#sec-18) | MIT-Lizenz, § 521 BGB Gefälligkeitsrecht und Copyright |
+
 
 - [1. Zusammenfassung & Kernidentität](#was-ist-llmauto)
 - [2. Visuelle Galerie & Systemarchitektur](#visuelle-galerie--systemarchitektur)
@@ -57,7 +81,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 
 ---
 
-<a id="was-ist-llmauto"></a>
+<a id="sec-01"></a><a id="was-ist-llmauto"></a>
 ## 1. Zusammenfassung & Kernidentität
 
 llmauto orchestriert autonome LLM-Agenten-Ketten ("Marble Runs" / Kugelbahnen). Mehrere Agenten arbeiten sequentiell -- Worker erledigen Aufgaben, Reviewer prüfen Ergebnisse, Controller koordinieren -- und übergeben Kontext deterministisch über Handoff-Dateien.
@@ -97,7 +121,7 @@ Metapher der Kugelbahn: Die Kugel (der Kontext) rollt von Link zu Link in einer 
 
 ---
 
-<a id="visuelle-galerie--systemarchitektur"></a><a id="visuelle-galerie--ausfuehrungsfluss"></a>
+<a id="sec-02"></a><a id="visuelle-galerie--systemarchitektur"></a><a id="visuelle-galerie--ausfuehrungsfluss"></a>
 ## 2. Visuelle Galerie & Systemarchitektur
 
 Die Kernarchitektur folgt einer zyklischen Kugelbahn-Pipeline, in der jeder Agent einen autonomen Schritt mit verifiziertem Zwischenzustand ausführt:
@@ -118,9 +142,57 @@ graph TD
     style END fill:#111827,stroke:#10b981,color:#fff
 ```
 
+### Vier-Ansichten-ASCII-Topologieprojektion
+
+```text
+===================================================================================================
+[SICHT 1: CLI-COCKPIT, RUNNER-LAUFZEITEN & CHAIN-ORCHESTRIERUNG]
++-------------------------------------------------------------------------------------------------+
+| Aufrufer-Schnittstellen: python -m llmauto chain start <chain> | --pipe | --once | --status     |
+| Multi-Modell-Matrix: Claude (Opus, Sonnet, Haiku) | Codex (via COMA) | Agy (via COMA)            |
+| Link-Supervisor: Rollensystem pro Link (Worker, Reviewer, Controller) & Prompt-Expansion        |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-PROC-07, INV-GATE-03)
+                                      v
+===================================================================================================
+[SICHT 2: MARBLERUN-KERN-ENGINE, SKIP-SCHUTZ & HANDOFF-KONTEXT-PIPELINE]
++-------------------------------------------------------------------------------------------------+
+| Chain-Ausführungs-Engine (llmauto.py / core/runner.py):                                         |
+|   +-----------------------+     +------------------------+     +------------------------+       |
+|   | Link 1: Worker-Agent  | --> | Link 2: Reviewer-Agent | --> | Link 3: Controller     |       |
+|   | (Entwurf & Coden)     |     | (Audit, Test & Fix)    |     | (Stopp-/Abschluss-Prf) |       |
+|   +-----------------------+     +------------------------+     +------------------------+       |
+| Handoff-Isolierung: Baseline-Snapshotting & Anti-Starvation Skip-Schutz (INV-CONT-05)           |
+| Nebenläufigkeits-Schutz: Isolierte Arbeitsverzeichnisse verhindern Kollisionen (INV-SYNC-04)   |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-STATE-06, INV-LOCAL-01)
+                                      v
+===================================================================================================
+[SICHT 3: LAUFZEIT-PERSISTENZ, ZUSTANDSMASCHINE-WAL & MULTI-HOST-SIGNALE]
++-------------------------------------------------------------------------------------------------+
+| Zustandsverzeichnis: ./state/                                                                   |
+|   * status.txt       -> Kanonische Zustandsmaschine (RUNNING, PAUSED, STOPPED, ALL_DONE)         |
+|   * round_counter    -> Persistenter atomarer Rundenzähler (1 .. max_rounds)                    |
+|   * handoff.md       -> Verifizierte Nutzlast für die Kontextübergabe                           |
+|   * pause.req / stop.req / steer.req -> Externe Steuersignale & Multi-Host-Governance           |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
+                                      v
+===================================================================================================
+[SICHT 4: AIR-GAP-SICHERHEITSPERIMETER, ZERO-EGRESS & RUNASINVOKER]
++-------------------------------------------------------------------------------------------------+
+| Zero-Egress-Perimeter: 100% lokale Offline-Ausführung, keine Telemetrie (INV-LOCAL-01)         |
+| Privilegienfreie Ausführung: Standard-Benutzermodus (RunAsInvoker), kein Dienst (INV-SEC-02)    |
+| Zero-Copyleft-Schutz: 100% permissive Lizenzen (PSFL, MIT, Apache-2.0) (Level 1 SBOM)           |
+| Governance & Audit: 48h Security Response SLA, § 521 BGB Schenkungsklausel (INV-SLA-10)         |
++-------------------------------------------------------------------------------------------------+
+===================================================================================================
+```
+
+
 ---
 
-<a id="taktischer-rundenablauf--sequenzdiagramm"></a>
+<a id="sec-03"></a><a id="taktischer-rundenablauf--sequenzdiagramm"></a>
 ## 3. Taktischer Rundenablauf & Sequenzdiagramm
 
 Der Ausführungszyklus koordiniert Prozessisolation, Baseline-Snapshots, Überschreibschutz und persistente Zustandsübergänge:
@@ -157,7 +229,7 @@ sequenceDiagram
 
 ---
 
-<a id="zielgruppen--discoverability-suchanfragen"></a><a id="zielgruppen"></a>
+<a id="sec-04"></a><a id="zielgruppen--discoverability-suchanfragen"></a><a id="zielgruppen"></a>
 ## 4. Zielgruppen & Discoverability-Suchanfragen
 
 | Persona ID | Zielgruppe | Primäre Anforderungen & Herausforderungen | High-Intent Suchanfragen |
@@ -169,7 +241,7 @@ sequenceDiagram
 
 ---
 
-<a id="vergleichsmatrix--alternativen"></a><a id="siehe-auch-openclaw"></a>
+<a id="sec-05"></a><a id="vergleichsmatrix--alternativen"></a><a id="siehe-auch-openclaw"></a>
 ## 5. Vergleichsmatrix vs. Alternativen
 
 | Architekturdimension | `MarbleRun (llmauto)` | LangGraph / LangChain | CrewAI | AutoGen (Microsoft) | Invarianten-Bezug |
@@ -203,7 +275,7 @@ MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Wor
 
 ---
 
-<a id="governance--laufzeit-invariantenmatrix"></a><a id="kernfaehigkeiten--sicherheitsinvarianten"></a>
+<a id="sec-06"></a><a id="governance--laufzeit-invariantenmatrix"></a><a id="kernfaehigkeiten--sicherheitsinvarianten"></a>
 ## 6. Governance- & Laufzeit-Invariantenmatrix
 
 MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantien:
@@ -223,7 +295,7 @@ MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantie
 
 ---
 
-<a id="chain-muster--rollenmatrix"></a>
+<a id="sec-07"></a><a id="chain-muster--rollenmatrix"></a>
 ## 7. Chain-Muster & Rollenmatrix
 
 | Rolle | Primäre Verantwortung | Empfohlenes Modell | Kontext-Retention |
@@ -286,7 +358,7 @@ Runner-Einstellungen lösen konsistent in dieser Reihenfolge auf: Link-Override,
 
 ---
 
-<a id="installation--voraussetzungen"></a><a id="installation"></a>
+<a id="sec-08"></a><a id="installation--voraussetzungen"></a><a id="installation"></a>
 ## 8. Installation & Voraussetzungen
 
 ```bash
@@ -306,7 +378,7 @@ pip install -e ".[providers]"
 
 ---
 
-<a id="schritt-fuer-schritt-schnellstart"></a><a id="1-chain-definieren"></a>
+<a id="sec-09"></a><a id="schritt-fuer-schritt-schnellstart"></a><a id="1-chain-definieren"></a>
 ## 9. Schritt-für-Schritt Schnellstart
 
 ### 1. Chain definieren
@@ -375,7 +447,7 @@ python -m llmauto chain reset my-chain
 
 ---
 
-<a id="pipe-modus--ad-hoc-ausfuehrung"></a><a id="4-pipe-mode-einzelaufrufe"></a>
+<a id="sec-10"></a><a id="pipe-modus--ad-hoc-ausfuehrung"></a><a id="4-pipe-mode-einzelaufrufe"></a>
 ## 10. Pipe-Modus & Ad-hoc-Ausführung
 
 Einzelne LLM-Aufrufe direkt aus dem Terminal oder in Shell-Skripten:
@@ -393,7 +465,7 @@ python -m llmauto pipe "Hallo" --model claude-opus-4-6-20250918
 
 ---
 
-<a id="cli-referenz--globale-konfiguration"></a><a id="cli-referenz"></a>
+<a id="sec-11"></a><a id="cli-referenz--globale-konfiguration"></a><a id="cli-referenz"></a>
 ## 11. CLI-Referenz & Globale Konfiguration
 
 ### CLI-Befehlsübersicht
@@ -420,7 +492,7 @@ python -m llmauto pipe "Hallo" --model claude-opus-4-6-20250918
 
 ---
 
-<a id="geschwister-tools--oekosystemmatrix"></a><a id="geschwister-tools--oekosystem"></a>
+<a id="sec-12"></a><a id="geschwister-tools--oekosystemmatrix"></a><a id="geschwister-tools--oekosystem"></a>
 ## 12. Geschwister-Tools & Ökosystemmatrix
 
 MarbleRun ist Teil des modularen Ökosystems von `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-and-more` und `open-bricks`:
@@ -442,7 +514,7 @@ MarbleRun ist Teil des modularen Ökosystems von `ellmos-ai`, `dev-bricks`, `fil
 
 ---
 
-<a id="drittanbieter-lizenzen--transparenz"></a>
+<a id="sec-13"></a><a id="drittanbieter-lizenzen--transparenz"></a>
 ## 13. Drittanbieter-Lizenzen & Level 1 SBOM
 
 MarbleRun (`llmauto`) besitzt null verpflichtende externe Laufzeit-Abhängigkeiten. Die Kern-Engine basiert vollständig auf der Python-Standardbibliothek ([PSFL-2.0](https://docs.python.org/3/license.html)).
@@ -456,7 +528,7 @@ Keine Copyleft-, GPL- oder AGPL-Bestandteile. Detaillierte Nachweise und Lizenzt
 
 ---
 
-<a id="sicherheitsrichtlinie--betriebsgrenzen"></a>
+<a id="sec-14"></a><a id="sicherheitsrichtlinie--betriebsgrenzen"></a>
 ## 14. Sicherheitsrichtlinie & Betriebsgrenzen
 
 MarbleRun garantiert strikte Local-First-Sicherheitsgrenzen:
@@ -467,7 +539,7 @@ MarbleRun garantiert strikte Local-First-Sicherheitsgrenzen:
 
 ---
 
-<a id="repository-struktur--kernkomponenten"></a>
+<a id="sec-15"></a><a id="repository-struktur--kernkomponenten"></a>
 ## 15. Repository-Struktur & Kernkomponenten
 
 ```
@@ -497,7 +569,7 @@ MarbleRun/
 
 ---
 
-<a id="entwicklung--testmatrix"></a>
+<a id="sec-16"></a><a id="entwicklung--testmatrix"></a>
 ## 16. Entwicklung, Testmatrix & Verifikation
 
 MarbleRun unterhält eine automatisierte Test-Suite mit 100% grünem Bestehensstatus:
@@ -523,7 +595,7 @@ Die CI-Pipeline läuft automatisch via `.github/workflows/tests.yml` unter:
 
 ---
 
-<a id="discovery-kontext--suchphrasen"></a><a id="beste-suchphrasen"></a>
+<a id="sec-17"></a><a id="discovery-kontext--suchphrasen"></a><a id="beste-suchphrasen"></a>
 ## 17. Discovery-Kontext & Disambiguierung
 
 Nutze diese Suchphrasen bei der Suche in Suchmaschinen, auf GitHub oder in KI-Tool-Indizes:
@@ -543,7 +615,7 @@ MarbleRun wird am zuverlässigsten über seinen Paketnamen `llmauto` und die Kom
 
 ---
 
-<a id="haftungsausschluss--lizenz"></a><a id="lizenz"></a>
+<a id="sec-18"></a><a id="haftungsausschluss--lizenz"></a><a id="lizenz"></a>
 ## 18. Gesetzlicher Haftungsausschluss, Schenkungsklausel (§ 521 BGB) & Lizenz
 
 ### Gesetzlicher Haftungsausschluss (§ 521 BGB Gefälligkeitsrecht)

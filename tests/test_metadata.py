@@ -33,7 +33,7 @@ def test_pyproject_metadata_integrity():
     assert "MarbleRun" in project.get("description", "")
     # PEP 639: license is an SPDX expression string, license files are declared separately
     assert project.get("license") == "MIT"
-    assert project.get("license-files") == ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
+    assert project.get("license-files") == ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md", "THIRD_PARTY_LICENSES.txt"]
     assert "urls" in project
     assert project["urls"].get("Homepage") == "https://github.com/ellmos-ai/MarbleRun"
     assert project["urls"].get("Repository") == "https://github.com/ellmos-ai/MarbleRun"
@@ -132,7 +132,7 @@ def test_llms_txt_and_badge_discovery_parity():
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
     assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+        stamp in llms_text for stamp in ("Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
     ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
@@ -533,9 +533,9 @@ def test_pyproject_notice_url_and_norecursedirs():
 
 
 def test_third_party_licenses_audit_recency():
-    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-28 or 2026-09-22 audit."""
+    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
+    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -559,3 +559,135 @@ def test_gitignore_hardened_tokens():
     assert "*-MacBook*" in gitignore_text
     assert "*.rej" in gitignore_text
     assert ".hypothesis/" in gitignore_text
+
+
+def test_readme_sec_dual_anchors_and_quick_nav_table():
+    """Verify both README.md and README_de.md feature bilateral <a id='sec-01'></a>..<a id='sec-18'></a> dual anchors and Quick Nav table."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    for i in range(1, 19):
+        sec_id = f"sec-{i:02d}"
+        anchor_tag = f'<a id="{sec_id}">'
+        assert anchor_tag in readme_en, f"Missing {anchor_tag} in README.md"
+        assert anchor_tag in readme_de, f"Missing {anchor_tag} in README_de.md"
+
+        nav_link = f"[`#{sec_id}`](#{sec_id})"
+        assert nav_link in readme_en, f"Missing {nav_link} in README.md Quick Navigation table"
+        assert nav_link in readme_de, f"Missing {nav_link} in README_de.md Schnellnavigation table"
+
+
+def test_four_view_ascii_topology_projection():
+    """Verify both English and German READMEs include the Four-View ASCII Topology Projection mapping INV-01..INV-10."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    assert "[VIEW 1: CLI COCKPIT, RUNNER RUNTIMES & CHAIN ORCHESTRATION]" in readme_en
+    assert "[VIEW 2: MARBLERUN CORE ENGINE, SKIP-GUARD & HANDOFF CONTEXT PIPELINE]" in readme_en
+    assert "[VIEW 3: RUNTIME PERSISTENCE, STATE MACHINE WAL & MULTI-HOST SIGNALS]" in readme_en
+    assert "[VIEW 4: AIR-GAP DEFENSE PERIMETER, ZERO-EGRESS & RUNASINVOKER]" in readme_en
+
+    assert "[SICHT 1: CLI-COCKPIT, RUNNER-LAUFZEITEN & CHAIN-ORCHESTRIERUNG]" in readme_de
+    assert "[SICHT 2: MARBLERUN-KERN-ENGINE, SKIP-SCHUTZ & HANDOFF-KONTEXT-PIPELINE]" in readme_de
+    assert "[SICHT 3: LAUFZEIT-PERSISTENZ, ZUSTANDSMASCHINE-WAL & MULTI-HOST-SIGNALE]" in readme_de
+    assert "[SICHT 4: AIR-GAP-SICHERHEITSPERIMETER, ZERO-EGRESS & RUNASINVOKER]" in readme_de
+
+    for text in (readme_en, readme_de):
+        assert "INV-LOCAL-01" in text
+        assert "INV-SEC-02" in text
+        assert "INV-CONT-05" in text
+        assert "INV-SLA-10" in text
+
+
+def test_level_1_sbom_plain_text_companion():
+    """Verify THIRD_PARTY_LICENSES.txt exists as Level 1 SBOM text companion with all invariants and licenses."""
+    sbom_txt = REPO_ROOT / "THIRD_PARTY_LICENSES.txt"
+    assert sbom_txt.is_file(), "THIRD_PARTY_LICENSES.txt must exist in repo root"
+
+    content = sbom_txt.read_text(encoding="utf-8")
+    assert "LEVEL 1 SBOM" in content
+    assert "Python Standard Library" in content
+    assert "PSFL-2.0" in content
+    assert "RunAsInvoker" in content
+    assert "Zero-Egress" in content or "Zero Egress" in content
+    assert "521 BGB" in content
+
+    # All 10 invariants
+    assert "INV-LOCAL-01" in content
+    assert "INV-SEC-02" in content
+    assert "INV-GATE-03" in content
+    assert "INV-SYNC-04" in content
+    assert "INV-CONT-05" in content
+    assert "INV-STATE-06" in content
+    assert "INV-PROC-07" in content
+    assert "INV-CI-08" in content
+    assert "INV-CONC-09" in content
+    assert "INV-SLA-10" in content
+
+    # Full license texts
+    assert "MIT LICENSE" in content
+    assert "APACHE LICENSE VERSION 2.0" in content
+    assert "PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2" in content
+
+
+def test_pyproject_20_topics_and_sbom_urls():
+    """Verify pyproject.toml keywords match all 20 sorted GitHub remote topics and declare Level 1 SBOM URLs."""
+    pyproject_file = REPO_ROOT / "pyproject.toml"
+    data = tomllib.loads(pyproject_file.read_text(encoding="utf-8"))
+    project = data.get("project", {})
+
+    expected_topics = [
+        "agent-chains",
+        "agent-framework",
+        "agent-orchestration",
+        "ai-agent",
+        "automation",
+        "autonomous-agents",
+        "chain-execution",
+        "claude",
+        "claude-code",
+        "claude-code-cli",
+        "llm",
+        "llm-agents",
+        "llm-automation",
+        "llmauto",
+        "local-first",
+        "multi-agent",
+        "open-source",
+        "orchestration",
+        "python",
+        "python-cli",
+    ]
+    actual_keywords = project.get("keywords", [])
+    assert actual_keywords == expected_topics, f"Keywords mismatch: {actual_keywords} vs {expected_topics}"
+
+    urls = project.get("urls", {})
+    assert "Level 1 SBOM" in urls
+    assert urls["Level 1 SBOM"].endswith("THIRD_PARTY_LICENSES.txt")
+    assert "Third-Party Licenses (Text)" in urls
+    assert urls["Third-Party Licenses (Text)"].endswith("THIRD_PARTY_LICENSES.txt")
+    assert "Plain-Text License" in urls
+    assert urls["Plain-Text License"].endswith("LICENSE")
+
+    license_files = project.get("license-files", [])
+    assert "THIRD_PARTY_LICENSES.txt" in license_files
+
+
+def test_notice_plain_text_companion_reference():
+    """Verify NOTICE attribution file references THIRD_PARTY_LICENSES.txt."""
+    notice_text = (REPO_ROOT / "NOTICE").read_text(encoding="utf-8")
+    assert "THIRD_PARTY_LICENSES.txt" in notice_text
+
+
+def test_pfad_b_recency_and_changelog_sync():
+    """Verify CHANGELOG.md, MARKETING-LOG.txt, and llms.txt reflect 2026-09-29 Pfad B audit."""
+    changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "Pfad B Discoverability" in changelog_text
+    assert "2026-09-29" in changelog_text
+
+    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
+    assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
+
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+    assert "Last-checked: 2026-09-29" in llms_text
+    assert "THIRD_PARTY_LICENSES.txt" in llms_text

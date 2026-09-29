@@ -206,3 +206,41 @@ Implemented Hygiene Actions:
     - Documented hygiene updates in CHANGELOG.md under [Unreleased].
 [x] Automated Contract Verification:
     - Expanded tests/test_repository_hygiene.py and tests/test_metadata.py to verify IDEAPAD sync tokens, Contributing URL, and audit recency.
+
+================================================================================
+11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)
+================================================================================
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Target Repo: ellmos-ai/marblerun (MarbleRun / llmauto)
+Version: 0.1.3 (Version-Freeze per T-20260920-167562623)
+
+Implemented Discoverability & Architecture Hardening Actions:
+[x] Version-Freeze Discipline (T-20260920-167562623):
+    - Single-source version 0.1.3 maintained strictly frozen across all manifests, code, and badges.
+[x] Bilingual 18-Point Quick Navigation Parity & Dual Anchors (sec-01..sec-18):
+    - Upgraded README.md and README_de.md with standardized 18-point quick navigation table.
+    - Prepend bilateral dual HTML anchors `<a id="sec-01"></a>` through `<a id="sec-18"></a>` across all 18 sections while preserving legacy link anchors.
+    - Added shields.io badges for Level 1 SBOM (Plain Text), Verified (2026-09-29), and Pytest pass count.
+[x] Four-View ASCII Topology Projection:
+    - Added standardized Four-View ASCII Topology Projection in Section 2 of both READMEs:
+      * View 1: CLI Cockpit, Runner Runtimes & Chain Orchestration (INV-PROC-07, INV-GATE-03)
+      * View 2: MarbleRun Core Engine, Skip-Guard & Handoff Context Pipeline (INV-CONT-05, INV-SYNC-04)
+      * View 3: Runtime Persistence, State Machine WAL & Multi-Host Signals (INV-STATE-06, INV-LOCAL-01)
+      * View 4: Air-Gap Defense Perimeter, Zero-Egress & RunAsInvoker (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
+[x] Level 1 SBOM Plain-Text Companion (THIRD_PARTY_LICENSES.txt):
+    - Created root Level 1 SBOM plain-text companion covering runtime core (Python stdlib PSFL-2.0), optional provider bridge (coma MIT), and development tooling (pytest, pytest-asyncio, ruff, setuptools, setuptools-scm).
+    - Formally verified all 10 governance and security invariants (INV-LOCAL-01..INV-SLA-10).
+    - Re-audited THIRD_PARTY_LICENSES.md as of 2026-09-29 with cross-reference to THIRD_PARTY_LICENSES.txt.
+    - Updated NOTICE to declare the plain-text companion.
+[x] PEP 621 Standard & 20-Topic Saturation in pyproject.toml:
+    - Saturated project.keywords with all 20 GitHub remote topics in alphabetical order:
+      agent-chains, agent-framework, agent-orchestration, ai-agent, automation, autonomous-agents,
+      chain-execution, claude, claude-code, claude-code-cli, llm, llm-agents, llm-automation, llmauto,
+      local-first, multi-agent, open-source, orchestration, python, python-cli.
+    - Registered project.urls for "Level 1 SBOM", "Third-Party Licenses (Text)", and "Plain-Text License".
+    - Updated license-files whitelist with THIRD_PARTY_LICENSES.txt.
+[x] Documentation & RAG Manifest Sync:
+    - Updated llms.txt Last-checked timestamp to 2026-09-29 and linked THIRD_PARTY_LICENSES.txt.
+    - Updated CHANGELOG.md under [Unreleased].
+[x] Automated Contract Verification:
+    - Added new contract tests in tests/test_metadata.py verifying dual HTML anchors sec-01..sec-18, ASCII Four-View Topology, Level 1 SBOM plain-text companion invariants, 20-topic saturation, and audit recency.

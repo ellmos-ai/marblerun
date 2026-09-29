@@ -25,11 +25,35 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
+[![Level 1 SBOM: Plain Text](https://img.shields.io/badge/Level%201%20SBOM-Plain%20Text-success.svg)](THIRD_PARTY_LICENSES.txt)
+[![Verified: 2026-09-29](https://img.shields.io/badge/Verified-2026--09--29-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
 
 ## Quick Navigation
+
+| # | Section | Nav Anchor | Description |
+|---|---|---|---|
+| 01 | [Executive Summary & Core Identity](#what-is-llmauto) | [`#sec-01`](#sec-01) | Universal automation tool for autonomous LLM agent chains |
+| 02 | [Visual Showcase & System Architecture](#visual-showcase--system-architecture) | [`#sec-02`](#sec-02) | Mermaid execution loops and Four-View ASCII Topology Projection |
+| 03 | [Tactical Round Execution & Sequence Flow](#tactical-round-execution--sequence-flow) | [`#sec-03`](#sec-03) | Sequence diagram and handoff context pipeline |
+| 04 | [Target Personas & Discoverability Queries](#target-personas--discoverability-queries) | [`#sec-04`](#sec-04) | Core archetypes [PERSONA-01]..[PERSONA-04] and high-intent queries |
+| 05 | [Comparative Matrix vs. Alternatives](#comparative-matrix--alternatives) | [`#sec-05`](#sec-05) | 10-dimension comparison vs LangGraph, CrewAI, AutoGen, OpenClaw |
+| 06 | [Governance & Runtime Invariants Matrix](#governance--runtime-invariants-matrix) | [`#sec-06`](#sec-06) | 10 canonical security and runtime invariants INV-LOCAL-01..INV-SLA-10 |
+| 07 | [Chain Patterns & Role Matrix](#chain-patterns--role-matrix) | [`#sec-07`](#sec-07) | Worker, Reviewer, Controller, and multi-model configuration |
+| 08 | [Installation & Prerequisites](#installation--prerequisites) | [`#sec-08`](#sec-08) | Python 3.10+ and Claude Code CLI requirements |
+| 09 | [Step-by-Step Quickstart](#step-by-step-quickstart) | [`#sec-09`](#sec-09) | Chain definition, initialization, and execution commands |
+| 10 | [Pipe Mode & Ad-hoc Execution](#pipe-mode--ad-hoc-execution) | [`#sec-10`](#sec-10) | Single-call CLI pipes and ad-hoc task automation |
+| 11 | [CLI Reference & Global Configuration](#cli-reference--global-configuration) | [`#sec-11`](#sec-11) | Comprehensive command flags, timeouts, and options |
+| 12 | [Sibling Tools & Ecosystem Matrix](#sibling-tools--ecosystem-matrix) | [`#sec-12`](#sec-12) | 12 partner repositories across ellmos-ai, dev-bricks, and open-bricks |
+| 13 | [Third-Party Licenses & Level 1 SBOM](#third-party-licenses--transparency) | [`#sec-13`](#sec-13) | Zero-copyleft inventory, Level 1 SBOM companion, and RunAsInvoker |
+| 14 | [Security Policy & Operational Limits](#security-policy--operational-limits) | [`#sec-14`](#sec-14) | 48h response SLA, zero-egress perimeter, and vulnerability reporting |
+| 15 | [Repository Structure & Key Assets](#repository-structure--key-assets) | [`#sec-15`](#sec-15) | Folder structure, chains, prompts, templates, and runtime files |
+| 16 | [Development, Test Matrix & Verification](#development--test-matrix) | [`#sec-16`](#sec-16) | Pytest suite (140+ green), ruff linter, and multi-OS CI matrix |
+| 17 | [Discovery Keywords & Disambiguation](#discovery--keywords--disambiguation) | [`#sec-17`](#sec-17) | Disambiguation from edgelesssys/marblerun and high-intent SEO |
+| 18 | [Statutory Notice, Liability Limitation & License (§ 521 BGB)](#statutory-notice--liability-limitation) | [`#sec-18`](#sec-18) | MIT license, § 521 BGB gratuitous lending disclaimer, and copyright |
+
 
 - [1. Executive Summary & Core Identity](#what-is-llmauto)
 - [2. Visual Showcase & System Architecture](#visual-showcase--system-architecture)
@@ -57,7 +81,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 
 ---
 
-<a id="what-is-llmauto"></a>
+<a id="sec-01"></a><a id="what-is-llmauto"></a>
 ## 1. Executive Summary & Core Identity
 
 llmauto orchestrates autonomous LLM agent chains ("marble runs"). Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context via handoff files.
@@ -97,7 +121,7 @@ Think of it as a marble run: the marble (context) rolls from link to link in a l
 
 ---
 
-<a id="visual-showcase--system-architecture"></a><a id="visual-showcase--execution-flow"></a>
+<a id="sec-02"></a><a id="visual-showcase--system-architecture"></a><a id="visual-showcase--execution-flow"></a>
 ## 2. Visual Showcase & System Architecture
 
 The core architecture follows a cyclic marble-run pipeline where each agent is an autonomous step passing verified state:
@@ -118,9 +142,57 @@ graph TD
     style END fill:#111827,stroke:#10b981,color:#fff
 ```
 
+### Four-View ASCII Topology Projection
+
+```text
+===================================================================================================
+[VIEW 1: CLI COCKPIT, RUNNER RUNTIMES & CHAIN ORCHESTRATION]
++-------------------------------------------------------------------------------------------------+
+| Caller Invocations: python -m llmauto chain start <chain> | --pipe | --once | --status          |
+| Multi-Model Matrix: Claude (Opus, Sonnet, Haiku) | Codex (via COMA) | Agy (via COMA)            |
+| Link Supervisor: Per-link roles (Worker, Reviewer, Controller) & custom prompt expansion        |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-PROC-07, INV-GATE-03)
+                                      v
+===================================================================================================
+[VIEW 2: MARBLERUN CORE ENGINE, SKIP-GUARD & HANDOFF CONTEXT PIPELINE]
++-------------------------------------------------------------------------------------------------+
+| Chain Execution Engine (llmauto.py / core/runner.py):                                           |
+|   +-----------------------+     +------------------------+     +------------------------+       |
+|   | Link 1: Worker Agent  | --> | Link 2: Reviewer Agent | --> | Link 3: Controller     |       |
+|   | (Draft & Code Task)   |     | (Audit, Test & Verify) |     | (Evaluate Stop / Done) |       |
+|   +-----------------------+     +------------------------+     +------------------------+       |
+| Handoff Isolation: Baseline snapshotting & anti-starvation skip-protection (INV-CONT-05)        |
+| Concurrency Isolation: Isolated per-link workspaces prevent file collisions (INV-SYNC-04)       |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-STATE-06, INV-LOCAL-01)
+                                      v
+===================================================================================================
+[VIEW 3: RUNTIME PERSISTENCE, STATE MACHINE WAL & MULTI-HOST SIGNALS]
++-------------------------------------------------------------------------------------------------+
+| State Directory: ./state/                                                                       |
+|   * status.txt       -> Canonical state machine (RUNNING, PAUSED, STOPPED, ALL_DONE)            |
+|   * round_counter    -> Persistent atomic round iterations (1 .. max_rounds)                    |
+|   * handoff.md       -> Verified contextual payload passed between agent links                  |
+|   * pause.req / stop.req / steer.req -> External control signals & multi-host governance        |
++-------------------------------------------------------------------------------------------------+
+                                      | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
+                                      v
+===================================================================================================
+[VIEW 4: AIR-GAP DEFENSE PERIMETER, ZERO-EGRESS & RUNASINVOKER]
++-------------------------------------------------------------------------------------------------+
+| Zero-Egress Boundary: 100% offline local execution, zero telemetry, zero analytics (INV-LOCAL)  |
+| Non-Elevation Privilege: Standard user-mode execution (RunAsInvoker), no daemon (INV-SEC-02)   |
+| Zero-Copyleft Perimeter: 100% permissive dependencies (PSFL, MIT, Apache-2.0) (Level 1 SBOM)    |
+| Governance & Audit: 48h Security Response SLA, § 521 BGB statutory disclaimer (INV-SLA-10)      |
++-------------------------------------------------------------------------------------------------+
+===================================================================================================
+```
+
+
 ---
 
-<a id="tactical-round-execution--sequence-flow"></a>
+<a id="sec-03"></a><a id="tactical-round-execution--sequence-flow"></a>
 ## 3. Tactical Round Execution & Sequence Flow
 
 The execution cycle coordinates process isolation, baseline snapshotting, anti-overwrite protection, and persistent state transitions:
@@ -157,7 +229,7 @@ sequenceDiagram
 
 ---
 
-<a id="target-personas--discoverability-queries"></a><a id="target-personas"></a>
+<a id="sec-04"></a><a id="target-personas--discoverability-queries"></a><a id="target-personas"></a>
 ## 4. Target Personas & Discoverability Queries
 
 | Persona ID | Target Audience | Primary Needs & Operational Pain Points | High-Intent Discoverability Queries |
@@ -169,7 +241,7 @@ sequenceDiagram
 
 ---
 
-<a id="comparative-matrix--alternatives"></a><a id="see-also-openclaw"></a>
+<a id="sec-05"></a><a id="comparative-matrix--alternatives"></a><a id="see-also-openclaw"></a>
 ## 5. Comparative Matrix vs. Alternatives
 
 | Architectural Dimension | `MarbleRun (llmauto)` | LangGraph / LangChain | CrewAI | AutoGen (Microsoft) | Invariant Alignment |
@@ -203,7 +275,7 @@ MarbleRun makes LLMs act -- autonomous multi-agent chains where workers, reviewe
 
 ---
 
-<a id="governance--runtime-invariants-matrix"></a><a id="core-capabilities--security-invariants"></a>
+<a id="sec-06"></a><a id="governance--runtime-invariants-matrix"></a><a id="core-capabilities--security-invariants"></a>
 ## 6. Governance & Runtime Invariants Matrix
 
 MarbleRun is built on strict local-first, zero-egress, and resilient execution guarantees:
@@ -223,7 +295,7 @@ MarbleRun is built on strict local-first, zero-egress, and resilient execution g
 
 ---
 
-<a id="chain-patterns--role-matrix"></a>
+<a id="sec-07"></a><a id="chain-patterns--role-matrix"></a>
 ## 7. Chain Patterns & Role Matrix
 
 | Role | Primary Responsibility | Recommended Model | Context Retention |
@@ -312,7 +384,7 @@ Prompts support `{HOME}` (Windows path) and `{BASH_HOME}` (Unix path) placeholde
 
 ---
 
-<a id="installation--prerequisites"></a><a id="installation"></a>
+<a id="sec-08"></a><a id="installation--prerequisites"></a><a id="installation"></a>
 ## 8. Installation & Prerequisites
 
 ```bash
@@ -332,7 +404,7 @@ pip install -e ".[providers]"
 
 ---
 
-<a id="step-by-step-quickstart"></a><a id="1-define-a-chain"></a>
+<a id="sec-09"></a><a id="step-by-step-quickstart"></a><a id="1-define-a-chain"></a>
 ## 9. Step-by-Step Quickstart
 
 ### 1. Create a Chain Definition
@@ -401,7 +473,7 @@ python -m llmauto chain reset my-chain
 
 ---
 
-<a id="pipe-mode--ad-hoc-execution"></a><a id="4-pipe-mode-single-calls"></a>
+<a id="sec-10"></a><a id="pipe-mode--ad-hoc-execution"></a><a id="4-pipe-mode-single-calls"></a>
 ## 10. Pipe Mode & Ad-hoc Execution
 
 Single LLM calls executed directly from your terminal or shell scripts:
@@ -419,7 +491,7 @@ python -m llmauto pipe "Hello" --model claude-opus-4-6-20250918
 
 ---
 
-<a id="cli-reference--global-configuration"></a><a id="cli-reference"></a>
+<a id="sec-11"></a><a id="cli-reference--global-configuration"></a><a id="cli-reference"></a>
 ## 11. CLI Reference & Global Configuration
 
 ### CLI Command Reference
@@ -455,7 +527,7 @@ llmauto ships with production-tested chain configurations:
 
 ---
 
-<a id="sibling-tools--ecosystem-matrix"></a><a id="sibling-tools--ecosystem"></a>
+<a id="sec-12"></a><a id="sibling-tools--ecosystem-matrix"></a><a id="sibling-tools--ecosystem"></a>
 ## 12. Sibling Tools & Ecosystem Matrix
 
 MarbleRun is part of the `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-and-more`, and `open-bricks` ecosystem of modular developer tools and agent orchestration components:
@@ -477,7 +549,7 @@ MarbleRun is part of the `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-an
 
 ---
 
-<a id="third-party-licenses--transparency"></a><a id="drittanbieter-lizenzen--transparenz"></a>
+<a id="sec-13"></a><a id="third-party-licenses--transparency"></a><a id="drittanbieter-lizenzen--transparenz"></a>
 ## 13. Third-Party Licenses & Level 1 SBOM
 
 MarbleRun (`llmauto`) is engineered with zero mandatory external runtime dependencies. The core agent loop, CLI runner, and process orchestration operate solely on the Python Standard Library ([PSFL-2.0](https://docs.python.org/3/license.html)).
@@ -491,7 +563,7 @@ Zero copyleft, GPL, or AGPL dependencies are included. Detailed dependency notic
 
 ---
 
-<a id="security-policy--operational-limits"></a>
+<a id="sec-14"></a><a id="security-policy--operational-limits"></a>
 ## 14. Security Policy & Operational Limits
 
 MarbleRun enforces a strict local-first security boundary:
@@ -502,7 +574,7 @@ MarbleRun enforces a strict local-first security boundary:
 
 ---
 
-<a id="repository-structure--key-assets"></a>
+<a id="sec-15"></a><a id="repository-structure--key-assets"></a>
 ## 15. Repository Structure & Key Assets
 
 ```
@@ -532,7 +604,7 @@ MarbleRun/
 
 ---
 
-<a id="development--test-matrix"></a>
+<a id="sec-16"></a><a id="development--test-matrix"></a>
 ## 16. Development, Test Matrix & Verification
 
 `MarbleRun` maintains a comprehensive automated test suite with 100% green passing status:
@@ -558,7 +630,7 @@ The CI pipeline executes automatically via `.github/workflows/tests.yml` across:
 
 ---
 
-<a id="discovery--keywords--disambiguation"></a><a id="best-search-phrases"></a>
+<a id="sec-17"></a><a id="discovery--keywords--disambiguation"></a><a id="best-search-phrases"></a>
 ## 17. Discovery Keywords & Disambiguation
 
 Use these phrases when looking for the project in search engines, GitHub search, LLM tool indexes, or internal automation documentation:
@@ -578,7 +650,7 @@ MarbleRun is best discovered through its CLI/package name `llmauto` plus the use
 
 ---
 
-<a id="statutory-notice--liability-limitation"></a><a id="license"></a>
+<a id="sec-18"></a><a id="statutory-notice--liability-limitation"></a><a id="license"></a>
 ## 18. Statutory Notice, Liability Limitation & License (§ 521 BGB)
 
 ### Statutory Disclaimer (§ 521 BGB Gefälligkeitsrecht)
