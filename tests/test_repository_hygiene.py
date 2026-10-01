@@ -70,6 +70,9 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "LOCK.user.test",
         "LOCK.until.test",
         "LOCK.condition.test",
+        "LOCK.dev.test",
+        "LOCK.antigravity.test",
+        "LOCK.bugsearch.test",
         "LOCK.permissions.json",
         ".automation-lock",
         "LOCK_test.txt",
@@ -79,6 +82,8 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "state.conflict",
         "doc-CONFLIT-host.md",
         "sync.sync-temp-part.tmp",
+        "ehthumbs.db",
+        "TASKPLAN_daily.md",
     )
 
     assert ignored == {
@@ -86,6 +91,9 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "LOCK.user.test",
         "LOCK.until.test",
         "LOCK.condition.test",
+        "LOCK.dev.test",
+        "LOCK.antigravity.test",
+        "LOCK.bugsearch.test",
         "LOCK.permissions.json",
         ".automation-lock",
         "LOCK_test.txt",
@@ -95,6 +103,8 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "state.conflict",
         "doc-CONFLIT-host.md",
         "sync.sync-temp-part.tmp",
+        "ehthumbs.db",
+        "TASKPLAN_daily.md",
     }
 
 

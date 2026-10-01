@@ -13,7 +13,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 
 [![Version](https://img.shields.io/badge/Version-0.1.3-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-140%20bestanden%20%7C%20100%25%20gr%C3%BCn-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-148%20bestanden%20%7C%20100%25%20gr%C3%BCn-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/Code%20Style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -26,7 +26,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 [![Organization](https://img.shields.io/badge/organization-ellmos--ai-blue.svg)](https://github.com/ellmos-ai)
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Level 1 SBOM: Textbegleiter](https://img.shields.io/badge/Level%201%20SBOM-Textbegleiter-success.svg)](THIRD_PARTY_LICENSES.txt)
-[![Verifiziert: 2026-09-29](https://img.shields.io/badge/Verifiziert-2026--09--29-brightgreen.svg)]()
+[![Verifiziert: 2026-10-01](https://img.shields.io/badge/Verifiziert-2026--10--01-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
@@ -50,7 +50,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 | 13 | [Drittanbieter-Lizenzen & Level 1 SBOM](#drittanbieter-lizenzen--transparenz) | [`#sec-13`](#sec-13) | Zero-Copyleft-Inventar, Level 1 SBOM Textbegleiter und RunAsInvoker |
 | 14 | [Sicherheitsrichtlinie & Betriebsgrenzen](#sicherheitsrichtlinie--betriebsgrenzen) | [`#sec-14`](#sec-14) | 48h Security-SLA, Zero-Egress-Perimeter und Meldewege |
 | 15 | [Repository-Struktur & Kernkomponenten](#repository-struktur--kernkomponenten) | [`#sec-15`](#sec-15) | Ordnerstruktur, Chains, Prompts, Templates und Laufzeitdateien |
-| 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (140+ grün), Ruff-Linter und Multi-OS CI-Matrix |
+| 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (148+ grün), Ruff-Linter und Multi-OS CI-Matrix |
 | 17 | [Discovery-Kontext & Disambiguierung](#discovery-kontext--suchphrasen) | [`#sec-17`](#sec-17) | Disambiguierung zu edgelesssys/marblerun und kanonische Suchbegriffe |
 | 18 | [Gesetzlicher Haftungsausschluss, Schenkungsklausel (§ 521 BGB) & Lizenz](#haftungsausschluss--lizenz) | [`#sec-18`](#sec-18) | MIT-Lizenz, § 521 BGB Gefälligkeitsrecht und Copyright |
 

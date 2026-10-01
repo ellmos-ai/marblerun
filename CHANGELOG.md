@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Pfad A Repository Hygiene, Bilingual CONTRIBUTING Expansion, Multi-Host Sync Defense & Contract Tests (2026-10-01) [G 2026-10-01]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
+- **Bilinguale CONTRIBUTING-Spezifikation (EN/DE):** Upgraded `CONTRIBUTING.md` to comprehensive dual-language developer guidelines defining all 10 governance and runtime invariants (`INV-LOCAL-01` through `INV-SLA-10`), Plan D local clone workflow (`C:\_Local_DEV\repos\marblerun`), unprivileged user-mode execution (`RunAsInvoker`), clean diff standards, and 48h Security Response SLA.
+- **Multi-Host Cloud-Sync, Cache & Lock Defense (`.gitignore`):** Hardened against multi-agent collisions with additional canonical lock patterns (`LOCK.dev.*`, `LOCK.antigravity.*`, `LOCK.bugsearch.*`), OS thumbnail artifacts (`ehthumbs.db`), and local task plans (`TASKPLAN_*.md`).
+- **Level 1 SBOM Companion & Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime and build dependencies as of 2026-10-01, confirming 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution, zero copyleft, zero outbound egress, and statutory disclaimer (§ 521 BGB).
+- **RAG-Manifest & Badges:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-01`; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-01`; updated Section 12 in `MARKETING-LOG.txt`.
+- **Automatisierte Vertragstests:** Extended `tests/test_repository_hygiene.py` and `tests/test_metadata.py` with contract tests verifying bilingual CONTRIBUTING invariants, hardened lock/cache patterns, and 2026-10-01 recency.
+
 ### Pfad B Discoverability, 18-Point Dual Anchors, ASCII 4-View Topology, Level 1 SBOM Text Companion & Contract Tests (2026-09-29) [G 2026-09-29]
 
 - **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, and manifests.

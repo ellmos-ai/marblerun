@@ -80,6 +80,7 @@ token.json
 # OS
 .DS_Store
 Thumbs.db
+ehthumbs.db
 desktop.ini
 
 # PDFs (generated, large)
@@ -96,6 +97,7 @@ desktop.ini
 
 # Interne Aufgabenliste (zitiert private Pfade)
 TODO.md
+TASKPLAN_*.md
 
 # Multi-Agent & Canonical Lock-System (lokal, nie committen)
 LOCK
@@ -103,6 +105,9 @@ LOCK.*
 LOCK.user.*
 LOCK.until.*
 LOCK.condition.*
+LOCK.dev.*
+LOCK.antigravity.*
+LOCK.bugsearch.*
 LOCK*.txt
 LOCK.permissions.json
 .automation-lock

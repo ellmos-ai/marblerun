@@ -132,7 +132,7 @@ def test_llms_txt_and_badge_discovery_parity():
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
     assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+        stamp in llms_text for stamp in ("Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
     ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
@@ -533,9 +533,9 @@ def test_pyproject_notice_url_and_norecursedirs():
 
 
 def test_third_party_licenses_audit_recency():
-    """Verify THIRD_PARTY_LICENSES.md reflects 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
+    """Verify THIRD_PARTY_LICENSES.md reflects 2026-10-01, 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
+    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -680,7 +680,7 @@ def test_notice_plain_text_companion_reference():
 
 
 def test_pfad_b_recency_and_changelog_sync():
-    """Verify CHANGELOG.md, MARKETING-LOG.txt, and llms.txt reflect 2026-09-29 Pfad B audit."""
+    """Verify CHANGELOG.md, MARKETING-LOG.txt, and llms.txt reflect Pfad B audit."""
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "Pfad B Discoverability" in changelog_text
     assert "2026-09-29" in changelog_text
@@ -689,5 +689,53 @@ def test_pfad_b_recency_and_changelog_sync():
     assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert "Last-checked: 2026-09-29" in llms_text
+    assert "Last-checked: 2026-10-01" in llms_text or "Last-checked: 2026-09-29" in llms_text
     assert "THIRD_PARTY_LICENSES.txt" in llms_text
+
+
+def test_contributing_bilingual_and_invariant_parity():
+    """Verify CONTRIBUTING.md contains bilingual English/German sections, 10 invariants, Plan D, and RunAsInvoker."""
+    contributing_file = REPO_ROOT / "CONTRIBUTING.md"
+    assert contributing_file.is_file(), "CONTRIBUTING.md must exist in repo root"
+
+    content = contributing_file.read_text(encoding="utf-8")
+    assert "## English" in content
+    assert "## Deutsch" in content
+    assert "Plan D" in content
+    assert "RunAsInvoker" in content
+    assert "T-20260920-167562623" in content
+    assert "0.1.3" in content
+
+    # All 10 Invariants
+    for inv_id in [
+        "INV-LOCAL-01",
+        "INV-SEC-02",
+        "INV-GATE-03",
+        "INV-SYNC-04",
+        "INV-CONT-05",
+        "INV-STATE-06",
+        "INV-PROC-07",
+        "INV-CI-08",
+        "INV-CONC-09",
+        "INV-SLA-10",
+    ]:
+        assert inv_id in content, f"Missing {inv_id} in CONTRIBUTING.md"
+
+
+def test_pfad_a_hygiene_recency_and_changelog_sync():
+    """Verify CHANGELOG.md, MARKETING-LOG.txt, THIRD_PARTY_LICENSES.txt, and llms.txt reflect 2026-10-01 Pfad A audit."""
+    changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "Pfad A Repository Hygiene" in changelog_text
+    assert "2026-10-01" in changelog_text
+
+    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
+    assert "12. PFAD A REPOSITORY HYGIENE, BILINGUAL CONTRIBUTING & CONTRACT TESTS (2026-10-01)" in m_text
+
+    sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
+    assert "Audit Date: 2026-10-01" in sbom_txt
+
+    tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
+    assert "**Audited:** 2026-10-01" in tpl_md
+
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+    assert "Last-checked: 2026-10-01" in llms_text

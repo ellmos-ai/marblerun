@@ -244,3 +244,36 @@ Implemented Discoverability & Architecture Hardening Actions:
     - Updated CHANGELOG.md under [Unreleased].
 [x] Automated Contract Verification:
     - Added new contract tests in tests/test_metadata.py verifying dual HTML anchors sec-01..sec-18, ASCII Four-View Topology, Level 1 SBOM plain-text companion invariants, 20-topic saturation, and audit recency.
+
+================================================================================
+12. PFAD A REPOSITORY HYGIENE, BILINGUAL CONTRIBUTING & CONTRACT TESTS (2026-10-01)
+================================================================================
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Target Repo: ellmos-ai/marblerun (MarbleRun / llmauto)
+Version: 0.1.3 (Version-Freeze per T-20260920-167562623)
+
+Implemented Hygiene & Architecture Hardening Actions:
+[x] Version-Freeze Discipline (T-20260920-167562623):
+    - Single-source version 0.1.3 maintained strictly frozen across all manifests, code, and badges.
+[x] Bilingual CONTRIBUTING.md Guidelines:
+    - Upgraded CONTRIBUTING.md to comprehensive bilingual English/German specification covering:
+      * 10 Invariants (INV-LOCAL-01 through INV-SLA-10)
+      * Plan D Local Development Protocol (C:\_Local_DEV\repos\marblerun)
+      * Unprivileged RunAsInvoker non-elevation mandate
+      * Version-Freeze rule T-20260920-167562623
+      * Local verification quality gates (pytest, ruff check, compileall, git diff --check, version check)
+      * 48h Security Response SLA
+[x] Multi-Host Cloud-Sync, Cache & Lock Hardening (.gitignore):
+    - Added canonical lock protection patterns: LOCK.dev.*, LOCK.antigravity.*, LOCK.bugsearch.*
+    - Added OS/shell artifacts: ehthumbs.db, TASKPLAN_*.md
+[x] Level 1 SBOM Text-Companion & Re-Audit (2026-10-01):
+    - Re-audited THIRD_PARTY_LICENSES.md and THIRD_PARTY_LICENSES.txt as of 2026-10-01.
+    - Confirmed 100% permissive runtime dependencies (pure Python standard library PSFL-2.0, zero external runtime packages), optional provider bridge (coma MIT), and development tooling (pytest, ruff, setuptools).
+    - Re-verified all 10 governance and security invariants (INV-LOCAL-01..INV-SLA-10), unprivileged RunAsInvoker mode, Zero-Copyleft, Zero-Egress, and § 521 BGB statutory disclaimer.
+[x] Documentation & RAG Manifest Sync:
+    - Refreshed llms.txt Last-checked timestamp to 2026-10-01.
+    - Updated README.md and README_de.md badges (Verified: 2026-10-01 / Verifiziert: 2026-10-01).
+    - Documented all hygiene updates in CHANGELOG.md under [Unreleased].
+[x] Automated Contract Verification:
+    - Expanded tests/test_repository_hygiene.py with tests for new lock and cache patterns.
+    - Expanded tests/test_metadata.py with contract tests for bilingual CONTRIBUTING.md parity, 10 invariants, and 2026-10-01 recency.
