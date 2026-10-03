@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install ruff pytest pytest-asyncio
+        pip install ruff pytest pytest-asyncio "tomli; python_version < '3.11'"
         
     - name: Lint with ruff
       run: |

@@ -5,7 +5,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib  # type: ignore[no-redef]
 
 import llmauto
 
