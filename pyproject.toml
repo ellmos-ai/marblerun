@@ -78,6 +78,7 @@ test = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
     "ruff>=0.5.0",
+    "tomli; python_version < \"3.11\"",
 ]
 providers = ["coma @ git+https://github.com/dev-bricks/coma.git"]
 
