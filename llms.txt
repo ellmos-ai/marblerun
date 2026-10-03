@@ -1,4 +1,4 @@
-## Last-checked: 2026-10-01
+## Last-checked: 2026-10-03
 
 # MarbleRun / llmauto - LLM Automation Framework
 
@@ -40,7 +40,7 @@ zero dependency LLM automation CLI
 
 ## External Discovery Notes
 
-As of 2026-10-01, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 148 passed, 0 skipped (148 total), exit code 0.
+As of 2026-10-03, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 150 passed, 0 skipped (150 total), exit code 0.
 
 ## Docs & Architecture
 
@@ -54,6 +54,7 @@ As of 2026-10-01, web search finds the canonical GitHub repository for exact ell
 - [MARKETING-LOG](https://github.com/ellmos-ai/MarbleRun/blob/main/MARKETING-LOG.txt): Discoverability register & persona analysis
 - [CONTRIBUTING](https://github.com/ellmos-ai/MarbleRun/blob/main/CONTRIBUTING.md): Contribution workflow
 - [SECURITY](https://github.com/ellmos-ai/MarbleRun/blob/main/SECURITY.md): Security policy and dual response SLAs
+- [Dependabot](https://github.com/ellmos-ai/MarbleRun/blob/main/.github/dependabot.yml): Automated dependency updates for GitHub Actions workflows
 - [LICENSE](https://github.com/ellmos-ai/MarbleRun/blob/main/LICENSE): MIT license text
 
 ## ellmos family (related projects)

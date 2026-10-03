@@ -3,7 +3,7 @@ THIRD-PARTY SOFTWARE LICENSES & TRANSPARENCY NOTICE (LEVEL 1 SBOM)
 Project: MarbleRun / llmauto
 Organization: ellmos-ai (Ecosystem: open-bricks)
 Canonical Repository: https://github.com/ellmos-ai/marblerun
-Audit Date: 2026-10-01
+Audit Date: 2026-10-03
 Primary License: MIT (see LICENSE)
 Attribution: NOTICE
 Level 1 SBOM Plain-Text Companion: THIRD_PARTY_LICENSES.txt

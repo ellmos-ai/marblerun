@@ -104,7 +104,7 @@ version = { attr = "llmauto.__version__" }
 minversion = "7.0"
 testpaths = ["tests"]
 pythonpath = ["."]
-norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv", "venv", "_archive", "legacy"]
+norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv", "venv", "_archive", "legacy", ".tox", ".pytest_tmp*", ".hypothesis", ".turbo", ".nyc_output"]
 python_files = ["test_*.py", "*_test.py"]
 addopts = "-ra -v"
 

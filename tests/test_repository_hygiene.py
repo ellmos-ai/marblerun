@@ -83,7 +83,10 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "doc-CONFLIT-host.md",
         "sync.sync-temp-part.tmp",
         "ehthumbs.db",
+        "Desktop.ini",
+        "Thumbs.db",
         "TASKPLAN_daily.md",
+        "local-TASKPLAN-1.md",
     )
 
     assert ignored == {
@@ -104,17 +107,22 @@ def test_multihost_conflict_and_lock_artifacts_are_ignored():
         "doc-CONFLIT-host.md",
         "sync.sync-temp-part.tmp",
         "ehthumbs.db",
+        "Desktop.ini",
+        "Thumbs.db",
         "TASKPLAN_daily.md",
+        "local-TASKPLAN-1.md",
     }
 
 
 def test_test_caches_and_temp_files_are_ignored():
     ignored = _git_check_ignore(
         ".pytest_cache/dummy",
+        ".pytest_tmp/dummy",
         ".ruff_cache/dummy",
         ".hypothesis/dummy",
         ".turbo/dummy",
         ".nyc_output/dummy",
+        ".tox/dummy",
         ".coverage",
         "coverage/index.html",
         "htmlcov/index.html",
@@ -129,10 +137,12 @@ def test_test_caches_and_temp_files_are_ignored():
 
     assert ignored == {
         ".pytest_cache/dummy",
+        ".pytest_tmp/dummy",
         ".ruff_cache/dummy",
         ".hypothesis/dummy",
         ".turbo/dummy",
         ".nyc_output/dummy",
+        ".tox/dummy",
         ".coverage",
         "coverage/index.html",
         "htmlcov/index.html",
@@ -152,6 +162,7 @@ def test_multihost_workstation_patterns_ignored():
         "PUSH-LOG-ASUS-GEI-1.txt",
         "CHECK-REG-ASUS-2.txt",
         "CHECK-REG-IDEAPAD-GEI-12.txt",
+        "CHECK-REG-IDEAPAD-GEI.json",
         "PUSH-LOG-IDEAPAD-1.txt",
         "PUSH-LOG-LAPTOP-3.txt",
         "CHECK-REG-Mac Studio-4.txt",
@@ -164,6 +175,7 @@ def test_multihost_workstation_patterns_ignored():
         "PUSH-LOG-ASUS-GEI-1.txt",
         "CHECK-REG-ASUS-2.txt",
         "CHECK-REG-IDEAPAD-GEI-12.txt",
+        "CHECK-REG-IDEAPAD-GEI.json",
         "PUSH-LOG-IDEAPAD-1.txt",
         "PUSH-LOG-LAPTOP-3.txt",
         "CHECK-REG-Mac Studio-4.txt",

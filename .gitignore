@@ -98,6 +98,7 @@ desktop.ini
 # Interne Aufgabenliste (zitiert private Pfade)
 TODO.md
 TASKPLAN_*.md
+*-TASKPLAN*
 
 # Multi-Agent & Canonical Lock-System (lokal, nie committen)
 LOCK
@@ -114,12 +115,16 @@ LOCK.permissions.json
 *.lock
 
 # Multi-Host Sync Conflicts (OneDrive, Syncthing, Dropbox)
+Desktop.ini
+ehthumbs.db
+Thumbs.db
 *-WORKSTATION*
 *-WORKSTATION-LG*
 *-ASUS*
 *-ASUS-GEI*
 *-IDEAPAD*
 *-IDEAPAD-GEI*
+*-IDEAPAD-GEI.*
 *-LAPTOP*
 *-Mac Studio*
 *-MacBook*
@@ -134,6 +139,7 @@ LOCK.permissions.json
 
 # Test & Coverage Artifacts
 .pytest_cache/
+.pytest_tmp*/
 .ruff_cache/
 .coverage
 coverage/
@@ -143,6 +149,7 @@ wheelhouse/
 .hypothesis/
 .turbo/
 .nyc_output/
+.tox/
 *.rej
 *.orig
 *.tmp

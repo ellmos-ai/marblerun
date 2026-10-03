@@ -132,7 +132,7 @@ def test_llms_txt_and_badge_discovery_parity():
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
     assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+        stamp in llms_text for stamp in ("Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
     ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
@@ -530,12 +530,14 @@ def test_pyproject_notice_url_and_norecursedirs():
     norecursedirs = pytest_ini.get("norecursedirs", [])
     assert "__pycache__" in norecursedirs
     assert ".venv" in norecursedirs
+    assert ".tox" in norecursedirs
+    assert ".pytest_tmp*" in norecursedirs
 
 
 def test_third_party_licenses_audit_recency():
-    """Verify THIRD_PARTY_LICENSES.md reflects 2026-10-01, 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
+    """Verify THIRD_PARTY_LICENSES.md reflects 2026-10-03, 2026-10-01, 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
+    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-03", "**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -554,11 +556,17 @@ def test_gitignore_hardened_tokens():
     assert "*-ASUS*" in gitignore_text
     assert "*-IDEAPAD*" in gitignore_text
     assert "*-IDEAPAD-GEI*" in gitignore_text
+    assert "*-IDEAPAD-GEI.*" in gitignore_text
+    assert "Desktop.ini" in gitignore_text
+    assert "Thumbs.db" in gitignore_text
+    assert "*-TASKPLAN*" in gitignore_text
     assert "*-LAPTOP*" in gitignore_text
     assert "*-Mac Studio*" in gitignore_text
     assert "*-MacBook*" in gitignore_text
     assert "*.rej" in gitignore_text
     assert ".hypothesis/" in gitignore_text
+    assert ".tox/" in gitignore_text
+    assert ".pytest_tmp*/" in gitignore_text
 
 
 def test_readme_sec_dual_anchors_and_quick_nav_table():
@@ -689,7 +697,7 @@ def test_pfad_b_recency_and_changelog_sync():
     assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert "Last-checked: 2026-10-01" in llms_text or "Last-checked: 2026-09-29" in llms_text
+    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29"))
     assert "THIRD_PARTY_LICENSES.txt" in llms_text
 
 
@@ -722,20 +730,41 @@ def test_contributing_bilingual_and_invariant_parity():
         assert inv_id in content, f"Missing {inv_id} in CONTRIBUTING.md"
 
 
+def test_dependabot_configuration():
+    """Verify .github/dependabot.yml exists and configures github-actions updates."""
+    dependabot_file = REPO_ROOT / ".github" / "dependabot.yml"
+    assert dependabot_file.is_file(), ".github/dependabot.yml must exist"
+    content = dependabot_file.read_text(encoding="utf-8")
+    assert 'package-ecosystem: "github-actions"' in content
+    assert 'interval: "weekly"' in content
+    assert "Europe/Berlin" in content
+
+
 def test_pfad_a_hygiene_recency_and_changelog_sync():
-    """Verify CHANGELOG.md, MARKETING-LOG.txt, THIRD_PARTY_LICENSES.txt, and llms.txt reflect 2026-10-01 Pfad A audit."""
+    """Verify CHANGELOG.md, MARKETING-LOG.txt, THIRD_PARTY_LICENSES.txt, and llms.txt reflect 2026-10-03 Pfad A audit."""
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "Pfad A Repository Hygiene" in changelog_text
-    assert "2026-10-01" in changelog_text
+    assert "2026-10-03" in changelog_text
 
     m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert "12. PFAD A REPOSITORY HYGIENE, BILINGUAL CONTRIBUTING & CONTRACT TESTS (2026-10-01)" in m_text
+    assert "13. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT GUARD & CONTRACT TESTS (2026-10-03)" in m_text
 
     sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
-    assert "Audit Date: 2026-10-01" in sbom_txt
+    assert "Audit Date: 2026-10-03" in sbom_txt
 
     tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert "**Audited:** 2026-10-01" in tpl_md
+    assert "**Audited:** 2026-10-03" in tpl_md
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert "Last-checked: 2026-10-01" in llms_text
+    assert "Last-checked: 2026-10-03" in llms_text
+
+
+def test_readme_badges_currency_2026_10_03():
+    """Verify README.md and README_de.md badges reflect 2026-10-03 verification and Contributing badges."""
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+
+    assert "Verified-2026--10--03" in readme_en
+    assert "Verifiziert-2026--10--03" in readme_de
+    assert "Contributing-Guidelines" in readme_en
+    assert "Mitwirken-Leitfaden" in readme_de

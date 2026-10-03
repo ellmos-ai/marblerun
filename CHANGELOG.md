@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Pfad A Repository Hygiene, Automated Dependabot Guard, Multi-Host Lock Defense & Contract Tests (2026-10-03) [G 2026-10-03]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
+- **Automated CI Maintenance Guard (`.github/dependabot.yml`):** Provisioned canonical Dependabot configuration for automated weekly vulnerability and action updates across GitHub Actions workflows (`Europe/Berlin`, limit: 3).
+- **Multi-Host Cloud-Sync, Cache & Lock Defense (`.gitignore`):** Hardened against multi-agent collisions and cloud sync artifacts (`*-IDEAPAD-GEI.*`, `Desktop.ini`, `Thumbs.db`, `*-TASKPLAN*`, `.tox/`, `.pytest_tmp*/`).
+- **PEP 621 Standard & pytest Configuration (`pyproject.toml`):** Hardened `[tool.pytest.ini_options].norecursedirs` with `.tox`, `.pytest_tmp*`, `.hypothesis`, `.turbo`, and `.nyc_output`.
+- **Level 1 SBOM Companion & Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime and build dependencies as of 2026-10-03, confirming 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, zero outbound egress, and statutory disclaimer (§ 521 BGB).
+- **RAG-Manifest & Badges:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-03` and Dependabot link; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-03` plus Contributing Guidelines badges; added Section 13 in `MARKETING-LOG.txt`.
+- **Automatisierte Vertragstests:** Extended `tests/test_metadata.py` and `tests/test_repository_hygiene.py` with contract tests verifying Dependabot provisioning, hardened lock/cache patterns, and 2026-10-03 recency.
+
 ### Pfad A Repository Hygiene, Bilingual CONTRIBUTING Expansion, Multi-Host Sync Defense & Contract Tests (2026-10-01) [G 2026-10-01]
 
 - **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
