@@ -23,9 +23,9 @@ Welcome! We welcome contributions to `MarbleRun` (`llmauto` - Local-first multi-
 
 ### 2. Local Development Workflow (Plan D)
 ```bash
-# Clone the repository (canonical Plan D location)
-git clone https://github.com/ellmos-ai/MarbleRun.git "C:\_Local_DEV\repos\marblerun"
-cd "C:\_Local_DEV\repos\marblerun"
+# Clone the repository
+git clone https://github.com/ellmos-ai/MarbleRun.git MarbleRun
+cd MarbleRun
 
 # Install package in editable mode with test dependencies
 pip install -e ".[test]"
@@ -76,9 +76,9 @@ By contributing to `MarbleRun`, you agree that your contributions will be licens
 
 ### 2. Lokaler Entwicklungs-Workflow (Plan D)
 ```bash
-# Klonen des Repositories (kanonischer Plan D Pfad)
-git clone https://github.com/ellmos-ai/MarbleRun.git "C:\_Local_DEV\repos\marblerun"
-cd "C:\_Local_DEV\repos\marblerun"
+# Klonen des Repositories
+git clone https://github.com/ellmos-ai/MarbleRun.git MarbleRun
+cd MarbleRun
 
 # Paket im Entwicklungsmodus mit Testabhängigkeiten installieren
 pip install -e ".[test]"

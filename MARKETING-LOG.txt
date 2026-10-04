@@ -2,7 +2,7 @@
 Date: 2026-09-11
 Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
 Target Repo: ellmos-ai/marblerun
-Canonical Path: C:\_Local_DEV\repos\marblerun
+Canonical Path: (local clone path omitted)
 Version: 0.1.1
 
 ================================================================================
@@ -258,7 +258,7 @@ Implemented Hygiene & Architecture Hardening Actions:
 [x] Bilingual CONTRIBUTING.md Guidelines:
     - Upgraded CONTRIBUTING.md to comprehensive bilingual English/German specification covering:
       * 10 Invariants (INV-LOCAL-01 through INV-SLA-10)
-      * Plan D Local Development Protocol (C:\_Local_DEV\repos\marblerun)
+      * Plan D Local Development Protocol (local clone, path omitted)
       * Unprivileged RunAsInvoker non-elevation mandate
       * Version-Freeze rule T-20260920-167562623
       * Local verification quality gates (pytest, ruff check, compileall, git diff --check, version check)
