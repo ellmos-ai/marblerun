@@ -4,7 +4,6 @@ from dataclasses import replace
 from unittest.mock import Mock
 
 import pytest
-
 from llmauto.core.embedded import (
     CompletedStep,
     ExecutionHandle,
@@ -61,7 +60,7 @@ def test_ordered_steps_use_terminal_receipts_and_real_previous_outputs(harness):
     assert harness.observed[:2] == [result.completed[0].handle] * 2
     assert harness.started[1][2] == (result.completed[0],)
     assert result.completed[0].output == "Prüfung beendet: first-job"
-    assert all(a.revision < b.revision for a, b in zip(harness.states, harness.states[1:]))
+    assert all(a.revision < b.revision for a, b in zip(harness.states, harness.states[1:], strict=False))
     restored = SequenceState.from_record(json.loads(json.dumps(result.as_record(), ensure_ascii=False)))
     assert restored == result
 

@@ -157,7 +157,7 @@ def request_id_for(run_id: str, cursor: int) -> str:
     _identifier(run_id)
     if type(cursor) is not int or cursor < 0:
         raise ValueError("Invalid sequence cursor")
-    return hashlib.sha256(f"marblerun.sequence.v1:{run_id}:{cursor}".encode("utf-8")).hexdigest()[:32]
+    return hashlib.sha256(f"marblerun.sequence.v1:{run_id}:{cursor}".encode()).hexdigest()[:32]
 
 
 def run_sequence(
