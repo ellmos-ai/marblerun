@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Embedded sequence API
+
+- Added `llmauto.core.embedded` API v1 for application-owned worker dispatch,
+  correlated terminal observations, sequential result handoff, durable
+  checkpoints and cancellation that waits for physical termination.
+- Recovery preserves active execution identities and confirmed completed steps;
+  uncertain admissions require explicit reconciliation by the application.
+- Package version 0.1.3 remains frozen. Consumers pin the implementation commit.
+- Added focused contract tests and [embedding documentation](docs/embedded-sequences.md).
+
 ### Pfad A Repository Hygiene, Automated Dependabot Guard, Multi-Host Lock Defense & Contract Tests (2026-10-03) [G 2026-10-03]
 
 - **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.

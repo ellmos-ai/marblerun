@@ -299,6 +299,10 @@ MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantie
 <a id="sec-07"></a><a id="chain-muster--rollenmatrix"></a>
 ## 7. Chain-Muster & Rollenmatrix
 
+Anwendungen mit eigenen nativen Workern können die [eingebettete Sequenz-API](docs/embedded-sequences.md)
+für geordnete Schritte mit echten Ausführungsbelegen und Ergebnisübergaben verwenden. Die Anwendung
+stellt Start, Beobachtung, Abbruch und dauerhafte Checkpoints bereit; die API startet keine Provider-CLI.
+
 | Rolle | Primäre Verantwortung | Empfohlenes Modell | Kontext-Retention |
 |---|---|---|---|
 | `worker` | Implementiert Features, Fehlerbehebungen, Refactorings | `claude-sonnet-4-6` | Frische Sitzung pro Runde oder isolierter Handoff |
