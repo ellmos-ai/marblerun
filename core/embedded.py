@@ -105,6 +105,10 @@ class SequenceState:
     def from_record(cls, record: dict) -> SequenceState:
         if not isinstance(record, dict) or record.get("schema") != "marblerun.sequence.v1":
             raise ValueError("Invalid sequence checkpoint schema")
+        required = {"schema", "run_id", "plan_digest", "phase", "cursor", "completed",
+                    "active", "reason", "revision", "stop_requested"}
+        if set(record) != required:
+            raise ValueError("Checkpoint fields missing or unknown")
         fields = {key: value for key, value in record.items() if key != "schema"}
         completed = fields.get("completed", ())
         if not isinstance(completed, (list, tuple)) or len(completed) > 64:
@@ -145,7 +149,7 @@ def _validate_state(state: SequenceState) -> None:
         handles.append(state.active)
     if len({(handle.authority_id, handle.job_id) for handle in handles}) != len(handles):
         raise ValueError("Saved execution reused for another step")
-    if state.phase in {"ready", "starting", "complete", "stopped"} and state.active is not None:
+    if state.phase in {"ready", "starting", "complete", "failed", "stopped"} and state.active is not None:
         raise ValueError("This phase cannot hold an active execution")
     if state.phase in {"running", "stopping"} and state.active is None:
         raise ValueError("Active execution receipt missing")
@@ -221,7 +225,8 @@ def run_sequence(
         return state
 
     if state.phase in {"starting", "unconfirmed"} and state.active is None:
-        return save(phase="unconfirmed", reason="admission_receipt_requires_reconciliation")
+        return save(phase="unconfirmed", stop_requested=stopping(),
+                    reason="admission_receipt_requires_reconciliation")
     cancellation_sent = False
     while state.cursor < len(plan):
         stop = stopping()

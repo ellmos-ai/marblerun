@@ -181,6 +181,37 @@ def test_checkpoint_cannot_reuse_the_same_execution_for_another_step(harness):
         harness.run(initial_state=replace(state, completed=(first, forged)))
 
 
+def test_stop_intent_survives_unconfirmed_admission_until_host_reconciliation(harness):
+    unknown = harness.run(dispatch=Mock(side_effect=TimeoutError()))
+    assert unknown.active is None and not unknown.stop_requested
+    harness.stop = True
+    requested = harness.run(initial_state=unknown)
+    assert requested.phase == "unconfirmed" and requested.stop_requested and requested.active is None
+    reconciled = replace(requested, active=ExecutionHandle(request_id_for("run-1", 0), "first-job", "controller-v1"))
+    harness.stop = False
+    result = harness.run(initial_state=reconciled, observe=lambda handle: ExecutionObservation(handle, True, True))
+    assert result.phase == "stopped" and result.stop_requested
+    assert harness.cancelled == [reconciled.active] and not harness.started
+
+
+@pytest.mark.parametrize("field", ["run_id", "plan_digest", "phase", "cursor", "completed",
+                                   "active", "reason", "revision", "stop_requested"])
+def test_missing_checkpoint_fields_cannot_default_to_a_new_admission(harness, field):
+    state = harness.run(dispatch=Mock(side_effect=TimeoutError()))
+    record = state.as_record()
+    del record[field]
+    with pytest.raises(ValueError, match="fields"):
+        SequenceState.from_record(record)
+    assert not harness.started
+
+
+@pytest.mark.parametrize("phase", ["ready", "starting", "complete", "failed", "stopped"])
+def test_inactive_checkpoint_phases_cannot_hide_an_active_execution(harness, phase):
+    state = harness.run(observe=Mock(side_effect=TimeoutError()))
+    with pytest.raises(ValueError, match="active execution"):
+        harness.run(initial_state=replace(state, phase=phase))
+
+
 @pytest.mark.parametrize("terminal,succeeded", [("true", True), (False, True), (True, None), (True, "yes")])
 def test_receipts_require_actual_booleans(terminal, succeeded):
     with pytest.raises(ValueError):
