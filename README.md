@@ -299,6 +299,10 @@ MarbleRun is built on strict local-first, zero-egress, and resilient execution g
 <a id="sec-07"></a><a id="chain-patterns--role-matrix"></a>
 ## 7. Chain Patterns & Role Matrix
 
+Applications with their own native workers can use the [embedded sequence API](docs/embedded-sequences.md)
+to pass actual execution receipts and task results between ordered steps. The host supplies dispatch,
+observation, cancellation and durable checkpoints; no provider CLI is started by this API.
+
 | Role | Primary Responsibility | Recommended Model | Context Retention |
 |---|---|---|---|
 | `worker` | Executes feature code, fixes, documentation, refactoring | `claude-sonnet-4-6` | Fresh session per round or isolated handoff |
