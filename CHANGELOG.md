@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Pfad A Repository Hygiene, Automated Dependabot Security Guard (pip + actions), Multi-Host Defense & Contract Tests (2026-10-11) [G 2026-10-11]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
+- **Automated Dependabot Security Guard (`.github/dependabot.yml`):** Deployed dual ecosystem security configuration covering `pip` (security groups, limit 0) and `github-actions` (Monday 06:00 Berlin, limit 3).
+- **Multi-Host Cloud-Sync, Lock- & OS-Defense (`.gitignore`):** Hardened multi-agent collision defenses with `thumbs.db`, `desktop.ini`, `ehthumbs_vista.db`, `node_modules/`, `PRIVATE.txt`, and `PUBLIC.txt`.
+- **Level 1 SBOM Companion Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime, optional, and build dependencies as of 2026-10-11, re-verifying 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, zero outbound network egress, and statutory disclaimer (§ 521 BGB).
+- **RAG-Manifest & Badge Synchronisation:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-11`; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-11` and synchronized test suite badge; added Section 14 in `MARKETING-LOG.txt`.
+- **Automatisierte Vertragstests:** Added contract tests in `tests/test_metadata.py` and `tests/test_repository_hygiene.py` verifying dual Dependabot guard (pip security + actions), extended OS/lock defense, SBOM recency Stand 2026-10-11, and version freeze compliance.
+
 ### Embedded sequence API
 
 - Added `llmauto.core.embedded` API v1 for application-owned worker dispatch,

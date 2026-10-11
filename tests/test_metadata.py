@@ -135,7 +135,7 @@ def test_llms_txt_and_badge_discovery_parity():
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
     assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
+        stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
     ), "llms.txt must have current Last-checked timestamp"
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
@@ -540,7 +540,7 @@ def test_pyproject_notice_url_and_norecursedirs():
 def test_third_party_licenses_audit_recency():
     """Verify THIRD_PARTY_LICENSES.md reflects 2026-10-03, 2026-10-01, 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-03", "**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
+    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-11", "**Audited:** 2026-10-03", "**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -700,7 +700,7 @@ def test_pfad_b_recency_and_changelog_sync():
     assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29"))
+    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29"))
     assert "THIRD_PARTY_LICENSES.txt" in llms_text
 
 
@@ -734,40 +734,79 @@ def test_contributing_bilingual_and_invariant_parity():
 
 
 def test_dependabot_configuration():
-    """Verify .github/dependabot.yml exists and configures github-actions updates."""
+    """Verify .github/dependabot.yml exists and configures pip and github-actions updates."""
     dependabot_file = REPO_ROOT / ".github" / "dependabot.yml"
     assert dependabot_file.is_file(), ".github/dependabot.yml must exist"
     content = dependabot_file.read_text(encoding="utf-8")
+    assert 'package-ecosystem: "pip"' in content
+    assert "open-pull-requests-limit: 0" in content
     assert 'package-ecosystem: "github-actions"' in content
     assert 'interval: "weekly"' in content
     assert "Europe/Berlin" in content
 
 
 def test_pfad_a_hygiene_recency_and_changelog_sync():
-    """Verify CHANGELOG.md, MARKETING-LOG.txt, THIRD_PARTY_LICENSES.txt, and llms.txt reflect 2026-10-03 Pfad A audit."""
+    """Verify CHANGELOG.md, MARKETING-LOG.txt, THIRD_PARTY_LICENSES.txt, and llms.txt reflect Pfad A audits."""
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "Pfad A Repository Hygiene" in changelog_text
-    assert "2026-10-03" in changelog_text
+    assert any(d in changelog_text for d in ("2026-10-11", "2026-10-03"))
 
     m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert "13. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT GUARD & CONTRACT TESTS (2026-10-03)" in m_text
+    assert any(sec in m_text for sec in (
+        "14. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT SECURITY GUARD (PIP + ACTIONS), MULTI-HOST OS & LOCK DEFENSE & CONTRACT TESTS (2026-10-11)",
+        "13. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT GUARD & CONTRACT TESTS (2026-10-03)",
+    ))
 
     sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
-    assert "Audit Date: 2026-10-03" in sbom_txt
+    assert any(stamp in sbom_txt for stamp in ("Audit Date: 2026-10-11", "Audit Date: 2026-10-03"))
 
     tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert "**Audited:** 2026-10-03" in tpl_md
+    assert any(stamp in tpl_md for stamp in ("**Audited:** 2026-10-11", "**Audited:** 2026-10-03"))
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert "Last-checked: 2026-10-03" in llms_text
+    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03"))
 
 
-def test_readme_badges_currency_2026_10_03():
-    """Verify README.md and README_de.md badges reflect 2026-10-03 verification and Contributing badges."""
+def test_readme_badges_currency():
+    """Verify README.md and README_de.md badges reflect verification and Contributing badges."""
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert "Verified-2026--10--03" in readme_en
-    assert "Verifiziert-2026--10--03" in readme_de
+    assert any(v in readme_en for v in ("Verified-2026--10--11", "Verified-2026--10--03"))
+    assert any(v in readme_de for v in ("Verifiziert-2026--10--11", "Verifiziert-2026--10--03"))
     assert "Contributing-Guidelines" in readme_en
     assert "Mitwirken-Leitfaden" in readme_de
+
+
+def test_pfad_a_hygiene_and_dependabot_security_guard_20261011():
+    """Verify 2026-10-11 Pfad A audit currency, dual Dependabot guard, and version freeze compliance."""
+    sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
+    assert "Audit Date: 2026-10-11" in sbom_txt
+
+    tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
+    assert "**Audited:** 2026-10-11" in tpl_md
+
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+    assert "Last-checked: 2026-10-11" in llms_text
+
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    assert "Verified-2026--10--11" in readme_en
+    assert "Verifiziert-2026--10--11" in readme_de
+
+    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
+    assert "14. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT SECURITY GUARD (PIP + ACTIONS), MULTI-HOST OS & LOCK DEFENSE & CONTRACT TESTS (2026-10-11)" in m_text
+
+    changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert "2026-10-11" in changelog_text
+
+    gitignore_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "ehthumbs_vista.db" in gitignore_text
+    assert "thumbs.db" in gitignore_text
+    assert "desktop.ini" in gitignore_text
+    assert "PRIVATE.txt" in gitignore_text
+    assert "PUBLIC.txt" in gitignore_text
+
+    # Strict version freeze discipline (T-20260920-167562623)
+    pkg_version = getattr(llmauto, "__version__", None)
+    assert pkg_version == "0.1.3", "llmauto version must remain frozen at 0.1.3"

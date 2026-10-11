@@ -305,3 +305,29 @@ Implemented Hygiene & Architecture Hardening Actions:
 [x] Automated Contract Verification:
     - Expanded tests/test_repository_hygiene.py with tests for new lock, thumbnail, and taskplan patterns.
     - Expanded tests/test_metadata.py with contract tests for Dependabot configuration, hardened norecursedirs, and 2026-10-03 recency.
+
+================================================================================
+14. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT SECURITY GUARD (PIP + ACTIONS), MULTI-HOST OS & LOCK DEFENSE & CONTRACT TESTS (2026-10-11)
+================================================================================
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Target Repo: ellmos-ai/marblerun (MarbleRun / llmauto)
+Version: 0.1.3 (Version-Freeze per T-20260920-167562623)
+
+Implemented Hygiene & Architecture Hardening Actions:
+[x] Version-Freeze Discipline (T-20260920-167562623):
+    - Single-source version 0.1.3 maintained strictly frozen across all manifests, code, and badges.
+[x] Automated Dependabot Security Guard (.github/dependabot.yml):
+    - Provisioned dual ecosystem security configuration: pip package ecosystem with security-only updates (open-pull-requests-limit: 0, grouped security updates) and github-actions updates (weekly Monday 06:00 Europe/Berlin, limit: 3).
+[x] Multi-Host Cloud-Sync, Cache & Lock Hardening (.gitignore):
+    - Added multi-host and OS artifacts: thumbs.db, desktop.ini, ehthumbs_vista.db, node_modules/, PRIVATE.txt, PUBLIC.txt.
+[x] Level 1 SBOM Text-Companion & Re-Audit (2026-10-11):
+    - Re-audited THIRD_PARTY_LICENSES.md and THIRD_PARTY_LICENSES.txt as of 2026-10-11.
+    - Confirmed 100% permissive runtime dependencies (pure Python standard library PSFL-2.0, zero external runtime packages), optional provider bridge (coma MIT), and development tooling (pytest, ruff, setuptools).
+    - Re-verified all 10 governance and security invariants (INV-LOCAL-01..INV-SLA-10), unprivileged RunAsInvoker mode, Zero-Copyleft, Zero-Egress, and § 521 BGB statutory disclaimer.
+[x] Documentation & RAG Manifest Sync:
+    - Refreshed llms.txt Last-checked timestamp to 2026-10-11.
+    - Updated README.md and README_de.md badges (Verified: 2026-10-11 / Verifiziert: 2026-10-11) and updated test suite count.
+    - Documented all hygiene updates in CHANGELOG.md under [Unreleased].
+[x] Automated Contract Verification:
+    - Expanded tests/test_repository_hygiene.py with tests for new OS, conflict, and lock patterns.
+    - Expanded tests/test_metadata.py with contract tests for dual Dependabot configuration (pip + actions), hardened gitignore patterns, and 2026-10-11 recency.

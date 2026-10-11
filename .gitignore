@@ -116,8 +116,14 @@ LOCK.permissions.json
 
 # Multi-Host Sync Conflicts (OneDrive, Syncthing, Dropbox)
 Desktop.ini
+desktop.ini
 ehthumbs.db
+ehthumbs_vista.db
 Thumbs.db
+thumbs.db
+node_modules/
+PRIVATE.txt
+PUBLIC.txt
 *-WORKSTATION*
 *-WORKSTATION-LG*
 *-ASUS*

@@ -1,7 +1,7 @@
 # Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
 > **Project:** `ellmos-ai/marblerun` (llmauto)
-> **Audited:** 2026-10-03
+> **Audited:** 2026-10-11
 > **Repository License:** [MIT License](LICENSE)
 > **Repository Attribution Notice:** [NOTICE](NOTICE)
 > **Plain-Text Level 1 SBOM Companion:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt)
