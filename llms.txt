@@ -4,7 +4,7 @@
 
 > MarbleRun (package name: llmauto, version 0.1.3) is a chain-execution framework for autonomous LLM agent loops. Multiple agents work in sequence -- workers execute tasks, reviewers check results, controllers coordinate -- passing context from link to link via handoff files. Named after a marble run: the context rolls through the chain, agent by agent.
 
-llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external runtime dependencies (pure Python standard library + Claude Code CLI, with optional COMA provider adapter for Codex and Agy). Python 3.10+, MIT, Level 1 SBOM audited.
+llmauto is the automation layer of the ellmos family: define multi-agent chains in JSON, run them autonomously with persistent state, stop/resume support, and Telegram status updates. Supports mixing Claude Opus, Sonnet, and Haiku in a single chain with role-based skip logic. Zero external runtime dependencies (pure Python standard library + Claude Code CLI, with optional [COMA provider adapter](https://github.com/ellmos-ai/coma) for Codex and Agy). Python 3.10+, MIT, Level 1 SBOM audited.
 
 Canonical repository: https://github.com/ellmos-ai/MarbleRun
 Canonical package / CLI name: llmauto

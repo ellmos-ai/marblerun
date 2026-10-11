@@ -152,7 +152,7 @@ class ProviderRunner:
         except ImportError as error:
             raise RuntimeError(
                 "Backend benötigt COMA. Installiere die MarbleRun-Option "
-                "'providers' oder coma aus https://github.com/dev-bricks/coma."
+                "'providers' oder coma aus https://github.com/ellmos-ai/coma."
             ) from error
 
         adapter_options = {"timeout": timeout, "cwd": cwd}
