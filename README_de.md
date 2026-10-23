@@ -13,11 +13,11 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 
 [![Version](https://img.shields.io/badge/Version-0.1.3-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-187%20bestanden%20%7C%20100%25%20gr%C3%BCn-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-185%20bestanden%20%7C%20100%25%20gr%C3%BCn-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/Code%20Style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Datenschutz](https://img.shields.io/badge/Datenschutz-100%25%20Offline%20%7C%20Zero--Egress-success.svg)](SECURITY.md)
+[![Datenschutz](https://img.shields.io/badge/Datenschutz-Zero--Egress%20per%20Vorgabe-success.svg)](SECURITY.md)
 [![Sicherheitsrichtlinie](https://img.shields.io/badge/Sicherheit-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
 [![Sicherheits-SLA](https://img.shields.io/badge/Sicherheits--SLA-48h%20%2F%205d%20Triage-blue.svg)](SECURITY.md)
 [![Drittanbieter Geprüft](https://img.shields.io/badge/Drittanbieter--Lizenzen-100%25%20permissiv-brightgreen.svg)](THIRD_PARTY_LICENSES.md)
@@ -27,7 +27,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Level 1 SBOM: Textbegleiter](https://img.shields.io/badge/Level%201%20SBOM-Textbegleiter-success.svg)](THIRD_PARTY_LICENSES.txt)
 [![Mitwirken](https://img.shields.io/badge/Mitwirken-Leitfaden-blue.svg)](CONTRIBUTING.md)
-[![Verifiziert: 2026-10-11](https://img.shields.io/badge/Verifiziert-2026--10--11-brightgreen.svg)]()
+[![Verifiziert: 2026-10-11](https://img.shields.io/badge/Verifiziert-2026--10--23-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
@@ -51,7 +51,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 | 13 | [Drittanbieter-Lizenzen & Level 1 SBOM](#drittanbieter-lizenzen--transparenz) | [`#sec-13`](#sec-13) | Zero-Copyleft-Inventar, Level 1 SBOM Textbegleiter und RunAsInvoker |
 | 14 | [Sicherheitsrichtlinie & Betriebsgrenzen](#sicherheitsrichtlinie--betriebsgrenzen) | [`#sec-14`](#sec-14) | 48h Security-SLA, Zero-Egress-Perimeter und Meldewege |
 | 15 | [Repository-Struktur & Kernkomponenten](#repository-struktur--kernkomponenten) | [`#sec-15`](#sec-15) | Ordnerstruktur, Chains, Prompts, Templates und Laufzeitdateien |
-| 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (187 bestanden | 100% grün), Ruff-Linter und Multi-OS CI-Matrix |
+| 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (185 bestanden | 100% grün), Ruff-Linter und Multi-OS CI-Matrix |
 | 17 | [Discovery-Kontext & Disambiguierung](#discovery-kontext--suchphrasen) | [`#sec-17`](#sec-17) | Disambiguierung zu edgelesssys/marblerun und kanonische Suchbegriffe |
 | 18 | [Gesetzlicher Haftungsausschluss, Schenkungsklausel (§ 521 BGB) & Lizenz](#haftungsausschluss--lizenz) | [`#sec-18`](#sec-18) | MIT-Lizenz, § 521 BGB Gefälligkeitsrecht und Copyright |
 
@@ -78,7 +78,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 > [!NOTE]
 > **Für KI-Agenten & automatisierte Tools:** Eine maschinenlesbare Architektur-Zusammenfassung, Suchanker und Integrationshinweise befinden sich in [`llms.txt`](llms.txt).
 
-**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+ | **Status:** Produktionsreif
+**Autor:** Lukas Geiger | **Lizenz:** MIT | **Python:** 3.10+ | **Status:** Alpha (`Development Status :: 3 - Alpha`, Version 0.1.x)
 
 ---
 
@@ -283,8 +283,8 @@ MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantie
 
 | Invarianten-ID & Fähigkeit | Implementierungsmechanismus | Sicherheits- & Zuverlässigkeitsgarantie |
 |---|---|---|
-| **INV-LOCAL-01: 100% Offline / Zero-Egress** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | Null Datenabfluss; Prompt- und Modellkontexte verbleiben auf dem lokalen Host |
-| **INV-SEC-02: Privilegienfreie Ausführung (`RunAsInvoker`)** | Standardmäßige Python-Ausführung ohne Root-/Administrator-Rechte | Verhindert Systemmanipulation; sichere sandboxed CLI-Ausführung |
+| **INV-LOCAL-01: Zero-Egress per Vorgabe** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | In der Standardkonfiguration kein Datenabfluss; Prompts und Modellkontext verlassen den Host nicht. Eine einzige zuschaltbare Ausnahme: der Telegram-Melder (`telegram.enabled`, standardmäßig aus) sendet Chain-Namen und Rundenstatus an `api.telegram.org` |
+| **INV-SEC-02: Privilegienfreie Ausführung (`RunAsInvoker`)** | Standardmäßige Python-Ausführung ohne Root-/Administrator-Rechte | Fordert nie Rechteerhöhung an, kann also nichts jenseits der Rechte des aufrufenden Kontos ändern. Das ist keine Sandbox: die mitgelieferte `config.json` gibt der Agenten-CLI standardmäßig `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` im Modus `dontAsk` -- vor einem unbeaufsichtigten Lauf prüfen |
 | **INV-GATE-03: Multi-Provider Fail-Closed** | Strikte Backend-Validierung (Claude CLI, optionaler COMA-Adapter für Codex/Agy) | Unkonfigurierte Backends brechen fail-closed ab; kein unsicheres Fallback |
 | **INV-SYNC-04: Race-Free Parallel-Worker** | Isolierte Handoff-Snapshots je Worker (`tests/test_parallel_handoff.py`) | Verhindert Race Conditions beim simultanen Schreiben paralleler Agenten |
 | **INV-CONT-05: Skip-Überschreibschutz** | Automatische Wiederherstellung der Baseline bei leeren `SKIPPED`-Antworten | Verhindert Kontextverlust; bewahrt wertvollen vorgelagerten Kontext |
@@ -500,22 +500,22 @@ python -m llmauto pipe "Hallo" --model claude-opus-4-6-20250918
 <a id="sec-12"></a><a id="geschwister-tools--oekosystemmatrix"></a><a id="geschwister-tools--oekosystem"></a>
 ## 12. Geschwister-Tools & Ökosystemmatrix
 
-MarbleRun ist Teil des modularen Ökosystems von `ellmos-ai`, `dev-bricks`, `file-bricks`, `entertain-and-more` und `open-bricks`:
+MarbleRun ist Teil des modularen Ökosystems von `ellmos-ai`, `dev-bricks` und `open-bricks`. Jeder Eintrag unten ist ein öffentliches Repository, und jede Zeile sagt, was es für MarbleRun-Nutzer tut:
 
-| Werkzeug | Ökosystem | Zweck |
+| Werkzeug | Ökosystem | Wozu es hier nützt |
 |---|---|---|
-| [COMA](https://github.com/ellmos-ai/coma) | `ellmos-ai` | Multi-Provider LLM CLI Orchestrierungs- und Adapterframework |
-| [policy-registry](https://github.com/ellmos-ai/policy-registry) | `ellmos-ai` | Governance-Policy-Engine und signierte Agenten-Delegation |
-| [system-explorer](https://github.com/ellmos-ai/system-explorer) | `ellmos-ai` | Multi-Agenten-Systemtopologie-Explorer und Laufzeit-Inspektor |
-| [sqlite-transit-sync](https://github.com/ellmos-ai/sqlite-transit-sync) | `ellmos-ai` | Lokale SQLite-Zustandssynchronisation für verteilte Agenten |
-| [ellmos-clatcher-mcp](https://github.com/ellmos-ai/ellmos-clatcher-mcp) | `ellmos-ai` | Multi-Agenten Kontext-Caching- und Snapshot-Bridge MCP-Server |
-| [automation-master](https://github.com/dev-bricks/automation-master) | `dev-bricks` | Lokale Guthabenreservierung und Hintergrund-Automations-Daemon |
-| [DevCenter](https://github.com/dev-bricks/DevCenter) | `dev-bricks` | Multi-Repo Entwickler-Werkbank und Telemetrie-Cockpit |
-| [CodeBox](https://github.com/dev-bricks/CodeBox) | `dev-bricks` | Sandboxed Multi-Sprachen Code-Ausführungs-Engine |
-| [FileCommander](https://github.com/file-bricks/FileCommander) | `file-bricks` | Leistungsstarke Batch-Dateiverarbeitung und Metadaten-Tools |
-| [ProFiler](https://github.com/file-bricks/ProFiler) | `file-bricks` | Dateisystem-Inspektion, Duplikaterkennung und Forensik |
-| [CuteStrike](https://github.com/entertain-and-more/CuteStrike) | `entertain-and-more` | Lokales gewaltfreies Arena-Spiel mit autonomen KI-Bots |
-| [open-bricks](https://github.com/open-bricks) | `open-bricks` | Dachorganisation und Architekturstandards für offene Tools |
+| [COMA](https://github.com/ellmos-ai/coma) | `ellmos-ai` | Lebenszyklus-Schicht für Agenten (Prozessstart, Dateiprotokoll, Statusabfrage) -- die optionale Provider-Bridge, die Codex und Agy als Chain-Backends ergänzt |
+| [swarm_ai](https://github.com/ellmos-ai/swarm_ai) | `ellmos-ai` | Parallele Agenten-Orchestrierung mit Konsensabstimmung und Boss-Worker-Mustern -- dasselbe Problem ohne sequentielle Ketten gelöst |
+| [clutch](https://github.com/ellmos-ai/clutch) | `ellmos-ai` | Anbieterneutraler LLM-Router; liefert die optionale Fähigkeit `routing.default`, die dieses Modul in `ellmos-module.v2.json` deklariert |
+| [task-master](https://github.com/ellmos-ai/task-master) | `ellmos-ai` | Deterministische Aufgabenauswahl -- entscheidet, was ein Worker-Link als Nächstes anfasst, statt es dem Modell zu überlassen |
+| [lock-master](https://github.com/ellmos-ai/lock-master) | `ellmos-ai` | Portable `LOCK*.txt`-Dateisperren für mehrere Agenten -- das Koordinationsprimitiv hinter race-freien Parallel-Workspaces (`INV-SYNC-04`) |
+| [ellmos-scheduler](https://github.com/ellmos-ai/ellmos-scheduler) | `ellmos-ai` | Cron-, Intervall- und Task-Engine mit Lauf-Belegen -- startet Chains unbeaufsichtigt nach Zeitplan |
+| [policy-registry](https://github.com/ellmos-ai/policy-registry) | `ellmos-ai` | Local-first Zeigerregister für Regeln, Policies und Entscheidungen mit SHA-256-Quellbezug |
+| [system-explorer](https://github.com/ellmos-ai/system-explorer) | `ellmos-ai` | Belegbasierte Systemkarten für Funktionen, Träger, Einstiegspunkte und Architekturdrift -- hilfreich, wenn eine Chain fremden Code anfasst |
+| [sqlite-transit-sync](https://github.com/ellmos-ai/sqlite-transit-sync) | `ellmos-ai` | Local-first SQLite-Synchronisation über geprüfte Snapshots -- trägt Chain-Zustand zwischen Rechnern |
+| [rinnsal](https://github.com/ellmos-ai/rinnsal) | `ellmos-ai` | Leichtgewichtige Agenten-Infrastruktur, die `llmauto` als Chain-Automationsmodul einbettet |
+| [automizer-for-claude-desktop](https://github.com/dev-bricks/automizer-for-claude-desktop) | `dev-bricks` | Inoffizielles Werkzeug für die geplanten Aufgaben der Claude-Desktop-App -- das GUI-Gegenstück zu dieser CLI-Automation |
+| [open-bricks](https://github.com/open-bricks) | `open-bricks` | Dachorganisations-Profil der Local-first-Werkzeugfamilien |
 
 ---
 
@@ -526,7 +526,7 @@ MarbleRun (`llmauto`) besitzt null verpflichtende externe Laufzeit-Abhängigkeit
 
 Alle optionalen und Entwicklungs-Tools sind 100% permissiv lizenziert:
 - **Kern-Engine:** 100% Python Standard Library ([PSFL-2.0](https://docs.python.org/3/license.html)) -- null externe Pakete zur Laufzeit.
-- **Optionale Provider-Bridge:** [`coma`](https://github.com/dev-bricks/coma) ([MIT](https://github.com/dev-bricks/coma/blob/main/LICENSE)) für Codex- und Agy-Adapter.
+- **Optionale Provider-Bridge:** [`coma`](https://github.com/ellmos-ai/coma) ([MIT](https://github.com/ellmos-ai/coma/blob/main/LICENSE)) für Codex- und Agy-Adapter.
 - **Testing & QA:** [`pytest`](https://github.com/pytest-dev/pytest) (MIT), [`ruff`](https://github.com/astral-sh/ruff) (MIT / Apache-2.0), [`setuptools`](https://github.com/pypa/setuptools) (MIT) und [`setuptools-scm`](https://github.com/pypa/setuptools-scm) (MIT).
 
 Keine Copyleft-, GPL- oder AGPL-Bestandteile. Detaillierte Nachweise und Lizenztexte befinden sich in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md). Die formale Urheberrechtsnotiz liegt unter [NOTICE](NOTICE).
@@ -537,10 +537,11 @@ Keine Copyleft-, GPL- oder AGPL-Bestandteile. Detaillierte Nachweise und Lizenzt
 ## 14. Sicherheitsrichtlinie & Betriebsgrenzen
 
 MarbleRun garantiert strikte Local-First-Sicherheitsgrenzen:
-- **Zero-Egress Standard:** Reine Standardbibliothek-Ausführung ohne Hintergrund-Netzwerkaufrufe oder Telemetrie.
+- **Zero-Egress als Vorgabe:** Reine Standardbibliothek-Ausführung ohne Telemetrie und ohne Hintergrund-Netzwerkaufrufe. Der einzige ausgehende Pfad im Code ist der optionale Telegram-Melder (`modes/chain.py`, in der mitgelieferten `config.json` abgeschaltet); wer ihn einschaltet, überträgt Chain-Namen und Rundenstatus an einen Drittanbieter ausserhalb der EU.
+- **Standardrechte des Agenten:** Die mitgelieferte `config.json` startet die Agenten-CLI mit `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` im Modus `dontAsk` und 7200 Sekunden Zeitlimit. Das ist für unbeaufsichtigte Chains gewollt und ist keine Sandbox -- vor dem Einsatz auf wichtigen Verzeichnissen enger fassen.
 - **RunAsInvoker Isolation:** Läuft im unprivilegierten Benutzerkontext ohne Administrator-Rechte oder Daemons.
-- **Unterstützte Versionen & SLAs:** Version 0.1.x wird aktiv unterstützt mit einem 48h-Erstantwort-SLA und einem 5-Werktage-Triage-Ziel.
-- **Sicherheitsmeldungen:** Vertrauliche Meldungen via `security@ellmos.ai`, `security@open-bricks.org` oder über [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new). Details: [SECURITY.md](SECURITY.md).
+- **Unterstützte Versionen & Reaktionsziele:** Version 0.1.x wird aktiv unterstützt. Die 48 Stunden Erstantwort und die 5 Werktage Triage sind Best-Effort-Ziele eines unentgeltlichen Ein-Personen-Projekts, keine vertragliche Zusage.
+- **Sicherheitsmeldungen:** Vertrauliche Meldungen laufen über [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new) (vertrauliches Meldeverfahren ist aktiviert). Das Projekt veröffentlicht kein Sicherheitspostfach; die in früheren Fassungen genannten E-Mail-Adressen waren nicht zustellbar und wurden entfernt. Details: [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -548,29 +549,45 @@ MarbleRun garantiert strikte Local-First-Sicherheitsgrenzen:
 ## 15. Repository-Struktur & Kernkomponenten
 
 ```
-MarbleRun/
-├── llmauto/                   # Python-Paket und CLI-Einstiegspunkte
-│   ├── llmauto.py             # CLI-Dispatcher (chain, pipe, inspect)
-│   ├── core/                  # Engine-Interna
-│   │   ├── runner.py          # Claude CLI & Provider-Aufruf (subprocess, env, fallback)
-│   │   ├── config.py          # Chain- & Konfigurationsparser (JSON)
-│   │   └── state.py           # Handoff-Dateien, Rundenzähler, Shutdown-Trigger
-│   └── modes/                 # Ausführungsmodi (Chain Runner, Pipe)
-│       └── chain.py           # Zyklische Marble-Run-Engine
-├── chains/                    # Beispiel- und Produktions-Chain-Dateien (JSON)
+MarbleRun/                     # Die Repo-Wurzel IST das Paket: pyproject mappt "llmauto" auf "."
+├── llmauto.py                 # CLI-Dispatcher (chain, pipe, inspect)
+├── __init__.py                # Paketmarker und einzige Versionsquelle `__version__`
+├── __main__.py                # Einstiegspunkt für `python -m llmauto`
+├── core/                      # Engine-Interna
+│   ├── runner.py              # Claude CLI & Provider-Aufruf (subprocess, env, fallback)
+│   ├── config.py              # Chain- & Konfigurationsparser (JSON)
+│   ├── state.py               # Handoff-Dateien, Rundenzähler, Shutdown-Trigger
+│   ├── embedded.py            # Native eingebettete Sequenzen mit Ausführungsbelegen
+│   └── chain_creator.py       # Interaktives Anlegen von Chains
+├── modes/                     # Ausführungsmodi (Chain Runner, Pipe)
+│   └── chain.py               # Zyklische Marble-Run-Engine
+├── chains/                    # Beispiel-Chain-Dateien (JSON)
 ├── prompts/                   # Wiederverwendbare Prompt-Vorlagen pro Rolle
 ├── templates/                 # Chain-Muster-Blaupausen (worker-reviewer, gui-live-test)
-├── tests/                     # Vollständige Vertrags- und Integrationstest-Suite
-├── docs/                      # Architekturnotizen & Playtest-Beweismaterial
+├── scripts/                   # Hilfsskripte (Chain-Creator, Review-Pipeline, Roblox-MCP-Wrapper)
+├── tests/                     # Vertrags- und Integrationstest-Suite
+├── docs/                      # Chain-Schema, Chain-Überblick, eingebettete Sequenzen
+├── legacy/                    # Stillgelegte Einstiegspunkte, nur zur Referenz
+├── assets/                    # Banner- und Logo-Grafiken
+├── config.json                # Globale Standardkonfiguration
+├── ellmos-module.v2.json      # ellmos-Modulmanifest (Fähigkeiten, Grenzen)
+├── USER-DOCU.md               # Ausführliches Nutzerhandbuch (deutsch)
 ├── CHANGELOG.md               # Versionierte Änderungshistorie
 ├── LICENSE                    # MIT-Lizenz
 ├── NOTICE                     # Produkt- und Urheberrechtsdeklaration
 ├── THIRD_PARTY_LICENSES.md    # Level 1 SBOM & Lizenz-Audit
+├── THIRD_PARTY_LICENSES.txt   # SBOM-Begleitfassung als Klartext & vollständige Lizenztexte
 ├── MARKETING-LOG.txt          # Discoverability-Log & SEO-Suchbegriffe
 ├── SECURITY.md                # Zweisprachige Sicherheitsrichtlinie & SLAs
+├── CONTRIBUTING.md            # Zweisprachiger Mitwirkungsleitfaden
 ├── llms.txt                   # Maschinenlesbarer KI-Agenten-Index
 └── pyproject.toml             # PEP 621 Paketmanifest & Ruff-Konfiguration
 ```
+
+> [!NOTE]
+> Es gibt **kein** Unterverzeichnis `llmauto/` und kein `src/`-Layout. `pyproject.toml` bildet
+> den Paketnamen `llmauto` auf die Repo-Wurzel ab; ein installiertes `llmauto.core.runner`
+> liegt in diesem Baum also unter `core/runner.py`.
 
 ---
 
@@ -618,10 +635,12 @@ Nutze diese Suchphrasen bei der Suche in Suchmaschinen, auf GitHub oder in KI-To
 
 MarbleRun wird am zuverlässigsten über seinen Paketnamen `llmauto` und die Kombination mit Claude Code Automatisierung gefunden. Der Name `MarbleRun` allein führt häufig zu Ergebnissen aus dem Bereich Confidential Computing (`edgelesssys/marblerun`) oder physischen Murmelbahnen.
 
+`MarbleRun` ist zugleich der Name eines kommerziellen Produkts der Edgeless Systems GmbH (ein Service Mesh für Confidential Computing). Dieses Projekt steht damit in keiner Verbindung und beansprucht keine Rechte an diesem Namen; kanonischer Paket- und CLI-Name ist hier `llmauto`, der Projektname wird beschreibend für die Kugelbahn-Metapher der Kettenausführung verwendet.
+
 ---
 
 <a id="sec-18"></a><a id="haftungsausschluss--lizenz"></a><a id="lizenz"></a>
-## 18. Gesetzlicher Haftungsausschluss, Schenkungsklausel (§ 521 BGB) & Lizenz
+## 18. Gesetzlicher Haftungsausschluss, Haftungsbeschränkung (§ 521 BGB) & Lizenz
 
 ### Gesetzlicher Haftungsausschluss (§ 521 BGB Gefälligkeitsrecht)
 
