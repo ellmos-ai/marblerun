@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 try:
@@ -88,9 +89,22 @@ def test_security_policy_bilingual_integrity():
     assert "## Deutsch" in sec_text
     assert "Zero-Egress" in sec_text or "zero-egress" in sec_text.lower()
     assert "Non-Elevation" in sec_text
-    assert "security@ellmos.ai" in sec_text
-    assert "support@lukasgeiger.com" in sec_text
     assert "https://github.com/ellmos-ai/MarbleRun/security/advisories/new" in sec_text
+
+    # A reporting channel has to be reachable. Measured 2026-10-23 against 1.1.1.1:
+    # ellmos.ai and open-bricks.org have no NS record at all, lukasgeiger.com publishes
+    # no MX record. Mail to the addresses this policy used to offer was never delivered.
+    # If one of them is named again, the policy must say that it is not a channel.
+    for dead in (
+        "security@ellmos.ai",
+        "security@open-bricks.org",
+        "lukas@open-bricks.org",
+        "support@lukasgeiger.com",
+    ):
+        if dead in sec_text:
+            assert "no e-mail channel" in sec_text.lower(), (
+                f"{dead} is undeliverable and must not be offered as a reporting channel"
+            )
 
 
 def test_ellmos_module_manifest_validity():
@@ -134,9 +148,9 @@ def test_llms_txt_and_badge_discovery_parity():
     llms_file = REPO_ROOT / "llms.txt"
     assert llms_file.exists()
     llms_text = llms_file.read_text(encoding="utf-8")
-    assert any(
-        stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29", "Last-checked: 2026-09-28", "Last-checked: 2026-09-22", "Last-checked: 2026-09-20")
-    ), "llms.txt must have current Last-checked timestamp"
+    assert re.search(r"Last-checked: \d{4}-\d{2}-\d{2}", llms_text), (
+        "llms.txt must carry a well-formed Last-checked timestamp"
+    )
     assert any(repo in llms_text for repo in ("https://github.com/ellmos-ai/marblerun", "https://github.com/ellmos-ai/MarbleRun"))
     assert "llmauto" in llms_text
 
@@ -213,22 +227,37 @@ def test_readme_sibling_ecosystem_matrix():
 
     expected_tools = [
         "COMA",
+        "swarm_ai",
+        "clutch",
+        "task-master",
+        "lock-master",
+        "ellmos-scheduler",
         "policy-registry",
         "system-explorer",
         "sqlite-transit-sync",
-        "ellmos-clatcher-mcp",
-        "automation-master",
-        "DevCenter",
-        "CodeBox",
-        "FileCommander",
-        "ProFiler",
-        "CuteStrike",
+        "rinnsal",
+        "automizer-for-claude-desktop",
         "open-bricks",
     ]
 
     for tool in expected_tools:
         assert tool in readme_en, f"Missing sibling tool '{tool}' in README.md"
         assert tool in readme_de, f"Missing sibling tool '{tool}' in README_de.md"
+
+    # Every linked repository must be reachable for an outside reader. Checked against the
+    # GitHub API on 2026-10-23: dev-bricks/automation-master and entertain-and-more/CuteStrike
+    # are private, file-bricks/FileCommander does not exist (the real one is
+    # ellmos-ai/ellmos-filecommander-mcp), and coma lives in ellmos-ai, not dev-bricks.
+    # These four links sat in both READMEs and were required by this very test.
+    forbidden_links = [
+        "github.com/dev-bricks/automation-master",
+        "github.com/file-bricks/FileCommander",
+        "github.com/entertain-and-more/CuteStrike",
+        "github.com/dev-bricks/coma",
+    ]
+    for readme, name in ((readme_en, "README.md"), (readme_de, "README_de.md")):
+        for link in forbidden_links:
+            assert link not in readme, f"{name} links the unreachable/wrong repository {link}"
 
 
 def test_readme_quick_navigation_anchors():
@@ -302,7 +331,7 @@ def test_readme_quick_navigation_anchors():
 def test_security_policy_slas_and_contacts():
     """Verify SECURITY.md includes supported versions, SLAs, and security@open-bricks.org."""
     sec_text = (REPO_ROOT / "SECURITY.md").read_text(encoding="utf-8")
-    assert "security@open-bricks.org" in sec_text
+    assert "security/advisories/new" in sec_text, "SECURITY.md must name a working reporting channel"
     assert "48 hours" in sec_text or "48 Stunden" in sec_text
     assert "5 business days" in sec_text or "5 Werktagen" in sec_text
     assert "Supported Versions" in sec_text
@@ -411,7 +440,7 @@ def test_pytest_ini_addopts_and_gitignore_hardening():
     assert "wheelhouse/" in gitignore_text
 
     security_text = (REPO_ROOT / "SECURITY.md").read_text(encoding="utf-8")
-    assert "lukas@open-bricks.org" in security_text
+    assert "security/advisories/new" in security_text
 
 
 def test_readme_badge_matrix_completeness():
@@ -540,7 +569,7 @@ def test_pyproject_notice_url_and_norecursedirs():
 def test_third_party_licenses_audit_recency():
     """Verify THIRD_PARTY_LICENSES.md reflects 2026-10-03, 2026-10-01, 2026-09-29, 2026-09-28 or 2026-09-22 audit."""
     tpl_text = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_text for stamp in ("**Audited:** 2026-10-11", "**Audited:** 2026-10-03", "**Audited:** 2026-10-01", "**Audited:** 2026-09-29", "**Audited:** 2026-09-28", "**Audited:** 2026-09-22"))
+    assert re.search(r"\*\*Audited:\*\* \d{4}-\d{2}-\d{2}", tpl_text)
 
 
 def test_changelog_unreleased_hygiene_entry():
@@ -700,7 +729,7 @@ def test_pfad_b_recency_and_changelog_sync():
     assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03", "Last-checked: 2026-10-01", "Last-checked: 2026-09-29"))
+    assert re.search(r"Last-checked: \d{4}-\d{2}-\d{2}", llms_text)
     assert "THIRD_PARTY_LICENSES.txt" in llms_text
 
 
@@ -714,7 +743,9 @@ def test_contributing_bilingual_and_invariant_parity():
     assert "## Deutsch" in content
     assert "Plan D" in content
     assert "RunAsInvoker" in content
-    assert "T-20260920-167562623" in content
+    # No internal ticket IDs in a public contributor guide -- they are unresolvable for readers.
+    assert not re.search(r"T-\d{8}-\d+", content), "CONTRIBUTING.md must not carry internal ticket IDs"
+    assert "Version Freeze Discipline" in content
     assert "0.1.3" in content
 
     # All 10 Invariants
@@ -752,19 +783,16 @@ def test_pfad_a_hygiene_recency_and_changelog_sync():
     assert any(d in changelog_text for d in ("2026-10-11", "2026-10-03"))
 
     m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert any(sec in m_text for sec in (
-        "14. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT SECURITY GUARD (PIP + ACTIONS), MULTI-HOST OS & LOCK DEFENSE & CONTRACT TESTS (2026-10-11)",
-        "13. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT GUARD & CONTRACT TESTS (2026-10-03)",
-    ))
+    assert re.search(r"\n\d+\. PFAD A ", m_text), "MARKETING-LOG.txt must keep a numbered Pfad A entry"
 
     sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
-    assert any(stamp in sbom_txt for stamp in ("Audit Date: 2026-10-11", "Audit Date: 2026-10-03"))
+    assert re.search(r"Audit Date: \d{4}-\d{2}-\d{2}", sbom_txt)
 
     tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert any(stamp in tpl_md for stamp in ("**Audited:** 2026-10-11", "**Audited:** 2026-10-03"))
+    assert re.search(r"\*\*Audited:\*\* \d{4}-\d{2}-\d{2}", tpl_md)
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert any(stamp in llms_text for stamp in ("Last-checked: 2026-10-11", "Last-checked: 2026-10-03"))
+    assert re.search(r"Last-checked: \d{4}-\d{2}-\d{2}", llms_text)
 
 
 def test_readme_badges_currency():
@@ -772,33 +800,48 @@ def test_readme_badges_currency():
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
 
-    assert any(v in readme_en for v in ("Verified-2026--10--11", "Verified-2026--10--03"))
-    assert any(v in readme_de for v in ("Verifiziert-2026--10--11", "Verifiziert-2026--10--03"))
+    assert re.search(r"Verified-\d{4}--\d{2}--\d{2}", readme_en)
+    assert re.search(r"Verifiziert-\d{4}--\d{2}--\d{2}", readme_de)
     assert "Contributing-Guidelines" in readme_en
     assert "Mitwirken-Leitfaden" in readme_de
 
 
-def test_pfad_a_hygiene_and_dependabot_security_guard_20261011():
-    """Verify 2026-10-11 Pfad A audit currency, dual Dependabot guard, and version freeze compliance."""
+def test_freshness_stamps_are_well_formed_and_agree():
+    """Freshness stamps must be checked by FORMAT and mutual agreement, never pinned to a literal date.
+
+    The previous version of this test nailed `Audit Date: 2026-10-11`, `**Audited:** 2026-10-11`,
+    `Last-checked: 2026-10-11`, `Verified-2026--10--11` and one exact MARKETING-LOG heading as
+    literals. That turns the suite red on any refresh of the stamp -- which is the stamp's entire
+    purpose. Checked here instead: each stamp exists, is a well-formed ISO date, and all five
+    carriers name the same date.
+    """
     sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
-    assert "Audit Date: 2026-10-11" in sbom_txt
-
     tpl_md = (REPO_ROOT / "THIRD_PARTY_LICENSES.md").read_text(encoding="utf-8")
-    assert "**Audited:** 2026-10-11" in tpl_md
-
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
-    assert "Last-checked: 2026-10-11" in llms_text
-
     readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
-    assert "Verified-2026--10--11" in readme_en
-    assert "Verifiziert-2026--10--11" in readme_de
 
+    stamps = {}
+    for label, text_, pattern in (
+        ("THIRD_PARTY_LICENSES.txt", sbom_txt, r"Audit Date: (\d{4}-\d{2}-\d{2})"),
+        ("THIRD_PARTY_LICENSES.md", tpl_md, r"\*\*Audited:\*\* (\d{4}-\d{2}-\d{2})"),
+        ("llms.txt", llms_text, r"Last-checked: (\d{4}-\d{2}-\d{2})"),
+        ("README.md", readme_en, r"Verified-(\d{4})--(\d{2})--(\d{2})"),
+        ("README_de.md", readme_de, r"Verifiziert-(\d{4})--(\d{2})--(\d{2})"),
+    ):
+        m = re.search(pattern, text_)
+        assert m, f"{label} carries no well-formed freshness stamp"
+        stamps[label] = "-".join(m.groups()) if len(m.groups()) == 3 else m.group(1)
+
+    assert len(set(stamps.values())) == 1, f"Freshness stamps disagree across carriers: {stamps}"
+
+    # The MARKETING-LOG keeps a numbered audit history; require a numbered Pfad A entry,
+    # not one specific heading.
     m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert "14. PFAD A REPOSITORY HYGIENE, AUTOMATED DEPENDABOT SECURITY GUARD (PIP + ACTIONS), MULTI-HOST OS & LOCK DEFENSE & CONTRACT TESTS (2026-10-11)" in m_text
+    assert re.search(r"\n\d+\. PFAD A ", m_text), "MARKETING-LOG.txt must keep a numbered Pfad A entry"
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    assert "2026-10-11" in changelog_text
+    assert re.search(r"\d{4}-\d{2}-\d{2}", changelog_text)
 
     gitignore_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
     assert "ehthumbs_vista.db" in gitignore_text
@@ -810,3 +853,30 @@ def test_pfad_a_hygiene_and_dependabot_security_guard_20261011():
     # Strict version freeze discipline (T-20260920-167562623)
     pkg_version = getattr(llmauto, "__version__", None)
     assert pkg_version == "0.1.3", "llmauto version must remain frozen at 0.1.3"
+
+
+
+def test_documented_test_count_agrees_across_surfaces():
+    """The documented test count must be identical on every surface that states it.
+
+    Found on 2026-10-23: the README badge and the quick-navigation row said 187, llms.txt said
+    "186+", and `pytest -q` reported 184 -- three numbers, none of them measured. Nothing checked
+    them against each other, so each surface drifted on its own.
+    """
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (REPO_ROOT / "README_de.md").read_text(encoding="utf-8")
+    llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
+
+    counts = {}
+    for label, text_, pattern in (
+        ("README.md badge", readme_en, r"badge/Pytest-(\d+)%20passed"),
+        ("README.md nav", readme_en, r"Pytest suite \((\d+) passed"),
+        ("README_de.md badge", readme_de, r"badge/Pytest-(\d+)%20bestanden"),
+        ("README_de.md nav", readme_de, r"Pytest-Suite \((\d+) bestanden"),
+        ("llms.txt", llms_text, r"Test suite: (\d+) passed"),
+    ):
+        m = re.search(pattern, text_)
+        assert m, f"{label} states no test count"
+        counts[label] = int(m.group(1))
+
+    assert len(set(counts.values())) == 1, f"Documented test counts disagree: {counts}"
