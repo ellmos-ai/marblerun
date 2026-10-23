@@ -122,7 +122,7 @@ German (DE):
 2. AI Developer Directories:
    - Submit listing to Glama.ai, mcp.so, and ToolRegistry under workflow runners and multi-agent systems.
 3. Ecosystem Cross-Referencing:
-   - Link from dev-bricks/coma documentation as the canonical marble-run execution harness.
+   - Link from ellmos-ai/coma documentation as the canonical marble-run execution harness.
 
 ================================================================================
 8. PFAD B DISCOVERABILITY & 18-POINT NAVIGATION OVERHAUL (2026-09-20)

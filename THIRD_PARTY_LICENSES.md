@@ -1,7 +1,7 @@
 # Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
 > **Project:** `ellmos-ai/marblerun` (llmauto)
-> **Audited:** 2026-10-11
+> **Audited:** 2026-10-23
 > **Repository License:** [MIT License](LICENSE)
 > **Repository Attribution Notice:** [NOTICE](NOTICE)
 > **Plain-Text Level 1 SBOM Companion:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt)
@@ -21,7 +21,7 @@ All direct, optional, and development dependencies utilized across `MarbleRun` a
 |:---|:---|:---|:---|
 | `INV-LOCAL-01` | **100% Offline / Zero-Egress** | Pure local execution via stdlib, zero outbound network sockets, zero telemetry | [PSFL-2.0](https://docs.python.org/3/license.html) |
 | `INV-SEC-02` | **Non-Elevation (`RunAsInvoker`)** | Executes entirely in unprivileged user space; forbids root or administrator elevation | [MIT](LICENSE) |
-| `INV-GATE-03` | **Multi-Provider Fail-Closed** | Strict backend validation; unconfigured providers fail closed immediately | [MIT](https://github.com/dev-bricks/coma) |
+| `INV-GATE-03` | **Multi-Provider Fail-Closed** | Strict backend validation; unconfigured providers fail closed immediately | [MIT](https://github.com/ellmos-ai/coma) |
 | `INV-SYNC-04` | **Race-Free Parallel Workers** | Isolated per-link workspaces prevent concurrent handoff file collisions | [PSFL-2.0](https://docs.python.org/3/license.html) |
 | `INV-CONT-05` | **Anti-Starvation Skip Guard** | Automatic handoff restoration if an agent produces an empty or degenerate output | [PSFL-2.0](https://docs.python.org/3/license.html) |
 | `INV-STATE-06` | **Transparent State Machine** | Human-readable Markdown and plain-text state files (`status.txt`, `handoff.md`) | [MIT](LICENSE) |
@@ -52,7 +52,7 @@ All direct, optional, and development dependencies utilized across `MarbleRun` a
 
 | Package | Role / Functional Scope | License | Project Repository / Upstream |
 |:---|:---|:---|:---|
-| **coma** (optional) | Multi-provider LLM CLI orchestrator & adapter framework (Claude, Codex, Agy) | [MIT](https://github.com/dev-bricks/coma/blob/main/LICENSE) | [dev-bricks/coma](https://github.com/dev-bricks/coma) |
+| **coma** (optional) | Multi-provider LLM CLI orchestrator & adapter framework (Claude, Codex, Agy) | [MIT](https://github.com/ellmos-ai/coma/blob/main/LICENSE) | [ellmos-ai/coma](https://github.com/ellmos-ai/coma) |
 
 ---
 

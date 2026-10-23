@@ -3,7 +3,7 @@ THIRD-PARTY SOFTWARE LICENSES & TRANSPARENCY NOTICE (LEVEL 1 SBOM)
 Project: MarbleRun / llmauto
 Organization: ellmos-ai (Ecosystem: open-bricks)
 Canonical Repository: https://github.com/ellmos-ai/marblerun
-Audit Date: 2026-10-11
+Audit Date: 2026-10-23
 Primary License: MIT (see LICENSE)
 Attribution: NOTICE
 Level 1 SBOM Plain-Text Companion: THIRD_PARTY_LICENSES.txt
@@ -50,7 +50,7 @@ verified:
 
 [INV-GATE-03] Multi-Provider Fail-Closed:
   Enforcement: Strict backend validation; unconfigured providers fail closed.
-  License / Scope: MIT (dev-bricks/coma). Status: VERIFIED.
+  License / Scope: MIT (ellmos-ai/coma). Status: VERIFIED.
 
 [INV-SYNC-04] Race-Free Parallel Workers:
   Enforcement: Isolated per-link workspaces prevent concurrent file collisions.
@@ -98,7 +98,7 @@ Package: coma
 Role: Multi-provider LLM CLI orchestrator & adapter framework (Claude, Codex, Agy)
 License: MIT License
 SPDX: MIT
-URL: https://github.com/dev-bricks/coma
+URL: https://github.com/ellmos-ai/coma
 Notice: Copyright (c) 2026 dev-bricks contributors
 
 Development & Quality Assurance Tooling:
