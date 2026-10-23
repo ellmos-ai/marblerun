@@ -17,7 +17,7 @@ Welcome! We welcome contributions to `MarbleRun` (`llmauto` - Local-first multi-
 8. **Multi-OS CI Matrix (`INV-CI-08`)**: All features and fixes must pass automated GitHub Actions testing across Linux, Windows, macOS, and Python 3.10 through 3.13.
 9. **Strict Concurrency Gate (`INV-CONC-09`)**: All CI workflows enforce `concurrency: cancel-in-progress: true` to prevent conflicting concurrent builds or race conditions.
 10. **Cryptographic Auditability & Dual SLAs (`INV-SLA-10`)**: We commit to a 48h acknowledgment and 5-business-day triage SLA for security disclosures pursuant to [SECURITY.md](SECURITY.md).
-11. **Version Freeze Discipline (`T-20260920-167562623`)**: Package version `0.1.3` is strictly frozen across `__init__.py`, `pyproject.toml`, and all manifests. Do not bump the version string. Document all advancements under `## [Unreleased]` in `CHANGELOG.md`.
+11. **Version Freeze Discipline**: Package version `0.1.3` is strictly frozen across `__init__.py`, `pyproject.toml`, and all manifests. Do not bump the version string. Document all advancements under `## [Unreleased]` in `CHANGELOG.md`.
 12. **Clean Code & Regression Testing**: Every feature or fix must include regression tests in `tests/`. Keep test coverage at a 100% pass rate.
 13. **Bilingual Parity**: Maintain synchronized structural and navigational parity across `README.md` and `README_de.md` (18-point dual anchors `sec-01` through `sec-18`).
 
@@ -70,7 +70,7 @@ By contributing to `MarbleRun`, you agree that your contributions will be licens
 8. **Multi-OS CI-Matrix (`INV-CI-08`)**: Sämtliche Änderungen müssen die automatisierte GitHub Actions Matrix unter Linux, Windows, macOS und Python 3.10 bis 3.13 fehlerfrei durchlaufen.
 9. **Strikter Concurrency-Gate (`INV-CONC-09`)**: Alle Workflows erzwingen `concurrency: cancel-in-progress: true` zur Vermeidung überlappender CI-Läufe.
 10. **Kryptographische Auditierbarkeit & Duale SLAs (`INV-SLA-10`)**: Verbindliche Zusage von 48h Reaktionszeit und 5 Werktagen Triage-Bewertung gemäß [SECURITY.md](SECURITY.md).
-11. **Version-Freeze-Disziplin (`T-20260920-167562623`)**: Paketversion `0.1.3` ist über alle Manifeste, Quelltexte und Badges hinweg strikt eingefroren. Kein Versions-Bump. Alle Weiterentwicklungen werden unter `## [Unreleased]` in `CHANGELOG.md` dokumentiert.
+11. **Version-Freeze-Disziplin**: Paketversion `0.1.3` ist über alle Manifeste, Quelltexte und Badges hinweg strikt eingefroren. Kein Versions-Bump. Alle Weiterentwicklungen werden unter `## [Unreleased]` in `CHANGELOG.md` dokumentiert.
 12. **Sauberer Code & Regressionstests**: Jede Änderung erfordert begleitende Tests in `tests/`. Die Testsuite muss zu 100% grün bleiben.
 13. **Bilinguale Parität**: Strukturelle und navigatorische Parität zwischen `README.md` und `README_de.md` (18-Punkte Dual-Anker `sec-01` bis `sec-18`) ist zwingend einzuhalten.
 

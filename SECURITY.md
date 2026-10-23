@@ -41,7 +41,15 @@ If you discover a security vulnerability or potential privacy leak in MarbleRun,
 
 1. **Do NOT open a public issue.**
 2. **Preferred:** Submit a confidential advisory via [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
-3. **Alternative:** Email the security team directly at `security@ellmos.ai` with CC to `security@open-bricks.org`, `lukas@open-bricks.org`, and `support@lukasgeiger.com`.
+3. **There is currently no e-mail channel.** Earlier revisions of this policy offered
+   `security@ellmos.ai`, `security@open-bricks.org`, `lukas@open-bricks.org` and
+   `support@lukasgeiger.com`. Neither `ellmos.ai` nor `open-bricks.org` resolves in DNS
+   (no NS record), and `lukasgeiger.com` publishes no MX record -- mail sent to any of
+   those addresses was never delivered and no report ever arrived. They have therefore
+   been removed rather than left in place. Private vulnerability reporting is enabled on
+   this repository and is the working channel. If you cannot use it, open a public issue
+   that says only that you have a security finding and asks for a private channel -- do
+   not include any details there.
 
 Please include in your report:
 - A detailed description of the vulnerability and its potential impact.
@@ -82,6 +90,15 @@ Falls Sie eine Sicherheitslücke oder ein Datenschutzproblem entdecken:
 
 1. **Eröffnen Sie KEIN öffentliches GitHub-Issue.**
 2. **Bevorzugt:** Nutzen Sie das vertrauliche [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
-3. **Alternativ:** Senden Sie eine E-Mail an `security@ellmos.ai` (CC: `security@open-bricks.org`, `lukas@open-bricks.org` und `support@lukasgeiger.com`).
+3. **Ein E-Mail-Kanal besteht derzeit nicht.** Frühere Fassungen dieser Richtlinie nannten
+   `security@ellmos.ai`, `security@open-bricks.org`, `lukas@open-bricks.org` und
+   `support@lukasgeiger.com`. Weder `ellmos.ai` noch `open-bricks.org` ist im DNS
+   auflösbar (kein NS-Eintrag), und `lukasgeiger.com` führt keinen MX-Eintrag -- an diese
+   Adressen gesendete Post wurde nie zugestellt, es ist also auch nie eine Meldung
+   angekommen. Die Adressen wurden deshalb entfernt und nicht stehen gelassen. Das
+   vertrauliche Meldeverfahren von GitHub ist für dieses Repository aktiviert und ist der
+   funktionierende Weg. Wer es nicht nutzen kann, eröffnet ein öffentliches Issue, das
+   ausschließlich mitteilt, dass ein Sicherheitsfund vorliegt, und um einen vertraulichen
+   Kanal bittet -- ohne jede inhaltliche Angabe.
 
 Bitte geben Sie eine genaue Fehlerbeschreibung, Reproduktionsschritte sowie die betroffenen Versionen und Betriebssystemumgebungen an. Wir bestätigen den Eingang innerhalb von 48 Stunden und liefern eine Triage-Bewertung innerhalb von 5 Werktagen.
