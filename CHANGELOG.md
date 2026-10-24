@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Review corrections (2026-10-24)
+
+- Restrict the network claim to local orchestration state; the default Claude CLI and tools may transmit prompts/context. No Zero-Egress control is implemented.
+- Remove historical delivery conclusions drawn from DNS; absent MX alone does not prove non-delivery (RFC 5321 §5.1). GitHub private reporting remains the designated channel.
+- Synchronize conditional liability wording, response targets and the German badge label.
+
+
 ### Deep after-care: factual corrections across all documentation surfaces (2026-10-23) [C 2026-10-23]
 
 Deep maintenance round (`full-after-care`, rotation line F6). Everything below was measured
@@ -12,8 +19,8 @@ against the source, the GitHub API or DNS -- no claim was carried forward.
 - **Security reporting was impossible by e-mail.** `SECURITY.md` offered `security@ellmos.ai`,
   `security@open-bricks.org`, `lukas@open-bricks.org` and `support@lukasgeiger.com` and promised a
   48h acknowledgment. Measured against 1.1.1.1 on 2026-10-23: `ellmos.ai` and `open-bricks.org`
-  return NXDOMAIN (no NS record at all), `lukasgeiger.com` publishes no MX record. No report sent
-  to any of those addresses was ever delivered. The e-mail path has been removed and replaced by
+  were reported as NXDOMAIN; `lukasgeiger.com` was reported without an MX record. This snapshot
+  does not prove historical delivery or non-delivery; missing MX alone is not sufficient. The e-mail path has been removed and replaced by
   GitHub private vulnerability reporting, which is enabled on this repository; the policy says why
   rather than dropping the addresses silently.
 - **Four links in the sibling matrix were unreachable for any reader.**
@@ -31,7 +38,7 @@ against the source, the GitHub API or DNS -- no claim was carried forward.
   the actual tree in both languages, plus a note explaining the mapping.
 - **"100% Offline / Zero-Egress" was not accurate.** `modes/chain.py` posts chain name and round
   status to `api.telegram.org` when `telegram.enabled` is set (default `false`). Badge,
-  `INV-LOCAL-01` and Section 14 now say "Zero-Egress by default" and name the one opt-in exception.
+  `INV-LOCAL-01` and Section 14 now distinguish local state, provider/tool traffic and the opt-in notifier; no Zero-Egress guarantee is made.
 - **`INV-SEC-02` promised "safe sandboxed CLI execution".** There is no sandbox; the shipped
   `config.json` grants the agent CLI `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` in permission
   mode `dontAsk` with a 7200-second timeout. Both facts are now stated instead of implied.
@@ -53,7 +60,7 @@ against the source, the GitHub API or DNS -- no claim was carried forward.
 #### Tests
 
 - `tests/test_metadata.py`: five contract tests were defending exactly what they should have
-  found -- the dead sibling links, the four undeliverable addresses, the literal freshness stamps,
+  found -- the dead sibling links, the four unverified reporting addresses, the literal freshness stamps,
   the internal ticket ID. All inverted to format and consistency checks;
   `test_pfad_a_hygiene_and_dependabot_security_guard_20261011` replaced by
   `test_freshness_stamps_are_well_formed_and_agree`, and

@@ -11,9 +11,9 @@
 
 MarbleRun (`llmauto`) is an open-source, local-first LLM automation and agent-chain orchestration framework. The codebase is designed around strict privacy and execution safety principles:
 
-1. **Local-First & Zero-Egress Architecture:**
+1. **Local state & network boundaries (no enforced Zero-Egress):**
    - All chain execution, round scheduling, state persistence (`sqlite3`), and handoff files are processed strictly on the local machine.
-   - No telemetry, analytics, tracking, or unexpected third-party network egress is emitted by MarbleRun itself.
+   - The Python orchestrator has no analytics reporting. The default Claude CLI backend can transmit prompts and context; provider/tool traffic is not isolated or blocked. The optional Telegram notifier adds a separate outbound path and is disabled by default.
    - LLM calls are routed exclusively to the explicitly configured local CLI tools (e.g. `claude`, `codex`, `agy` via COMA adapter) or user-specified endpoints.
 
 2. **Execution Boundaries & Subprocess Safety:**
@@ -43,11 +43,10 @@ If you discover a security vulnerability or potential privacy leak in MarbleRun,
 2. **Preferred:** Submit a confidential advisory via [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
 3. **There is currently no e-mail channel.** Earlier revisions of this policy offered
    `security@ellmos.ai`, `security@open-bricks.org`, `lukas@open-bricks.org` and
-   `support@lukasgeiger.com`. Neither `ellmos.ai` nor `open-bricks.org` resolves in DNS
-   (no NS record), and `lukasgeiger.com` publishes no MX record -- mail sent to any of
-   those addresses was never delivered and no report ever arrived. They have therefore
-   been removed rather than left in place. Private vulnerability reporting is enabled on
-   this repository and is the working channel. If you cannot use it, open a public issue
+   `support@lukasgeiger.com`. They are not offered as verified reporting channels.
+   A current DNS snapshot cannot establish historical delivery or receipt, and an absent
+   MX record alone does not establish non-delivery (RFC 5321 §5.1). Private vulnerability
+   reporting is enabled on this repository and is the designated channel. If you cannot use it, open a public issue
    that says only that you have a security finding and asks for a private channel -- do
    not include any details there.
 
@@ -56,7 +55,7 @@ Please include in your report:
 - Step-by-step reproduction steps or a minimal proof-of-concept.
 - Affected versions, OS environment, and provider configuration.
 
-We will acknowledge receipt within 48 hours and provide a triage assessment within 5 business days along with a coordinated disclosure timeline.
+We aim to acknowledge receipt within 48 hours and provide a triage assessment within 5 business days. These are best-effort targets, not guaranteed response times.
 
 ---
 
@@ -67,9 +66,9 @@ We will acknowledge receipt within 48 hours and provide a triage assessment with
 
 MarbleRun (`llmauto`) ist ein quelloffenes, Local-First Automatisierungs- und Agentenketten-Framework für LLMs. Die Codebasis folgt strengen Datenschutz- und Ausführungssicherheitsprinzipien:
 
-1. **Local-First & Zero-Egress-Architektur:**
+1. **Lokaler Zustand & Netzwerkgrenzen (kein erzwungenes Zero-Egress):**
    - Alle Chain-Ausführungen, Rundenzähler, Zustandsspeicher (`sqlite3`) und Handoff-Dateien verbleiben vollständig auf dem lokalen System.
-   - MarbleRun selbst überträgt keinerlei Telemetrie, Tracking-Daten oder ungeprüften ausgehenden Netzwerkverkehr.
+   - Der Python-Orchestrator sendet keine Analysedaten. Das Standardbackend Claude-CLI kann Prompts und Kontext übertragen; Provider-/Werkzeugverkehr wird nicht isoliert oder blockiert. Der optionale Telegram-Melder ergänzt einen eigenen ausgehenden Pfad und ist standardmäßig abgeschaltet.
    - LLM-Aufrufe erfolgen ausschließlich über die vom Nutzer explizit konfigurierten lokalen CLIs (z. B. `claude`, `codex`, `agy` via COMA-Adapter) oder angegebene Schnittstellen.
 
 2. **Ausführungsgrenzen & Subprozess-Sicherheit:**
@@ -92,13 +91,12 @@ Falls Sie eine Sicherheitslücke oder ein Datenschutzproblem entdecken:
 2. **Bevorzugt:** Nutzen Sie das vertrauliche [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/MarbleRun/security/advisories/new).
 3. **Ein E-Mail-Kanal besteht derzeit nicht.** Frühere Fassungen dieser Richtlinie nannten
    `security@ellmos.ai`, `security@open-bricks.org`, `lukas@open-bricks.org` und
-   `support@lukasgeiger.com`. Weder `ellmos.ai` noch `open-bricks.org` ist im DNS
-   auflösbar (kein NS-Eintrag), und `lukasgeiger.com` führt keinen MX-Eintrag -- an diese
-   Adressen gesendete Post wurde nie zugestellt, es ist also auch nie eine Meldung
-   angekommen. Die Adressen wurden deshalb entfernt und nicht stehen gelassen. Das
-   vertrauliche Meldeverfahren von GitHub ist für dieses Repository aktiviert und ist der
-   funktionierende Weg. Wer es nicht nutzen kann, eröffnet ein öffentliches Issue, das
+   `support@lukasgeiger.com`. Sie werden nicht als bestätigte Meldekanäle angeboten.
+   Eine aktuelle DNS-Messung belegt keine historische Zustellung oder Nichtzustellung;
+   ein fehlender MX-Eintrag allein beweist keine Unzustellbarkeit (RFC 5321 §5.1).
+   Das vertrauliche Meldeverfahren von GitHub ist für dieses Repository aktiviert und
+   ist der vorgesehene Kanal. Wer es nicht nutzen kann, eröffnet ein öffentliches Issue, das
    ausschließlich mitteilt, dass ein Sicherheitsfund vorliegt, und um einen vertraulichen
    Kanal bittet -- ohne jede inhaltliche Angabe.
 
-Bitte geben Sie eine genaue Fehlerbeschreibung, Reproduktionsschritte sowie die betroffenen Versionen und Betriebssystemumgebungen an. Wir bestätigen den Eingang innerhalb von 48 Stunden und liefern eine Triage-Bewertung innerhalb von 5 Werktagen.
+Bitte geben Sie eine genaue Fehlerbeschreibung, Reproduktionsschritte sowie die betroffenen Versionen und Betriebssystemumgebungen an. Wir streben eine Bestätigung innerhalb von 48 Stunden und eine Triage-Bewertung innerhalb von 5 Werktagen an. Das sind Best-Effort-Ziele, keine garantierten Reaktionszeiten.

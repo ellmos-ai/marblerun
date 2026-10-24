@@ -17,9 +17,9 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Privacy](https://img.shields.io/badge/privacy-Zero--Egress%20by%20default-success.svg)](SECURITY.md)
+[![Privacy](https://img.shields.io/badge/privacy-provider--dependent%20network-success.svg)](SECURITY.md)
 [![Security Policy](https://img.shields.io/badge/security-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
-[![Security SLA](https://img.shields.io/badge/security%20SLA-48h%20%2F%205d%20triage-blue.svg)](SECURITY.md)
+[![Security SLA](https://img.shields.io/badge/security%20SLA-best--effort%2048h%20%2F%205d%20triage-blue.svg)](SECURITY.md)
 [![Third-Party: Audited](https://img.shields.io/badge/third--party%20licenses-audited%20100%25%20permissive-success.svg)](THIRD_PARTY_LICENSES.md)
 [![Marketing Log](https://img.shields.io/badge/marketing%20log-active-blue.svg)](MARKETING-LOG.txt)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -49,7 +49,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 | 11 | [CLI Reference & Global Configuration](#cli-reference--global-configuration) | [`#sec-11`](#sec-11) | Comprehensive command flags, timeouts, and options |
 | 12 | [Sibling Tools & Ecosystem Matrix](#sibling-tools--ecosystem-matrix) | [`#sec-12`](#sec-12) | 12 partner repositories across ellmos-ai, dev-bricks, and open-bricks |
 | 13 | [Third-Party Licenses & Level 1 SBOM](#third-party-licenses--transparency) | [`#sec-13`](#sec-13) | Zero-copyleft inventory, Level 1 SBOM companion, and RunAsInvoker |
-| 14 | [Security Policy & Operational Limits](#security-policy--operational-limits) | [`#sec-14`](#sec-14) | 48h response SLA, zero-egress perimeter, and vulnerability reporting |
+| 14 | [Security Policy & Operational Limits](#security-policy--operational-limits) | [`#sec-14`](#sec-14) | 48h response target, provider-dependent network, and vulnerability reporting |
 | 15 | [Repository Structure & Key Assets](#repository-structure--key-assets) | [`#sec-15`](#sec-15) | Folder structure, chains, prompts, templates, and runtime files |
 | 16 | [Development, Test Matrix & Verification](#development--test-matrix) | [`#sec-16`](#sec-16) | Pytest suite (185 passed | 100% green), ruff linter, and multi-OS CI matrix |
 | 17 | [Discovery Keywords & Disambiguation](#discovery--keywords--disambiguation) | [`#sec-17`](#sec-17) | Disambiguation from edgelesssys/marblerun and high-intent SEO |
@@ -180,12 +180,12 @@ graph TD
                                       | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
                                       v
 ===================================================================================================
-[VIEW 4: AIR-GAP DEFENSE PERIMETER, ZERO-EGRESS & RUNASINVOKER]
+[VIEW 4: NETWORK BOUNDARIES & RUNASINVOKER]
 +-------------------------------------------------------------------------------------------------+
-| Zero-Egress Boundary: 100% offline local execution, zero telemetry, zero analytics (INV-LOCAL)  |
+| Network boundary: provider/tool traffic is not blocked; Telegram is opt-in (INV-LOCAL-01) |
 | Non-Elevation Privilege: Standard user-mode execution (RunAsInvoker), no daemon (INV-SEC-02)   |
 | Zero-Copyleft Perimeter: 100% permissive dependencies (PSFL, MIT, Apache-2.0) (Level 1 SBOM)    |
-| Governance & Audit: 48h Security Response SLA, § 521 BGB statutory disclaimer (INV-SLA-10)      |
+| Governance & Audit: Best-effort 48h response target, § 521 BGB statutory disclaimer (INV-SLA-10)      |
 +-------------------------------------------------------------------------------------------------+
 ===================================================================================================
 ```
@@ -237,7 +237,7 @@ sequenceDiagram
 | :--- | :--- | :--- | :--- |
 | `[PERSONA-01]` | **Autonomous AI Agent Engineers & Chain Builders** | Requires unattended, cyclic multi-agent execution loops where workers, reviewers, and controllers collaborate for hours without manual prompt re-entry or session stalls. | `claude code agent chain runner`, `llmauto claude automation`, `unattended multi agent loop python`, `autonomous coding agent supervisor` |
 | `[PERSONA-02]` | **Multi-Agent Swarm & Handoff Architects** | Needs clean context passing between heterogeneous models (e.g. Sonnet worker, Opus reviewer, Haiku controller) with anti-starvation skip protection and baseline rollback. | `llm handoff file pattern python`, `worker reviewer controller multi agent loop`, `skip overwrite protection llm context`, `stateless agent handoff` |
-| `[PERSONA-03]` | **Enterprise Tooling, Safety & Governance Compliance Officers** | Requires 100% offline, local-first execution (`Zero-Egress`), non-elevated user privilege (`RunAsInvoker`), permissive open-source licensing, and dual security response SLAs. | `local first ai agent orchestration zero egress`, `runasinvoker llm automation framework`, `enterprise compliant agent chains python`, `permissive license ai agent runner` |
+| `[PERSONA-03]` | **Enterprise Tooling, Safety & Governance Compliance Officers** | Needs to assess provider/tool data flows and any external controls required for offline operation, non-elevated user privilege (`RunAsInvoker`), permissive open-source licensing, and best-effort response targets. | `local first ai agent orchestration zero egress`, `runasinvoker llm automation framework`, `enterprise compliant agent chains python`, `permissive license ai agent runner` |
 | `[PERSONA-04]` | **Open-Source AI Tool Builders & Local-First Developers** | Demands lightweight, zero-dependency Python tooling that wraps local LLM CLIs directly via standard library primitives without requiring heavy heavyweight node or cloud dependencies. | `zero dependency llm orchestration python`, `claude cli wrapper python stdlib`, `lightweight agent chain framework`, `marble run ai agent loop` |
 
 ---
@@ -256,7 +256,7 @@ sequenceDiagram
 | **Invocation Safety** | Direct vector execution (`shell=False`) | Shell tools commonly enabled | Python execution tools available | Code execution environment | `INV-PROC-07` |
 | **Cross-Platform CI Matrix** | Automated Linux, Windows, macOS (3.10-3.13) | Standard CI matrix | Standard CI matrix | Multi-OS CI matrix | `INV-CI-08` |
 | **CI Concurrency Gate** | Strict `cancel-in-progress` gate | Standard workflow triggers | Standard workflow triggers | Concurrency controls | `INV-CONC-09` |
-| **Security Governance** | Formal 48h SLA & public advisory workflow | General open-source issue tracker | Venture-backed commercial SLA | Enterprise security reporting | `INV-SLA-10` |
+| **Security Governance** | Best-effort 48h response target & advisory workflow | General open-source issue tracker | Venture-backed commercial SLA | Enterprise security reporting | `INV-SLA-10` |
 
 ### Architectural Spotlight: MarbleRun vs. OpenClaw
 
@@ -279,11 +279,11 @@ MarbleRun makes LLMs act -- autonomous multi-agent chains where workers, reviewe
 <a id="sec-06"></a><a id="governance--runtime-invariants-matrix"></a><a id="core-capabilities--security-invariants"></a>
 ## 6. Governance & Runtime Invariants Matrix
 
-MarbleRun is built on strict local-first, zero-egress, and resilient execution guarantees:
+MarbleRun keeps orchestration state local; provider and tool traffic follows the selected backend. Zero-Egress is not enforced:
 
 | Invariant ID & Capability | Implementation Mechanism | Security & Reliability Guarantee |
 |---|---|---|
-| **INV-LOCAL-01: Zero-Egress by default** | Local CLI orchestration via `subprocess` without external network listeners | No egress in the default configuration; prompts and model context never leave the machine. One opt-in exception: the Telegram notifier (`telegram.enabled`, off by default) posts the chain name and round status to `api.telegram.org` |
+| **INV-LOCAL-01: Local state, provider-dependent network** | Local orchestration and handoff files | The default runner starts the Claude CLI and passes it prompts; the provider may send prompts and context for remote inference. Provider/tool traffic is not isolated or blocked by this package. The optional Telegram notifier, disabled by default, additionally sends chain names and round status. |
 | **INV-SEC-02: Non-Elevation & User Mode** | Standard Python runtime execution without root/admin privilege requirements (`RunAsInvoker`) | Never asks for elevation, so nothing outside the invoking user's reach can be changed. This is not a sandbox: the shipped `config.json` default grants the agent CLI `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` in permission mode `dontAsk` -- review it before an unattended run |
 | **INV-GATE-03: Multi-Provider Fail-Closed** | Strict backend selection (Claude CLI, optional COMA adapter for Codex/Agy) | Unconfigured backends fail closed; no silent fallback to insecure endpoints |
 | **INV-SYNC-04: Race-Free Parallel Workers** | Per-worker isolated handoff snapshots (`tests/test_parallel_handoff.py`) | Prevents concurrency collisions when parallel agents write simultaneous outputs |
@@ -292,7 +292,7 @@ MarbleRun is built on strict local-first, zero-egress, and resilient execution g
 | **INV-PROC-07: Safe Process Scoping & Shell-Free Execution** | Direct `argv` execution (`shell=False`) with sanitized environment maps | Eliminates shell-injection vectors, command injection, and untracked side-effects |
 | **INV-CI-08: Multi-OS CI Matrix** | Automated GitHub Actions testing across Ubuntu, Windows, and macOS | Guaranteed cross-platform consistency on Python 3.10, 3.11, 3.12, and 3.13 |
 | **INV-CONC-09: Strict Concurrency Gate** | Workflow-level `concurrency` with `cancel-in-progress: true` | Prevents stale CI race conditions and wasted compute resources |
-| **INV-SLA-10: Cryptographic Receipt Integrity & Security SLA Auditability** | Timestamped state transitions, 48h SLA response commitment, and deterministic tests | Tamper-evident audit trails, guaranteed triage within 5 days, verified compliance |
+| **INV-SLA-10: Cryptographic Receipt Integrity & Security SLA Auditability** | Timestamped state transitions, best-effort 48h response target, and deterministic tests | Tamper-evident audit trails, best-effort triage target of 5 business days; no response-time guarantee |
 
 ---
 
@@ -572,11 +572,11 @@ Zero copyleft, GPL, or AGPL dependencies are included. Detailed dependency notic
 ## 14. Security Policy & Operational Limits
 
 MarbleRun enforces a strict local-first security boundary:
-- **Zero-Egress by Default:** Pure standard library execution with no telemetry and no background network requests. The only outbound path in the codebase is the optional Telegram notifier (`modes/chain.py`, disabled in the shipped `config.json`); enabling it transfers chain name and round status to a third-party service outside the EU.
+- **Network boundary:** The Python orchestrator has no analytics reporting. Its default Claude CLI backend can transmit prompts and context for inference; other providers and tools have their own data flows. This package does not enforce Zero-Egress. The optional Telegram notifier is disabled by default and adds a separate outbound path when enabled.
 - **Default Agent Permissions:** The shipped `config.json` runs the agent CLI with `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` in permission mode `dontAsk` and a 7200-second timeout. That is deliberate for unattended chains and is not a sandbox -- scope it down before pointing a chain at a directory you care about.
 - **RunAsInvoker Isolation:** Strictly executes in unprivileged user space. Does not require administrative elevation or daemon services.
 - **Supported Versions & Response Targets:** Version 0.1.x is actively supported. The 48h acknowledgment and 5-business-day triage figures are best-effort targets of an unpaid single-maintainer project, not a contractual service level.
-- **Vulnerability Reporting:** Disclosures are handled confidentially through [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new) (private vulnerability reporting is enabled). This project publishes no security mailbox; the e-mail addresses named in earlier revisions were undeliverable and have been removed. Full policy details: [SECURITY.md](SECURITY.md).
+- **Vulnerability Reporting:** Disclosures are handled confidentially through [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new) (private vulnerability reporting is enabled). This project publishes no security mailbox; the e-mail addresses named in earlier revisions are not offered as verified reporting channels. Full policy details: [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -685,7 +685,7 @@ Nutzung auf eigenes Risiko. Keine Wartungsverpflichtung, keine Verfügbarkeitszu
 
 ### English Summary
 
-This project is an unpaid open-source donation. In accordance with § 521 of the German Civil Code (BGB), liability is restricted strictly to cases of intentional misconduct and gross negligence. Supplemental liability disclaimers are set forth in the MIT License below.
+This software is provided at no charge. To the extent that its provision legally qualifies as a gift, § 521 BGB limits liability to intent and gross negligence. The legal classification is not asserted here. The MIT disclaimer also applies; mandatory liability remains unaffected.
 
 Use entirely at your own risk. No maintenance commitments, no availability guarantees, and no warranties regarding fitness for any particular purpose.
 

@@ -17,9 +17,9 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Plattform](https://img.shields.io/badge/Plattform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/Code%20Style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-[![Datenschutz](https://img.shields.io/badge/Datenschutz-Zero--Egress%20per%20Vorgabe-success.svg)](SECURITY.md)
+[![Datenschutz](https://img.shields.io/badge/Datenschutz-Netzwerk%20anbieterabh%C3%A4ngig-success.svg)](SECURITY.md)
 [![Sicherheitsrichtlinie](https://img.shields.io/badge/Sicherheit-Local--First%20%7C%20Non--Elevation-blue.svg)](SECURITY.md)
-[![Sicherheits-SLA](https://img.shields.io/badge/Sicherheits--SLA-48h%20%2F%205d%20Triage-blue.svg)](SECURITY.md)
+[![Sicherheits-SLA](https://img.shields.io/badge/Sicherheits--SLA-Best--Effort%2048h%20%2F%205d%20Triage-blue.svg)](SECURITY.md)
 [![Drittanbieter Geprüft](https://img.shields.io/badge/Drittanbieter--Lizenzen-100%25%20permissiv-brightgreen.svg)](THIRD_PARTY_LICENSES.md)
 [![Marketing Log](https://img.shields.io/badge/Marketing--Log-aktiv-blue.svg)](MARKETING-LOG.txt)
 [![Lizenz](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
@@ -27,7 +27,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Level 1 SBOM: Textbegleiter](https://img.shields.io/badge/Level%201%20SBOM-Textbegleiter-success.svg)](THIRD_PARTY_LICENSES.txt)
 [![Mitwirken](https://img.shields.io/badge/Mitwirken-Leitfaden-blue.svg)](CONTRIBUTING.md)
-[![Verifiziert: 2026-10-11](https://img.shields.io/badge/Verifiziert-2026--10--23-brightgreen.svg)]()
+[![Verifiziert: 2026-10-23](https://img.shields.io/badge/Verifiziert-2026--10--23-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
@@ -49,7 +49,7 @@ Dieses Repository ist nicht das Confidential-Computing-Projekt `edgelesssys/marb
 | 11 | [CLI-Referenz & Globale Konfiguration](#cli-referenz--globale-konfiguration) | [`#sec-11`](#sec-11) | Umfassende Befehlsflags, Timeouts und Steueroptionen |
 | 12 | [Geschwister-Tools & Ökosystemmatrix](#geschwister-tools--oekosystemmatrix) | [`#sec-12`](#sec-12) | 12 Partner-Repositories unter ellmos-ai, dev-bricks und open-bricks |
 | 13 | [Drittanbieter-Lizenzen & Level 1 SBOM](#drittanbieter-lizenzen--transparenz) | [`#sec-13`](#sec-13) | Zero-Copyleft-Inventar, Level 1 SBOM Textbegleiter und RunAsInvoker |
-| 14 | [Sicherheitsrichtlinie & Betriebsgrenzen](#sicherheitsrichtlinie--betriebsgrenzen) | [`#sec-14`](#sec-14) | 48h Security-SLA, Zero-Egress-Perimeter und Meldewege |
+| 14 | [Sicherheitsrichtlinie & Betriebsgrenzen](#sicherheitsrichtlinie--betriebsgrenzen) | [`#sec-14`](#sec-14) | 48h-Reaktionsziel, anbieterabhängiges Netzwerk und Meldewege |
 | 15 | [Repository-Struktur & Kernkomponenten](#repository-struktur--kernkomponenten) | [`#sec-15`](#sec-15) | Ordnerstruktur, Chains, Prompts, Templates und Laufzeitdateien |
 | 16 | [Entwicklung, Testmatrix & Verifikation](#entwicklung--testmatrix) | [`#sec-16`](#sec-16) | Pytest-Suite (185 bestanden | 100% grün), Ruff-Linter und Multi-OS CI-Matrix |
 | 17 | [Discovery-Kontext & Disambiguierung](#discovery-kontext--suchphrasen) | [`#sec-17`](#sec-17) | Disambiguierung zu edgelesssys/marblerun und kanonische Suchbegriffe |
@@ -180,12 +180,12 @@ graph TD
                                       | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
                                       v
 ===================================================================================================
-[SICHT 4: AIR-GAP-SICHERHEITSPERIMETER, ZERO-EGRESS & RUNASINVOKER]
+[SICHT 4: NETZWERKGRENZEN & RUNASINVOKER]
 +-------------------------------------------------------------------------------------------------+
-| Zero-Egress-Perimeter: 100% lokale Offline-Ausführung, keine Telemetrie (INV-LOCAL-01)         |
+| Netzwerkgrenze: Provider-/Werkzeugverkehr wird nicht blockiert; Telegram ist opt-in (INV-LOCAL-01) |
 | Privilegienfreie Ausführung: Standard-Benutzermodus (RunAsInvoker), kein Dienst (INV-SEC-02)    |
 | Zero-Copyleft-Schutz: 100% permissive Lizenzen (PSFL, MIT, Apache-2.0) (Level 1 SBOM)           |
-| Governance & Audit: 48h Security Response SLA, § 521 BGB Schenkungsklausel (INV-SLA-10)         |
+| Governance & Audit: Best-effort 48h response target, § 521 BGB Schenkungsklausel (INV-SLA-10)         |
 +-------------------------------------------------------------------------------------------------+
 ===================================================================================================
 ```
@@ -237,7 +237,7 @@ sequenceDiagram
 | :--- | :--- | :--- | :--- |
 | `[PERSONA-01]` | **Autonome KI-Agenten-Entwickler & Chain-Architekten** | Benötigen unbeaufsichtigte, zyklische Multi-Agenten-Ausführungsschleifen, in denen Worker, Reviewer und Controller stundenlang ohne manuelle Prompt-Eingabe zusammenarbeiten. | `claude code agent chain runner`, `llmauto claude automatisierung`, `unbeaufsichtigte multi agent schleife python`, `autonomer coding agent runner` |
 | `[PERSONA-02]` | **Multi-Agenten-Schwarm- & Handoff-Ingenieure** | Benötigen deterministische Kontextübergaben zwischen heterogenen Modellen (z. B. Sonnet Worker, Opus Reviewer, Haiku Controller) mit Skip-Schutz und Baseline-Rollback. | `llm handoff datei muster python`, `worker reviewer controller multi agent schleife`, `skip ueberschreibschutz llm kontext`, `stateless agent handoff` |
-| `[PERSONA-03]` | **Enterprise Tooling-, Compliance- & Governance-Beauftragte** | Erfordern 100% lokale, offlinefähige Ausführung (`Zero-Egress`), privilegienfreie Benutzerausführung (`RunAsInvoker`), permissive Open-Source-Lizenzen und duale Sicherheits-SLAs. | `lokale ki agenten orchestrierung zero egress`, `runasinvoker llm automations framework`, `enterprise agenten ketten python`, `permissive lizenz ai agent runner` |
+| `[PERSONA-03]` | **Enterprise Tooling-, Compliance- & Governance-Beauftragte** | Prüfen Provider-/Werkzeugdatenflüsse und externe Kontrollen für einen Offline-Betrieb, privilegienfreie Benutzerausführung (`RunAsInvoker`), permissive Open-Source-Lizenzen und Best-Effort-Reaktionsziele. | `lokale ki agenten orchestrierung zero egress`, `runasinvoker llm automations framework`, `enterprise agenten ketten python`, `permissive lizenz ai agent runner` |
 | `[PERSONA-04]` | **Open-Source Tool-Entwickler & Local-First-Programmierer** | Wünschen schlanke, abhängigkeitsfreie Python-Werkzeuge, die lokale LLM-CLIs direkt über Standardbibliothek-Primitiven ohne schwere Frameworks ansteuern. | `zero dependency llm orchestrierung python`, `claude cli wrapper python stdlib`, `schlankes agent chain framework`, `kugelbahn ki agenten schleife` |
 
 ---
@@ -256,7 +256,7 @@ sequenceDiagram
 | **Prozessaufruf-Sicherheit** | Direkter Vektoraufruf (`shell=False`) | Shell-Tools häufig aktiviert | Python-Ausführungswerkzeuge verfügbar | Code-Ausführungsumgebung | `INV-PROC-07` |
 | **Multi-OS CI-Matrix** | Linux, Windows, macOS (Python 3.10-3.13) | Standard CI-Matrix | Standard CI-Matrix | Multi-OS CI-Matrix | `INV-CI-08` |
 | **CI Concurrency-Gate** | Strikter `cancel-in-progress` Gate | Standard Workflow-Trigger | Standard Workflow-Trigger | Concurrency Controls | `INV-CONC-09` |
-| **Sicherheitsgovernance** | Formales 48h-SLA & Advisory-Prozess | Allgemeines Open-Source Issue-Tracking | Kommerzielles Startup-SLA | Enterprise-Sicherheitsmeldungen | `INV-SLA-10` |
+| **Sicherheitsgovernance** | Best-Effort-Ziel: 48h-Reaktion & Advisory-Prozess | Allgemeines Open-Source Issue-Tracking | Kommerzielles Startup-SLA | Enterprise-Sicherheitsmeldungen | `INV-SLA-10` |
 
 ### Architektur-Spotlight: MarbleRun vs. OpenClaw
 
@@ -279,11 +279,11 @@ MarbleRun bringt LLMs zum Handeln -- autonome Multi-Agenten-Ketten, in denen Wor
 <a id="sec-06"></a><a id="governance--laufzeit-invariantenmatrix"></a><a id="kernfaehigkeiten--sicherheitsinvarianten"></a>
 ## 6. Governance- & Laufzeit-Invariantenmatrix
 
-MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantien:
+MarbleRun hält den Orchestrierungszustand lokal; Provider- und Werkzeugverkehr hängt vom gewählten Backend ab. Zero-Egress wird nicht erzwungen:
 
 | Invarianten-ID & Fähigkeit | Implementierungsmechanismus | Sicherheits- & Zuverlässigkeitsgarantie |
 |---|---|---|
-| **INV-LOCAL-01: Zero-Egress per Vorgabe** | Lokale CLI-Orchestrierung via `subprocess` ohne externe Netzwerk-Listener | In der Standardkonfiguration kein Datenabfluss; Prompts und Modellkontext verlassen den Host nicht. Eine einzige zuschaltbare Ausnahme: der Telegram-Melder (`telegram.enabled`, standardmäßig aus) sendet Chain-Namen und Rundenstatus an `api.telegram.org` |
+| **INV-LOCAL-01: Lokaler Zustand, anbieterabhängiges Netzwerk** | Lokale Orchestrierung und Handoff-Dateien | Der Standardrunner startet die Claude-CLI und übergibt Prompts; der Provider kann Prompts und Kontext zur entfernten Inferenz übertragen. Dieses Paket isoliert oder blockiert Provider-/Werkzeugverkehr nicht. Der standardmäßig abgeschaltete Telegram-Melder sendet zusätzlich Chain-Namen und Rundenstatus. |
 | **INV-SEC-02: Privilegienfreie Ausführung (`RunAsInvoker`)** | Standardmäßige Python-Ausführung ohne Root-/Administrator-Rechte | Fordert nie Rechteerhöhung an, kann also nichts jenseits der Rechte des aufrufenden Kontos ändern. Das ist keine Sandbox: die mitgelieferte `config.json` gibt der Agenten-CLI standardmäßig `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` im Modus `dontAsk` -- vor einem unbeaufsichtigten Lauf prüfen |
 | **INV-GATE-03: Multi-Provider Fail-Closed** | Strikte Backend-Validierung (Claude CLI, optionaler COMA-Adapter für Codex/Agy) | Unkonfigurierte Backends brechen fail-closed ab; kein unsicheres Fallback |
 | **INV-SYNC-04: Race-Free Parallel-Worker** | Isolierte Handoff-Snapshots je Worker (`tests/test_parallel_handoff.py`) | Verhindert Race Conditions beim simultanen Schreiben paralleler Agenten |
@@ -292,7 +292,7 @@ MarbleRun basiert auf strikten Local-First-, Zero-Egress- und Resilienz-Garantie
 | **INV-PROC-07: Sicheres Prozess-Scoping** | Direkte `argv`-Ausführung (`shell=False`) mit bereinigten Umgebungsvariablen | Schließt Shell-Injektionen und unkontrollierte Nebeneffekte aus |
 | **INV-CI-08: Multi-OS CI-Matrix** | Automatisierte GitHub Actions Tests unter Ubuntu, Windows und macOS | Garantierte Plattformneutralität unter Python 3.10, 3.11, 3.12 und 3.13 |
 | **INV-CONC-09: Strikter Concurrency-Gate** | CI-Workflow mit `concurrency: cancel-in-progress: true` | Verhindert veraltete CI-Läufe und Ressourcenverschwendung |
-| **INV-SLA-10: Kryptographische Auditierbarkeit & SLA** | Zeitgestempelte Übergänge, 48h-Reaktionszusage und deterministische Tests | Manipulationssicheres Audit, garantierte Triage binnen 5 Werktagen |
+| **INV-SLA-10: Kryptographische Auditierbarkeit & SLA** | Zeitgestempelte Übergänge, Best-Effort-Ziel von 48h und deterministische Tests | Manipulationssicheres Audit, Best-Effort-Triageziel von 5 Werktagen, keine Zeitgarantie |
 
 ---
 
@@ -537,11 +537,11 @@ Keine Copyleft-, GPL- oder AGPL-Bestandteile. Detaillierte Nachweise und Lizenzt
 ## 14. Sicherheitsrichtlinie & Betriebsgrenzen
 
 MarbleRun garantiert strikte Local-First-Sicherheitsgrenzen:
-- **Zero-Egress als Vorgabe:** Reine Standardbibliothek-Ausführung ohne Telemetrie und ohne Hintergrund-Netzwerkaufrufe. Der einzige ausgehende Pfad im Code ist der optionale Telegram-Melder (`modes/chain.py`, in der mitgelieferten `config.json` abgeschaltet); wer ihn einschaltet, überträgt Chain-Namen und Rundenstatus an einen Drittanbieter ausserhalb der EU.
+- **Netzwerkgrenze:** Der Python-Orchestrator sendet keine Analysedaten. Sein Standardbackend Claude-CLI kann Prompts und Kontext zur Inferenz übertragen; weitere Provider und Werkzeuge haben eigene Datenflüsse. Dieses Paket erzwingt kein Zero-Egress. Der optionale Telegram-Melder ist standardmäßig abgeschaltet und ergänzt bei Aktivierung einen eigenen ausgehenden Pfad.
 - **Standardrechte des Agenten:** Die mitgelieferte `config.json` startet die Agenten-CLI mit `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` im Modus `dontAsk` und 7200 Sekunden Zeitlimit. Das ist für unbeaufsichtigte Chains gewollt und ist keine Sandbox -- vor dem Einsatz auf wichtigen Verzeichnissen enger fassen.
 - **RunAsInvoker Isolation:** Läuft im unprivilegierten Benutzerkontext ohne Administrator-Rechte oder Daemons.
 - **Unterstützte Versionen & Reaktionsziele:** Version 0.1.x wird aktiv unterstützt. Die 48 Stunden Erstantwort und die 5 Werktage Triage sind Best-Effort-Ziele eines unentgeltlichen Ein-Personen-Projekts, keine vertragliche Zusage.
-- **Sicherheitsmeldungen:** Vertrauliche Meldungen laufen über [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new) (vertrauliches Meldeverfahren ist aktiviert). Das Projekt veröffentlicht kein Sicherheitspostfach; die in früheren Fassungen genannten E-Mail-Adressen waren nicht zustellbar und wurden entfernt. Details: [SECURITY.md](SECURITY.md).
+- **Sicherheitsmeldungen:** Vertrauliche Meldungen laufen über [GitHub Security Advisories](https://github.com/ellmos-ai/MarbleRun/security/advisories/new) (vertrauliches Meldeverfahren ist aktiviert). Das Projekt veröffentlicht kein Sicherheitspostfach; die früher genannten E-Mail-Adressen werden nicht als bestätigte Meldekanäle angeboten. Details: [SECURITY.md](SECURITY.md).
 
 ---
 
@@ -642,15 +642,15 @@ MarbleRun wird am zuverlässigsten über seinen Paketnamen `llmauto` und die Kom
 <a id="sec-18"></a><a id="haftungsausschluss--lizenz"></a><a id="lizenz"></a>
 ## 18. Gesetzlicher Haftungsausschluss, Haftungsbeschränkung (§ 521 BGB) & Lizenz
 
-### Gesetzlicher Haftungsausschluss (§ 521 BGB Gefälligkeitsrecht)
+### Gesetzlicher Haftungsausschluss (§ 521 BGB)
 
-Dieses Open-Source-Softwareprodukt wird als **unentgeltliche Schenkung** im Sinne der §§ 516 ff. BGB bereitgestellt. Gemäß **§ 521 BGB** ist die Haftung des Urhebers und der Beitragenden auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die nachstehenden Bestimmungen der MIT-Lizenz.
+Diese Software wird unentgeltlich bereitgestellt. **Soweit** die unentgeltliche Überlassung rechtlich als Schenkung im Sinne der §§ 516 ff. BGB zu behandeln ist, ist die Haftung nach **§ 521 BGB** auf **Vorsatz und grobe Fahrlässigkeit** beschränkt; ob eine unentgeltliche Softwareüberlassung als Schenkung, als Leihe oder als bloßes Gefälligkeitsverhältnis einzuordnen ist, ist nicht abschließend geklärt. Unabhängig davon gelten die Haftungsausschlüsse der nachstehenden MIT-Lizenz. Zwingende Haftung, etwa für Vorsatz oder nach dem Produkthaftungsgesetz, bleibt unberührt.
 
 Nutzung auf eigenes Risiko. Keine Wartungsverpflichtung, keine Verfügbarkeitszusicherung, keine Gewähr für Fehlerfreiheit oder Eignung für einen bestimmten Einsatzzweck.
 
 ### Englische Zusammenfassung (English Summary)
 
-This project is an unpaid open-source donation. In accordance with § 521 of the German Civil Code (BGB), liability is restricted strictly to cases of intentional misconduct and gross negligence. Supplemental liability disclaimers are set forth in the MIT License below.
+This software is provided at no charge. To the extent that its provision legally qualifies as a gift, § 521 BGB limits liability to intent and gross negligence. The legal classification is not asserted here. The MIT disclaimer also applies; mandatory liability remains unaffected.
 
 ### Lizenz
 

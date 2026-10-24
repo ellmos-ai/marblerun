@@ -93,7 +93,7 @@ def test_security_policy_bilingual_integrity():
 
     # A reporting channel has to be reachable. Measured 2026-10-23 against 1.1.1.1:
     # ellmos.ai and open-bricks.org have no NS record at all, lukasgeiger.com publishes
-    # no MX record. Mail to the addresses this policy used to offer was never delivered.
+    # no MX record. This snapshot does not prove historical delivery or non-delivery.
     # If one of them is named again, the policy must say that it is not a channel.
     for dead in (
         "security@ellmos.ai",
@@ -103,7 +103,7 @@ def test_security_policy_bilingual_integrity():
     ):
         if dead in sec_text:
             assert "no e-mail channel" in sec_text.lower(), (
-                f"{dead} is undeliverable and must not be offered as a reporting channel"
+                f"{dead} must not be offered as a verified reporting channel"
             )
 
 
@@ -452,13 +452,13 @@ def test_readme_badge_matrix_completeness():
     assert "security%20SLA" in readme_en
     assert "third--party%20licenses" in readme_en
     assert "marketing%20log" in readme_en
-    assert "Zero--Egress" in readme_en
+    assert "provider--dependent%20network" in readme_en
 
     # Badges present in German README
     assert "Sicherheits--SLA" in readme_de
     assert "Drittanbieter--Lizenzen" in readme_de
     assert "Marketing--Log" in readme_de
-    assert "Zero--Egress" in readme_de
+    assert "Netzwerk%20anbieterabh%C3%A4ngig" in readme_de
 
 
 def test_package_version_and_documentation_parity():
@@ -625,12 +625,12 @@ def test_four_view_ascii_topology_projection():
     assert "[VIEW 1: CLI COCKPIT, RUNNER RUNTIMES & CHAIN ORCHESTRATION]" in readme_en
     assert "[VIEW 2: MARBLERUN CORE ENGINE, SKIP-GUARD & HANDOFF CONTEXT PIPELINE]" in readme_en
     assert "[VIEW 3: RUNTIME PERSISTENCE, STATE MACHINE WAL & MULTI-HOST SIGNALS]" in readme_en
-    assert "[VIEW 4: AIR-GAP DEFENSE PERIMETER, ZERO-EGRESS & RUNASINVOKER]" in readme_en
+    assert "[VIEW 4: NETWORK BOUNDARIES & RUNASINVOKER]" in readme_en
 
     assert "[SICHT 1: CLI-COCKPIT, RUNNER-LAUFZEITEN & CHAIN-ORCHESTRIERUNG]" in readme_de
     assert "[SICHT 2: MARBLERUN-KERN-ENGINE, SKIP-SCHUTZ & HANDOFF-KONTEXT-PIPELINE]" in readme_de
     assert "[SICHT 3: LAUFZEIT-PERSISTENZ, ZUSTANDSMASCHINE-WAL & MULTI-HOST-SIGNALE]" in readme_de
-    assert "[SICHT 4: AIR-GAP-SICHERHEITSPERIMETER, ZERO-EGRESS & RUNASINVOKER]" in readme_de
+    assert "[SICHT 4: NETZWERKGRENZEN & RUNASINVOKER]" in readme_de
 
     for text in (readme_en, readme_de):
         assert "INV-LOCAL-01" in text
