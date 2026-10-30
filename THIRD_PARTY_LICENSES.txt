@@ -3,12 +3,12 @@ THIRD-PARTY SOFTWARE LICENSES & TRANSPARENCY NOTICE (LEVEL 1 SBOM)
 Project: MarbleRun / llmauto
 Organization: ellmos-ai (Ecosystem: open-bricks)
 Canonical Repository: https://github.com/ellmos-ai/marblerun
-Audit Date: 2026-10-11
+Audit Date: 2026-10-23
 Primary License: MIT (see LICENSE)
 Attribution: NOTICE
 Level 1 SBOM Plain-Text Companion: THIRD_PARTY_LICENSES.txt
 Markdown SBOM & Audit Log: THIRD_PARTY_LICENSES.md
-Architecture & Privacy: 100% Local-First, Zero-Egress, RunAsInvoker
+Architecture & Privacy: Local state, provider-dependent network, RunAsInvoker
 ================================================================================
 
 1. EXECUTIVE COMPLIANCE & ZERO-COPYLEFT ASSURANCE
@@ -29,10 +29,10 @@ Windows/POSIX user token (RunAsInvoker). It requires no administrative elevation
 no root credentials, and no persistent background daemon services.
 
 Zero-Egress Perimeter (INV-LOCAL-01):
-By default, MarbleRun initiates no outbound network connections and performs
-zero telemetry or analytic reporting. Network traffic is generated only when
-external LLM provider CLIs (such as Claude Code CLI) are intentionally launched
-by explicit user configuration and authentication.
+The Python orchestrator has no analytics reporting. The default Claude CLI
+backend and tools may transmit prompts/context; this package does not isolate
+or block their traffic. Telegram adds an optional outbound path, disabled
+by default. Local orchestration does not imply local model inference.
 
 
 2. INVARIANT CROSS-REFERENCE MATRIX
@@ -40,8 +40,8 @@ by explicit user configuration and authentication.
 All 10 canonical security, architecture, and governance invariants are formally
 verified:
 
-[INV-LOCAL-01] 100% Offline / Zero-Egress:
-  Enforcement: Pure local execution via stdlib, zero outbound network sockets.
+[INV-LOCAL-01] Local state; no enforced Zero-Egress:
+  Boundary: Provider/tool traffic is not blocked; Telegram is optional.
   License / Scope: PSFL-2.0 (Python Standard Library). Status: VERIFIED.
 
 [INV-SEC-02] Non-Elevation (RunAsInvoker):
@@ -50,7 +50,7 @@ verified:
 
 [INV-GATE-03] Multi-Provider Fail-Closed:
   Enforcement: Strict backend validation; unconfigured providers fail closed.
-  License / Scope: MIT (dev-bricks/coma). Status: VERIFIED.
+  License / Scope: MIT (ellmos-ai/coma). Status: VERIFIED.
 
 [INV-SYNC-04] Race-Free Parallel Workers:
   Enforcement: Isolated per-link workspaces prevent concurrent file collisions.
@@ -77,7 +77,7 @@ verified:
   License / Scope: MIT (Workflow automation). Status: VERIFIED.
 
 [INV-SLA-10] Cryptographic Audit & Security SLA:
-  Enforcement: 48h acknowledgment SLA, 5-day triage, vulnerability reporting.
+  Targets: Best-effort 48h acknowledgment and 5-business-day triage.
   License / Scope: SECURITY.md / MIT. Status: VERIFIED.
 
 
@@ -98,7 +98,7 @@ Package: coma
 Role: Multi-provider LLM CLI orchestrator & adapter framework (Claude, Codex, Agy)
 License: MIT License
 SPDX: MIT
-URL: https://github.com/dev-bricks/coma
+URL: https://github.com/ellmos-ai/coma
 Notice: Copyright (c) 2026 dev-bricks contributors
 
 Development & Quality Assurance Tooling:
@@ -151,7 +151,7 @@ is disclaimed to the maximum extent permitted by applicable law.
 Coordinated Vulnerability Disclosure & SLA:
 Security issues may be reported confidentially to security@ellmos.ai,
 security@open-bricks.org, or support@lukasgeiger.com.
-SLA: Initial response within 48 hours; triage evaluation within 5 business days.
+Best-effort targets: response within 48 hours; triage within 5 business days.
 
 
 5. FULL LICENSE TEXTS

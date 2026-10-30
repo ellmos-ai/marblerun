@@ -7,7 +7,7 @@ Welcome! We welcome contributions to `MarbleRun` (`llmauto` - Local-first multi-
 ## English
 
 ### 1. General Principles & Quality Gates
-1. **Local-First & Zero-Egress (`INV-LOCAL-01`)**: Core agent execution loop, chain runner, handoff snapshotting, and process lifecycle operate strictly offline using the Python standard library. Zero outbound network sockets, zero telemetry, and zero phone-home tracking. External CLI agent invocation (e.g. `claude`) occurs only upon explicit user command vector.
+1. **Local state & network boundaries (`INV-LOCAL-01`)**: Keep orchestration state local. Document provider/tool data flows; the default Claude CLI may transmit prompts/context. Do not claim enforced Zero-Egress. Telegram is a separate opt-in outbound path.
 2. **Unprivileged User-Mode Execution (`INV-SEC-02` / `RunAsInvoker`)**: All CLI runners, worker links, controller loops, and background processes execute strictly in unprivileged user space. Administrative elevation (UAC/root/sudo) is strictly forbidden.
 3. **Multi-Provider Fail-Closed (`INV-GATE-03`)**: Multi-provider adapters (via `coma`) fail closed immediately if an unconfigured or unauthorized provider model is requested.
 4. **Race-Free Parallel Workspaces (`INV-SYNC-04`)**: Parallel workers utilize isolated per-link sub-workspaces (`link_N/handoff.md`), preventing concurrent filesystem write collisions and race conditions.
@@ -16,8 +16,8 @@ Welcome! We welcome contributions to `MarbleRun` (`llmauto` - Local-first multi-
 7. **Safe Process Scoping (`INV-PROC-07`)**: All external process invocations execute strictly through parameterized argument vectors (`subprocess.Popen` / `subprocess.run` with `shell=False`), preventing shell injection.
 8. **Multi-OS CI Matrix (`INV-CI-08`)**: All features and fixes must pass automated GitHub Actions testing across Linux, Windows, macOS, and Python 3.10 through 3.13.
 9. **Strict Concurrency Gate (`INV-CONC-09`)**: All CI workflows enforce `concurrency: cancel-in-progress: true` to prevent conflicting concurrent builds or race conditions.
-10. **Cryptographic Auditability & Dual SLAs (`INV-SLA-10`)**: We commit to a 48h acknowledgment and 5-business-day triage SLA for security disclosures pursuant to [SECURITY.md](SECURITY.md).
-11. **Version Freeze Discipline (`T-20260920-167562623`)**: Package version `0.1.3` is strictly frozen across `__init__.py`, `pyproject.toml`, and all manifests. Do not bump the version string. Document all advancements under `## [Unreleased]` in `CHANGELOG.md`.
+10. **Cryptographic Auditability & Dual SLAs (`INV-SLA-10`)**: We aim for 48h acknowledgment and 5-business-day triage as best-effort targets for security disclosures pursuant to [SECURITY.md](SECURITY.md).
+11. **Version Freeze Discipline**: Package version `0.1.3` is strictly frozen across `__init__.py`, `pyproject.toml`, and all manifests. Do not bump the version string. Document all advancements under `## [Unreleased]` in `CHANGELOG.md`.
 12. **Clean Code & Regression Testing**: Every feature or fix must include regression tests in `tests/`. Keep test coverage at a 100% pass rate.
 13. **Bilingual Parity**: Maintain synchronized structural and navigational parity across `README.md` and `README_de.md` (18-point dual anchors `sec-01` through `sec-18`).
 
@@ -60,7 +60,7 @@ By contributing to `MarbleRun`, you agree that your contributions will be licens
 ## Deutsch
 
 ### 1. Grundsätze & Qualitäts-Tore
-1. **Local-First & Zero-Egress (`INV-LOCAL-01`)**: Der Kern der Agenten-Schleife, der Chain-Runner, Handoff-Snapshots und der Prozess-Lebenszyklus arbeiten standardmäßig zu 100% offline ausschließlich mit Python-Standardbibliothek-Modulen. Keine Telemetrie, keine externen Sockets, kein Phone-Home. Externe LLM-CLI-Aufrufe erfolgen nur auf expliziten Befehl des Nutzers.
+1. **Lokaler Zustand & Netzwerkgrenzen (`INV-LOCAL-01`)**: Orchestrierungszustand lokal halten; Provider-/Werkzeugdatenflüsse dokumentieren. Die Standard-CLI kann Prompts/Kontext übertragen; kein erzwungenes Zero-Egress zusagen. Telegram ist ein eigener zuschaltbarer Netzwerkpfad.
 2. **Unprivilegierte Benutzer-Ausführung (`INV-SEC-02` / `RunAsInvoker`)**: Sämtliche Runner, Worker, Controller-Schleifen und Hintergrundprozesse laufen strikt im unprivilegierten Standard-Benutzerkontext. Administrative Rechte oder UAC-Elevationen sind verboten.
 3. **Multi-Provider Fail-Closed (`INV-GATE-03`)**: Multi-Provider-Adapter (via `coma`) schließen sofort fehl (Fail-Closed), falls ein unkonfiguriertes oder nicht freigegebenes Provider-Modell angefordert wird.
 4. **Race-Free Parallel-Workspaces (`INV-SYNC-04`)**: Parallele Worker arbeiten in isolierten Sub-Workspaces (`link_N/handoff.md`), um konkurrierende Schreibkonflikte auf Dateisystemebene auszuschließen.
@@ -69,8 +69,8 @@ By contributing to `MarbleRun`, you agree that your contributions will be licens
 7. **Sicheres Prozess-Scoping (`INV-PROC-07`)**: Subprozesse werden ausschließlich über strukturierte Argumentvektoren (`shell=False`) gestartet, um Shell-Injektionen auszuschließen.
 8. **Multi-OS CI-Matrix (`INV-CI-08`)**: Sämtliche Änderungen müssen die automatisierte GitHub Actions Matrix unter Linux, Windows, macOS und Python 3.10 bis 3.13 fehlerfrei durchlaufen.
 9. **Strikter Concurrency-Gate (`INV-CONC-09`)**: Alle Workflows erzwingen `concurrency: cancel-in-progress: true` zur Vermeidung überlappender CI-Läufe.
-10. **Kryptographische Auditierbarkeit & Duale SLAs (`INV-SLA-10`)**: Verbindliche Zusage von 48h Reaktionszeit und 5 Werktagen Triage-Bewertung gemäß [SECURITY.md](SECURITY.md).
-11. **Version-Freeze-Disziplin (`T-20260920-167562623`)**: Paketversion `0.1.3` ist über alle Manifeste, Quelltexte und Badges hinweg strikt eingefroren. Kein Versions-Bump. Alle Weiterentwicklungen werden unter `## [Unreleased]` in `CHANGELOG.md` dokumentiert.
+10. **Kryptographische Auditierbarkeit & Duale SLAs (`INV-SLA-10`)**: Best-Effort-Ziele von 48h Reaktionszeit und 5 Werktagen Triage-Bewertung gemäß [SECURITY.md](SECURITY.md).
+11. **Version-Freeze-Disziplin**: Paketversion `0.1.3` ist über alle Manifeste, Quelltexte und Badges hinweg strikt eingefroren. Kein Versions-Bump. Alle Weiterentwicklungen werden unter `## [Unreleased]` in `CHANGELOG.md` dokumentiert.
 12. **Sauberer Code & Regressionstests**: Jede Änderung erfordert begleitende Tests in `tests/`. Die Testsuite muss zu 100% grün bleiben.
 13. **Bilinguale Parität**: Strukturelle und navigatorische Parität zwischen `README.md` und `README_de.md` (18-Punkte Dual-Anker `sec-01` bis `sec-18`) ist zwingend einzuhalten.
 

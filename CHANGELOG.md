@@ -2,6 +2,70 @@
 
 ## [Unreleased]
 
+### Review corrections (2026-10-24)
+
+- Restrict the network claim to local orchestration state; the default Claude CLI and tools may transmit prompts/context. No Zero-Egress control is implemented.
+- Remove historical delivery conclusions drawn from DNS; absent MX alone does not prove non-delivery (RFC 5321 §5.1). GitHub private reporting remains the designated channel.
+- Synchronize conditional liability wording, response targets and the German badge label.
+
+
+### Deep after-care: factual corrections across all documentation surfaces (2026-10-23) [C 2026-10-23]
+
+Deep maintenance round (`full-after-care`, rotation line F6). Everything below was measured
+against the source, the GitHub API or DNS -- no claim was carried forward.
+
+#### Fixed
+
+- **Security reporting was impossible by e-mail.** `SECURITY.md` offered `security@ellmos.ai`,
+  `security@open-bricks.org`, `lukas@open-bricks.org` and `support@lukasgeiger.com` and promised a
+  48h acknowledgment. Measured against 1.1.1.1 on 2026-10-23: `ellmos.ai` and `open-bricks.org`
+  were reported as NXDOMAIN; `lukasgeiger.com` was reported without an MX record. This snapshot
+  does not prove historical delivery or non-delivery; missing MX alone is not sufficient. The e-mail path has been removed and replaced by
+  GitHub private vulnerability reporting, which is enabled on this repository; the policy says why
+  rather than dropping the addresses silently.
+- **Four links in the sibling matrix were unreachable for any reader.**
+  `dev-bricks/automation-master` and `entertain-and-more/CuteStrike` are private,
+  `file-bricks/FileCommander` does not exist (the real repository is
+  `ellmos-ai/ellmos-filecommander-mcp`), and `coma` was linked under `dev-bricks` instead of
+  `ellmos-ai` on six surfaces -- contradicting Section 1 and `llms.txt` in the same document. The
+  matrix is rebuilt from repositories verified public via the API, each row stating what the
+  neighbour does for a MarbleRun user.
+- **Three contradictory test counts.** Badges and quick navigation said 187, `llms.txt` said
+  "186+", `pytest -q` said 184. Now 185 everywhere, measured, with a new contract test that
+  compares the five surfaces against each other.
+- **Section 15 documented a directory layout the manifest denies.** The tree showed `llmauto/` as a
+  subdirectory while `pyproject.toml` maps the package name onto the repository root. Replaced with
+  the actual tree in both languages, plus a note explaining the mapping.
+- **"100% Offline / Zero-Egress" was not accurate.** `modes/chain.py` posts chain name and round
+  status to `api.telegram.org` when `telegram.enabled` is set (default `false`). Badge,
+  `INV-LOCAL-01` and Section 14 now distinguish local state, provider/tool traffic and the opt-in notifier; no Zero-Egress guarantee is made.
+- **`INV-SEC-02` promised "safe sandboxed CLI execution".** There is no sandbox; the shipped
+  `config.json` grants the agent CLI `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` in permission
+  mode `dontAsk` with a 7200-second timeout. Both facts are now stated instead of implied.
+- **Status "Production-Ready" / "Produktionsreif"** contradicted
+  `Development Status :: 3 - Alpha`; pulled onto the manifest.
+- **Internal ticket ID removed from the public `CONTRIBUTING.md`** -- unresolvable for readers.
+
+#### Changed
+
+- `§ 521 BGB` liability section is now conditional ("soweit ... als Schenkung zu behandeln ist")
+  instead of asserting that gratuitous software provision *is* a Schenkung, and the heading no
+  longer mixes Schenkung with Gefälligkeitsrecht. Mandatory liability is expressly reserved.
+- The 48h / 5-business-day figures are labelled as best-effort targets of an unpaid project, not a
+  service level.
+- Section 17 names the unrelated commercial product `MarbleRun` of Edgeless Systems GmbH and
+  disclaims any rights in the name.
+- Freshness stamps refreshed to 2026-10-23 across all five carriers.
+
+#### Tests
+
+- `tests/test_metadata.py`: five contract tests were defending exactly what they should have
+  found -- the dead sibling links, the four unverified reporting addresses, the literal freshness stamps,
+  the internal ticket ID. All inverted to format and consistency checks;
+  `test_pfad_a_hygiene_and_dependabot_security_guard_20261011` replaced by
+  `test_freshness_stamps_are_well_formed_and_agree`, and
+  `test_documented_test_count_agrees_across_surfaces` added. 185 passed, ruff clean.
+
 ### Pfad A Repository Hygiene, Automated Dependabot Security Guard (pip + actions), Multi-Host Defense & Contract Tests (2026-10-11) [G 2026-10-11]
 
 - **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
