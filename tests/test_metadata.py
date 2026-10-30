@@ -136,7 +136,6 @@ def test_required_documentation_and_governance_files():
         "CONTRIBUTING.md",
         "USER-DOCU.md",
         "llms.txt",
-        "MARKETING-LOG.txt",
     ]
     for rel_path in required_files:
         p = REPO_ROOT / rel_path
@@ -339,12 +338,9 @@ def test_security_policy_slas_and_contacts():
 
 
 def test_marketing_log_and_changelog_recency():
-    """Verify MARKETING-LOG.txt exists and CHANGELOG.md has 2026-09-11 entry."""
+    """Verify MARKETING-LOG.txt is untracked and CHANGELOG.md has 2026-09-11 entry."""
     m_log = REPO_ROOT / "MARKETING-LOG.txt"
-    assert m_log.is_file(), "MARKETING-LOG.txt must exist in repo root"
-    m_text = m_log.read_text(encoding="utf-8")
-    assert "2026-09-11" in m_text
-    assert "ellmos-ai/marblerun" in m_text
+    assert not m_log.exists(), "MARKETING-LOG.txt must not be tracked in repo root"
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert "2026-09-11" in changelog_text
@@ -387,17 +383,14 @@ def test_third_party_licenses_inventory():
 
 
 def test_marketing_log_personas_and_differentiation():
-    """Verify MARKETING-LOG.txt defines 4 personas, search queries, and competitive matrix."""
-    m_log = REPO_ROOT / "MARKETING-LOG.txt"
-    assert m_log.is_file()
-    m_text = m_log.read_text(encoding="utf-8")
-    assert "Autonomous AI Agent Engineers" in m_text
-    assert "Multi-Agent Swarm & Handoff Developers" in m_text
-    assert "Enterprise Tooling, Safety & Governance Compliance Officers" in m_text
-    assert "Open-Source AI Tool Builders & Local-First Developers" in m_text
-    assert "LangGraph" in m_text
-    assert "CrewAI" in m_text
-    assert "AutoGen" in m_text
+    """Verify MARKETING-LOG.txt is gitignored and README defines competitive positioning."""
+    assert not (REPO_ROOT / "MARKETING-LOG.txt").exists()
+    gi_text = (REPO_ROOT / ".gitignore").read_text(encoding="utf-8")
+    assert "MARKETING-LOG.txt" in gi_text
+    readme_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    assert "LangGraph" in readme_en
+    assert "CrewAI" in readme_en
+    assert "AutoGen" in readme_en
 
 
 def test_readme_canonical_invariant_ids_parity():
@@ -725,8 +718,7 @@ def test_pfad_b_recency_and_changelog_sync():
     assert "Pfad B Discoverability" in changelog_text
     assert "2026-09-29" in changelog_text
 
-    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert "11. PFAD B MARKETING, DISCOVERABILITY & LEVEL 1 SBOM HARDENING (2026-09-29)" in m_text
+    assert not (REPO_ROOT / "MARKETING-LOG.txt").exists()
 
     llms_text = (REPO_ROOT / "llms.txt").read_text(encoding="utf-8")
     assert re.search(r"Last-checked: \d{4}-\d{2}-\d{2}", llms_text)
@@ -782,8 +774,7 @@ def test_pfad_a_hygiene_recency_and_changelog_sync():
     assert "Pfad A Repository Hygiene" in changelog_text
     assert any(d in changelog_text for d in ("2026-10-11", "2026-10-03"))
 
-    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert re.search(r"\n\d+\. PFAD A ", m_text), "MARKETING-LOG.txt must keep a numbered Pfad A entry"
+    assert not (REPO_ROOT / "MARKETING-LOG.txt").exists(), "MARKETING-LOG.txt must not be tracked"
 
     sbom_txt = (REPO_ROOT / "THIRD_PARTY_LICENSES.txt").read_text(encoding="utf-8")
     assert re.search(r"Audit Date: \d{4}-\d{2}-\d{2}", sbom_txt)
@@ -837,8 +828,7 @@ def test_freshness_stamps_are_well_formed_and_agree():
 
     # The MARKETING-LOG keeps a numbered audit history; require a numbered Pfad A entry,
     # not one specific heading.
-    m_text = (REPO_ROOT / "MARKETING-LOG.txt").read_text(encoding="utf-8")
-    assert re.search(r"\n\d+\. PFAD A ", m_text), "MARKETING-LOG.txt must keep a numbered Pfad A entry"
+    assert not (REPO_ROOT / "MARKETING-LOG.txt").exists(), "MARKETING-LOG.txt must not be tracked"
 
     changelog_text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert re.search(r"\d{4}-\d{2}-\d{2}", changelog_text)
