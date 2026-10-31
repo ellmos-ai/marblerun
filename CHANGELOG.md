@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Pfad B Discoverability, State Machine Diagram, Flat Root Architecture Tree Alignment & Badges Currency (2026-10-31) [G 2026-10-31]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
+- **State Machine & Lifecycle Transitions Diagram (`stateDiagram-v2`):** Enhanced Section 7 in both `README.md` and `README_de.md` with a formal Mermaid state diagram visualizing initial load (`READY`), autonomous round execution loop (`RUNNING`), external control signals (`pause.req`, `steer.req`, `stop.req`), and shutdown conditions (`ALL_DONE`, `max_rounds`, `runtime_hours`, deadline).
+- **Flat Root Architecture Tree Parity (Section 15):** Corrected the ASCII repository structure tree in both English and German editions to reflect the canonical flat root package layout (where `core/`, `modes/`, `llmauto.py`, `chains/`, `prompts/`, `templates/`, and `tests/` reside directly in the root) eliminating previous pseudo-`llmauto/` subfolder contradiction.
+- **Canonical COMA Link Integration:** Updated COMA links in Section 13 and `THIRD_PARTY_LICENSES.md` to canonical `https://github.com/ellmos-ai/coma`.
+- **Level 1 SBOM Companion Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime, optional, and build dependencies as of 2026-10-31, re-verifying 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, and zero outbound network egress.
+- **RAG-Manifest & Badge Synchronisation:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-31` and 188 passed tests baseline; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-31` and Pytest 188 passed.
+- **Automatisierte Vertragstests:** Extended `tests/test_metadata.py` with `test_pfad_b_discoverability_state_diagram_and_badges_currency_20261031()` verifying state diagram syntax, flat root tree alignment, badge recency, and single-source version 0.1.3 freeze.
+
 ### Pfad A Repository Hygiene, Automated Dependabot Security Guard (pip + actions), Multi-Host Defense & Contract Tests (2026-10-11) [G 2026-10-11]
 
 - **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.

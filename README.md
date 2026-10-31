@@ -13,7 +13,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 
 [![Version](https://img.shields.io/badge/version-0.1.3-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![CI](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/MarbleRun/actions/workflows/tests.yml)
-[![Pytest](https://img.shields.io/badge/Pytest-187%20passed%20%7C%20100%25%20green-brightgreen.svg)]()
+[![Pytest](https://img.shields.io/badge/Pytest-188%20passed%20%7C%20100%25%20green-brightgreen.svg)]()
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://python.org)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-blue.svg)](https://github.com/ellmos-ai/MarbleRun)
 [![Code Style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -27,7 +27,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 [![Ecosystem](https://img.shields.io/badge/ecosystem-open--bricks-orange.svg)](https://github.com/open-bricks)
 [![Level 1 SBOM: Plain Text](https://img.shields.io/badge/Level%201%20SBOM-Plain%20Text-success.svg)](THIRD_PARTY_LICENSES.txt)
 [![Contributing Guidelines](https://img.shields.io/badge/Contributing-Guidelines-blue.svg)](CONTRIBUTING.md)
-[![Verified: 2026-10-11](https://img.shields.io/badge/Verified-2026--10--11-brightgreen.svg)]()
+[![Verified: 2026-10-31](https://img.shields.io/badge/Verified-2026--10--31-brightgreen.svg)]()
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet.svg)](llms.txt)
 
 ---
@@ -51,7 +51,7 @@ This repository is not the confidential-computing project `edgelesssys/marblerun
 | 13 | [Third-Party Licenses & Level 1 SBOM](#third-party-licenses--transparency) | [`#sec-13`](#sec-13) | Zero-copyleft inventory, Level 1 SBOM companion, and RunAsInvoker |
 | 14 | [Security Policy & Operational Limits](#security-policy--operational-limits) | [`#sec-14`](#sec-14) | 48h response SLA, zero-egress perimeter, and vulnerability reporting |
 | 15 | [Repository Structure & Key Assets](#repository-structure--key-assets) | [`#sec-15`](#sec-15) | Folder structure, chains, prompts, templates, and runtime files |
-| 16 | [Development, Test Matrix & Verification](#development--test-matrix) | [`#sec-16`](#sec-16) | Pytest suite (187 passed | 100% green), ruff linter, and multi-OS CI matrix |
+| 16 | [Development, Test Matrix & Verification](#development--test-matrix) | [`#sec-16`](#sec-16) | Pytest suite (188 passed | 100% green), ruff linter, and multi-OS CI matrix |
 | 17 | [Discovery Keywords & Disambiguation](#discovery--keywords--disambiguation) | [`#sec-17`](#sec-17) | Disambiguation from edgelesssys/marblerun and high-intent SEO |
 | 18 | [Statutory Notice, Liability Limitation & License (§ 521 BGB)](#statutory-notice--liability-limitation) | [`#sec-18`](#sec-18) | MIT license, § 521 BGB gratuitous lending disclaimer, and copyright |
 
@@ -309,6 +309,31 @@ observation, cancellation and durable checkpoints; no provider CLI is started by
 | `reviewer` | Audits code quality, executes test suites, identifies regressions | `claude-opus-4-6` | `continue: true` for persistent project context |
 | `controller` | Evaluates overall milestone progress, routes tasks, triggers shutdown | `claude-sonnet-4-6` / `haiku` | Evaluates criteria against `max_rounds` & deadline |
 
+### State Machine & Lifecycle Transitions
+
+The runtime orchestrates transitions between idle, active execution, pause/steer signals, and terminal states:
+
+```mermaid
+stateDiagram-v2
+    [*] --> READY: Chain Definition Loaded
+    READY --> RUNNING: python -m llmauto chain start
+    state RUNNING {
+        [*] --> Worker: Execute Link 1
+        Worker --> SkipGuard: Write Handoff Snapshot
+        SkipGuard --> Reviewer: Verify and Test Link 2
+        Reviewer --> Controller: Audit and Fixes Link 3
+        Controller --> Worker: Advance to Next Round
+    }
+    RUNNING --> PAUSED: pause.req Signal Detected
+    PAUSED --> RUNNING: Pause Cleared or Resume
+    RUNNING --> STEERED: steer.req Signal Injected
+    STEERED --> RUNNING: Context Injected into Link
+    RUNNING --> ALL_DONE: Controller Evaluates Completion
+    RUNNING --> STOPPED: stop.req or Max Rounds or Deadline
+    ALL_DONE --> [*]: Final Report Generated
+    STOPPED --> [*]: Clean Termination
+```
+
 ### Shutdown Conditions
 
 A chain stops when any of these conditions are met:
@@ -561,7 +586,7 @@ MarbleRun (`llmauto`) is engineered with zero mandatory external runtime depende
 
 All optional integrations and development tools are 100% permissively licensed:
 - **Core Engine:** 100% Python Standard Library ([PSFL-2.0](https://docs.python.org/3/license.html)) -- zero external runtime packages.
-- **Optional Provider Bridge:** [`coma`](https://github.com/dev-bricks/coma) ([MIT](https://github.com/dev-bricks/coma/blob/main/LICENSE)) for Codex and Agy adapters.
+- **Optional Provider Bridge:** [`coma`](https://github.com/ellmos-ai/coma) ([MIT](https://github.com/ellmos-ai/coma/blob/main/LICENSE)) for Codex and Agy adapters.
 - **Testing & Quality Assurance:** [`pytest`](https://github.com/pytest-dev/pytest) (MIT), [`ruff`](https://github.com/astral-sh/ruff) (MIT / Apache-2.0), [`setuptools`](https://github.com/pypa/setuptools) (MIT), and [`setuptools-scm`](https://github.com/pypa/setuptools-scm) (MIT).
 
 Zero copyleft, GPL, or AGPL dependencies are included. Detailed dependency notices, provenance audits, and full license texts are maintained in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md). Formal repository notice is in [NOTICE](NOTICE).
@@ -584,25 +609,32 @@ MarbleRun enforces a strict local-first security boundary:
 
 ```
 MarbleRun/
-├── llmauto/                   # Core Python package & CLI entry points
-│   ├── llmauto.py             # Main CLI dispatcher (chain, pipe, inspect)
-│   ├── core/                  # Engine internals
-│   │   ├── runner.py          # Claude CLI & provider invocation (subprocess, env, fallback)
-│   │   ├── config.py          # Chain & global JSON configuration parser
-│   │   └── state.py           # Handoff files, round counters, shutdown triggers
-│   └── modes/                 # Execution modes (chain runner, pipe)
-│       └── chain.py           # Cyclic marble-run engine
+├── core/                      # Engine internals (llmauto.core.*)
+│   ├── runner.py              # Claude CLI & provider invocation (subprocess, env, fallback)
+│   ├── config.py              # Chain & global JSON configuration parser
+│   ├── state.py               # Handoff files, round counters, shutdown triggers
+│   └── embedded/              # Application-owned embedded sequence API
+├── modes/                     # Execution modes (llmauto.modes.*)
+│   ├── chain.py               # Cyclic marble-run engine
+│   └── pipe.py                # Single-shot stdin/stdout pipe mode
 ├── chains/                    # Example & production chain configurations (JSON)
 ├── prompts/                   # Reusable prompt templates per chain role
 ├── templates/                 # Chain pattern blueprints (worker-reviewer, gui-live-test)
 ├── tests/                     # Comprehensive contract & integration test suite
-├── docs/                      # Architecture notes & playtest evidence
+├── docs/                      # Architecture notes & embedded sequences specification
+├── llmauto.py                 # Main CLI dispatcher (chain, pipe, inspect)
+├── __init__.py                # Package root exporting __version__ (0.1.3)
+├── __main__.py                # Package execution entry point (python -m llmauto)
+├── config.json                # Global default configuration
+├── conftest.py                # Pytest runtime package resolution harness
 ├── CHANGELOG.md               # Versioned changelog & release history
-├── LICENSE                    # MIT License
+├── LICENSE                    # MIT license declaration
 ├── NOTICE                     # Product attribution & copyright declaration
 ├── THIRD_PARTY_LICENSES.md    # Level 1 SBOM & dependency compliance audit
+├── THIRD_PARTY_LICENSES.txt   # Plain-text SBOM companion & full license texts
 ├── MARKETING-LOG.txt          # Discoverability log & SEO queries
 ├── SECURITY.md                # Bilingual security policy & SLA commitments
+├── CONTRIBUTING.md            # Bilingual contribution workflow
 ├── llms.txt                   # Machine-readable AI agent index & sitemap
 └── pyproject.toml             # PEP 621 package manifest & ruff configuration
 ```
