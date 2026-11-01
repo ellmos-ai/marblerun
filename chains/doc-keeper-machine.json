@@ -1,0 +1,68 @@
+{
+    "chain_name": "doc-keeper-machine",
+    "description": "Lokale 5-Stationen-Dokumentationsmaschine (ellmos-doc-keeper) in Ocean/BACH: Claim-Extraktion, NemoFold-Evidenz-Prober, 3-Ursachen-Klassifikator (Erosion vs. geplantes vs. erfolgtes Terraforming), lokaler Task/Doku-Actuator und i18n-Gate.",
+    "mode": "once",
+    "max_rounds": 1,
+    "runtime_hours": 1,
+    "max_consecutive_blocks": 3,
+    "links": [
+        {
+            "name": "claim-extractor",
+            "role": "worker",
+            "model": "claude-haiku-4-5",
+            "prompt": "claim-extractor",
+            "description": "Station 1: Zerlegt Doku (SKILL.md, CORE.md, docs/help/*.txt, Manifeste) in atomare, pruefbare Aussagen."
+        },
+        {
+            "name": "evidence-prober",
+            "role": "worker",
+            "model": "claude-sonnet-4-6",
+            "prompt": "evidence-prober",
+            "description": "Station 2: Prueft jeden Claim gegen den echten Code/AST/CLI/Tests mit NemoFold-Quote-Evidence."
+        },
+        {
+            "name": "cause-classifier",
+            "role": "controller",
+            "model": "claude-sonnet-4-6",
+            "prompt": "cause-classifier",
+            "description": "Station 3: Klassifiziert jede Abweichung deterministisch nach dem 3-Ursachen-Modell via classify_doc_reality_diff()."
+        },
+        {
+            "name": "local-actuator",
+            "role": "worker",
+            "model": "claude-sonnet-4-6",
+            "prompt": "local-actuator",
+            "description": "Station 4: Fuehrt die Aktion strikt lokal in Ocean/BACH aus: Ursache 3 -> Doku-Update; Ursache 1 & 2 -> Lokaler Reparatur-/Umsetzungs-Task in taskplan (oder optionaler wishes_redirect)."
+        },
+        {
+            "name": "verification-gate",
+            "role": "reviewer",
+            "model": "claude-haiku-4-5",
+            "prompt": "verification-gate",
+            "description": "Station 5: Prueft lint_mermaid.py, verify_cli_api_reference_parity() (6 Sprachen) und SOLL/IST-Trennung."
+        }
+    ],
+    "prompts": {
+        "claim-extractor": {
+            "type": "inline",
+            "text": "Extrahiere aus den Zieldokumenten alle technischen Claims (Pfade, CLI-Befehle, Funktionen, Schemas, Konfigurationswerte) als strukturierte Liste fuer den Evidence-Prober."
+        },
+        "evidence-prober": {
+            "type": "inline",
+            "text": "Pruefe jeden extrahierten Claim gegen das lokale Dateisystem und den Code. Liefere exakte Dateipfade, Zeilennummern, Git-Blame-Kontext und Taskplan-Status."
+        },
+        "cause-classifier": {
+            "type": "inline",
+            "text": "Rufe classify_doc_reality_diff() und resolve_doc_machine_dispatch() aus tools/help_projection.py fuer jeden belegten Diff auf. Ordne eindeutig zu: (1) unintended_erosion, (2) planned_terraforming_pending, (3) completed_terraforming_doc_lag oder aligned."
+        },
+        "local-actuator": {
+            "type": "inline",
+            "text": "Setze den deterministischen Beschluss lokal in Ocean/BACH um: Bei completed_terraforming_doc_lag aktualisiere die Dokumentation und i18n-Spiegel. Bei unintended_erosion oder planned_terraforming_pending lege standardmaessig (local_taskplan) einen praezisen Reparatur-/Umsetzungs-Task fuer den Hintergrund-Worker in taskplan an (oder nutze wishes_redirect nur falls in config.json explizit aktiviert)."
+        },
+        "verification-gate": {
+            "type": "inline",
+            "text": "Validiere alle geaenderten Markdown-Dateien mit lint_mermaid.py und pruefe verify_cli_api_reference_parity(). Bestaetige, dass keine geplante SOLL-Architektur geloescht wurde."
+        }
+    },
+    "task_pools": {}
+}
