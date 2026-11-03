@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Control request documentation (2026-11-03)
+
+- Correct the EN/DE architecture and state-file documentation to name the actual
+  `STOP`, `PAUSE.json`, and `steer_queue.json` inputs. Document the CLI commands,
+  checkpoint timing, and that requests do not interrupt an active model call.
+  The previously shown `*.req` files are not recognized. Runtime behavior is unchanged.
+
 ### Review corrections (2026-10-24)
 
 - Restrict the network claim to local orchestration state; the default Claude CLI and tools may transmit prompts/context. No Zero-Egress control is implemented.

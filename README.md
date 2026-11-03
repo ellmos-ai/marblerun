@@ -175,7 +175,7 @@ graph TD
 |   * status.txt       -> Canonical state machine (RUNNING, PAUSED, STOPPED, ALL_DONE)            |
 |   * round_counter    -> Persistent atomic round iterations (1 .. max_rounds)                    |
 |   * handoff.md       -> Verified contextual payload passed between agent links                  |
-|   * pause.req / stop.req / steer.req -> External control signals & multi-host governance        |
+|   * PAUSE.json / STOP / steer_queue.json -> Control requests at safe checkpoints                |
 +-------------------------------------------------------------------------------------------------+
                                       | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
                                       v
@@ -329,6 +329,16 @@ Each chain maintains persistent state in `state/<chain-name>/`:
 | `round_counter.txt` | Current round number |
 | `handoff.md` | Context handoff between links |
 | `start_time.txt` | When the chain was started |
+| `STOP` | Stop request, with the reason as plain text |
+| `PAUSE.json` | Pending pause request, including its reason |
+| `steer_queue.json` | Queued operator messages for the next model call |
+
+Use `llmauto chain stop <name> [reason]`, `llmauto chain pause <name> [reason]`,
+`llmauto chain resume <name>`, and `llmauto chain steer <name> <message>` to manage
+these requests. They are read at safe checkpoints: a pause or stop request does
+not interrupt a model call already in progress. Steering messages are consumed
+before the next model call and added to its prompt. Resume clears the pending
+pause. Files named `pause.req`, `stop.req`, or `steer.req` are not control inputs.
 
 ### Chain Configuration Schema
 
