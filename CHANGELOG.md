@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Pfad B Discoverability, State Machine Diagram, Flat Root Architecture Tree Alignment & Badges Currency (2026-10-31) [G 2026-10-31]
+
+- **Version-Freeze Disziplin (`T-20260920-167562623`):** Single-source package version `0.1.3` strictly frozen across `__init__.py`, `pyproject.toml`, Shields.io badges, and manifests; zero version-bump.
+- **State Machine & Lifecycle Transitions Diagram (`stateDiagram-v2`):** Enhanced Section 7 in both `README.md` and `README_de.md` with a formal Mermaid state diagram visualizing initial load (`READY`), autonomous round execution loop (`RUNNING`), external control signals (`PAUSE.json`, `steer_queue.json`, `STOP`), and shutdown conditions (`ALL_DONE`, `max_rounds`, `runtime_hours`, deadline).
+- **Flat Root Architecture Tree Parity (Section 15):** Corrected the ASCII repository structure tree in both English and German editions to reflect the canonical flat root package layout (where `core/`, `modes/`, `llmauto.py`, `chains/`, `prompts/`, `templates/`, and `tests/` reside directly in the root) eliminating previous pseudo-`llmauto/` subfolder contradiction.
+- **Canonical COMA Link Integration:** Updated COMA links in Section 13 and `THIRD_PARTY_LICENSES.md` to canonical `https://github.com/ellmos-ai/coma`.
+- **Level 1 SBOM Companion Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime, optional, and build dependencies as of 2026-10-31, re-verifying 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, and local orchestration state; optional Telegram notifications and provider CLIs may use the network.
+- **Integration verification (2026-11-04):** Preserved prior dated audit stamps and corrected the runtime signal names and network boundaries. The integrated local suite passed 187 tests; this is not a release or remote CI receipt.
+- **Automatisierte Vertragstests:** Extended `tests/test_metadata.py` with `test_pfad_b_discoverability_state_diagram_and_badges_currency_20261031()` verifying state diagram syntax, flat root tree alignment, badge recency, and single-source version 0.1.3 freeze.
+
 ### Review corrections (2026-10-24)
 
 - Restrict the network claim to local orchestration state; the default Claude CLI and tools may transmit prompts/context. No Zero-Egress control is implemented.
@@ -72,7 +82,7 @@ against the source, the GitHub API or DNS -- no claim was carried forward.
 - **Automated Dependabot Security Guard (`.github/dependabot.yml`):** Deployed dual ecosystem security configuration covering `pip` (security groups, limit 0) and `github-actions` (Monday 06:00 Berlin, limit 3).
 - **Multi-Host Cloud-Sync, Lock- & OS-Defense (`.gitignore`):** Hardened multi-agent collision defenses with `thumbs.db`, `desktop.ini`, `ehthumbs_vista.db`, `node_modules/`, `PRIVATE.txt`, and `PUBLIC.txt`.
 - **Level 1 SBOM Companion Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime, optional, and build dependencies as of 2026-10-11, re-verifying 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, zero outbound network egress, and statutory disclaimer (§ 521 BGB).
-- **RAG-Manifest & Badge Synchronisation:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-11`; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-11` and synchronized test suite badge; added Section 14 in `MARKETING-LOG.txt`.
+- **Integration verification (2026-11-04):** Preserved prior dated audit stamps and corrected the runtime signal names and network boundaries. The integrated local suite passed 187 tests; this is not a release or remote CI receipt.
 - **Automatisierte Vertragstests:** Added contract tests in `tests/test_metadata.py` and `tests/test_repository_hygiene.py` verifying dual Dependabot guard (pip security + actions), extended OS/lock defense, SBOM recency Stand 2026-10-11, and version freeze compliance.
 
 ### Embedded sequence API
