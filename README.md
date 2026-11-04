@@ -313,6 +313,8 @@ observation, cancellation and durable checkpoints; no provider CLI is started by
 
 The runtime orchestrates transitions between idle, active execution, pause/steer signals, and terminal states:
 
+Illustrative worker/reviewer/controller example; these nodes are not a complete list of persisted runtime states. Steering preserves RUNNING.
+
 ```mermaid
 stateDiagram-v2
     [*] --> READY: Chain Definition Loaded
@@ -326,10 +328,11 @@ stateDiagram-v2
     }
     RUNNING --> PAUSED: PAUSE.json Signal Detected
     PAUSED --> RUNNING: Pause Cleared or Resume
-    RUNNING --> STEERED: steer_queue.json Signal Injected
-    STEERED --> RUNNING: Context Injected into Link
+    RUNNING --> RUNNING: steer_queue.json context injected
     RUNNING --> ALL_DONE: Controller Evaluates Completion
     RUNNING --> STOPPED: STOP or Max Rounds or Deadline
+    RUNNING --> COMPLETED: once or normal chain completion
+    COMPLETED --> [*]
     ALL_DONE --> [*]: Final Report Generated
     STOPPED --> [*]: Clean Termination
 ```

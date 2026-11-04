@@ -82,7 +82,7 @@ against the source, the GitHub API or DNS -- no claim was carried forward.
 - **Automated Dependabot Security Guard (`.github/dependabot.yml`):** Deployed dual ecosystem security configuration covering `pip` (security groups, limit 0) and `github-actions` (Monday 06:00 Berlin, limit 3).
 - **Multi-Host Cloud-Sync, Lock- & OS-Defense (`.gitignore`):** Hardened multi-agent collision defenses with `thumbs.db`, `desktop.ini`, `ehthumbs_vista.db`, `node_modules/`, `PRIVATE.txt`, and `PUBLIC.txt`.
 - **Level 1 SBOM Companion Re-Audit (`THIRD_PARTY_LICENSES.md` & `THIRD_PARTY_LICENSES.txt`):** Re-audited runtime, optional, and build dependencies as of 2026-10-11, re-verifying 100% permissive open-source licenses (pure Python stdlib PSFL-2.0, optional coma MIT, pytest/ruff tooling), unprivileged execution (`RunAsInvoker`), zero copyleft, zero outbound network egress, and statutory disclaimer (§ 521 BGB).
-- **Integration verification (2026-11-04):** Preserved prior dated audit stamps and corrected the runtime signal names and network boundaries. The integrated local suite passed 187 tests; this is not a release or remote CI receipt.
+- **RAG-Manifest & Badge Synchronisation:** Refreshed `llms.txt` with Last-checked timestamp `2026-10-11`; updated `README.md` and `README_de.md` badges to Verified / Verifiziert `2026-10-11` and synchronized test suite badge; added Section 14 in `MARKETING-LOG.txt`.
 - **Automatisierte Vertragstests:** Added contract tests in `tests/test_metadata.py` and `tests/test_repository_hygiene.py` verifying dual Dependabot guard (pip security + actions), extended OS/lock defense, SBOM recency Stand 2026-10-11, and version freeze compliance.
 
 ### Embedded sequence API

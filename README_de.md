@@ -313,6 +313,8 @@ stellt Start, Beobachtung, Abbruch und dauerhafte Checkpoints bereit; die API st
 
 Die Laufzeit steuert Zustandsübergänge zwischen Leerlauf, aktiver Schleifenausführung, Steuerungs-/Pausensignalen und Endzuständen:
 
+Illustratives Worker-/Reviewer-/Controller-Beispiel; diese Knoten sind keine vollständige Liste gespeicherter Laufzeitzustände. Steuern erhält RUNNING.
+
 ```mermaid
 stateDiagram-v2
     [*] --> READY: Chain-Definition geladen
@@ -326,10 +328,11 @@ stateDiagram-v2
     }
     RUNNING --> PAUSED: PAUSE.json Signal erkannt
     PAUSED --> RUNNING: Pause aufgehoben oder Fortsetzung
-    RUNNING --> STEERED: steer_queue.json Signal injiziert
-    STEERED --> RUNNING: Kontext in Link eingespeist
+    RUNNING --> RUNNING: steer_queue.json Kontext eingespeist
     RUNNING --> ALL_DONE: Controller stellt Fertigstellung fest
     RUNNING --> STOPPED: STOP oder Max-Runden oder Deadline
+    RUNNING --> COMPLETED: once or normal chain completion
+    COMPLETED --> [*]
     ALL_DONE --> [*]: Abschlussbericht erstellt
     STOPPED --> [*]: Saubere Terminierung
 ```
