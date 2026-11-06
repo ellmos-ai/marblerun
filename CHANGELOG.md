@@ -12,6 +12,13 @@
 - **Integration verification (2026-11-04):** Preserved prior dated audit stamps and corrected the runtime signal names and network boundaries. The integrated local suite passed 187 tests; this is not a release or remote CI receipt.
 - **Automatisierte Vertragstests:** Extended `tests/test_metadata.py` with `test_pfad_b_discoverability_state_diagram_and_badges_currency_20261031()` verifying state diagram syntax, flat root tree alignment, badge recency, and single-source version 0.1.3 freeze.
 
+### Control request documentation (2026-11-03)
+
+- Correct the EN/DE architecture and state-file documentation to name the actual
+  `STOP`, `PAUSE.json`, and `steer_queue.json` inputs. Document the CLI commands,
+  checkpoint timing, and that requests do not interrupt an active model call.
+  The previously shown `*.req` files are not recognized. Runtime behavior is unchanged.
+
 ### Review corrections (2026-10-24)
 
 - Restrict the network claim to local orchestration state; the default Claude CLI and tools may transmit prompts/context. No Zero-Egress control is implemented.

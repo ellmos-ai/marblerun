@@ -38,5 +38,72 @@
     "path": ".",
     "repository": "https://github.com/ellmos-ai/marblerun"
   },
-  "adapters": []
+  "adapters": [],
+  "roles": [
+    {
+      "id": "marble-controller",
+      "label": "MARBLE-CONTROLLER",
+      "prompt": "prompts/example_controller.txt",
+      "request": "Start as MARBLE-CONTROLLER. Read the chain queue and handoff state and coordinate worker rounds.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    },
+    {
+      "id": "marble-worker",
+      "label": "MARBLE-WORKER",
+      "prompt": "prompts/example_worker.txt",
+      "request": "Start as MARBLE-WORKER. Execute the assigned handoff task and write verifiable results.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    },
+    {
+      "id": "marble-reviewer",
+      "label": "MARBLE-REVIEWER",
+      "prompt": "prompts/example_reviewer.txt",
+      "request": "Start as MARBLE-REVIEWER. Audit worker outputs against acceptance criteria and update queue status.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    },
+    {
+      "id": "gui-live-tester",
+      "label": "GUI-LIVE-TESTER",
+      "prompt": "prompts/gui_live_tester.txt",
+      "request": "Start as GUI-LIVE-TESTER. Perform interactive UI verification and report defects.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    },
+    {
+      "id": "doc-keeper",
+      "label": "DOC-KEEPER",
+      "prompt": "prompts/doc_keeper.txt",
+      "request": "Start as DOC-KEEPER. Audit documentation claims against code reality using the 3-Cause Model.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    }
+  ]
 }

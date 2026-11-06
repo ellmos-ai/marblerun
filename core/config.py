@@ -41,7 +41,44 @@ DEFAULT_GLOBAL_CONFIG = {
         "enabled": False,
         "bot_token_env": "LLMAUTO_TELEGRAM_BOT_TOKEN",
         "chat_id": "",
-    }
+    },
+    "doc_machine": {
+        "enabled": True,
+        "execution_locality": "local_ocean_bach_only",
+        "default_repair_dispatch": "local_taskplan",
+        "available_repair_dispatches": [
+            "local_taskplan",
+            "local_marblerun_wishes",
+            "wishes_redirect",
+        ],
+        "local_taskplan": {
+            "enabled": True,
+            "db_target": "bach_or_ocean_taskplan",
+            "assigned_worker": "background_worker",
+            "priority_unintended_erosion": "P1",
+            "priority_planned_terraforming": "P2",
+        },
+        "local_marblerun_wishes": {
+            "enabled": False,
+            "chain_name": "wishes-come-true-local",
+            "max_rounds": 3,
+        },
+        "wishes_redirect": {
+            "enabled": False,
+            "feature_tier": "developer_only",
+            "required_tier": "ocean-dev",
+            "owner": "lukas",
+            "target_mode": "local_marblerun_chain",
+            "target_chain": "wishes-come-true-local",
+            "local_genie_repo_path": "C:\\_Local_DEV\\repos\\local-genie",
+            "wishes_come_true_repo_path": "C:\\_Local_DEV\\repos\\wishes-come-true",
+            "redirect_on_causes": [
+                "unintended_erosion",
+                "planned_terraforming_pending",
+            ],
+            "allow_auto_fix_branch": True,
+        },
+    },
 }
 
 

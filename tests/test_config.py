@@ -42,9 +42,20 @@ class TestDefaultGlobalConfig:
     def test_has_required_keys(self):
         required = ["default_model", "default_permission_mode",
                      "default_allowed_tools", "default_timeout_seconds",
-                     "default_backend", "provider_models"]
+                     "default_backend", "provider_models", "doc_machine"]
         for key in required:
             assert key in DEFAULT_GLOBAL_CONFIG
+
+    def test_doc_machine_defaults_and_wishes_redirect_dev_feature(self):
+        doc_cfg = DEFAULT_GLOBAL_CONFIG["doc_machine"]
+        assert doc_cfg["execution_locality"] == "local_ocean_bach_only"
+        assert doc_cfg["default_repair_dispatch"] == "local_taskplan"
+        assert doc_cfg["local_taskplan"]["enabled"] is True
+        redirect = doc_cfg["wishes_redirect"]
+        assert redirect["enabled"] is False
+        assert redirect["feature_tier"] == "developer_only"
+        assert redirect["required_tier"] == "ocean-dev"
+        assert "unintended_erosion" in redirect["redirect_on_causes"]
 
     def test_model_is_current(self):
         assert "claude-sonnet-4-6" in DEFAULT_GLOBAL_CONFIG["default_model"]
@@ -73,6 +84,7 @@ class TestLoadGlobalConfig:
         config = load_global_config()
         assert "default_model" in config
         assert "default_permission_mode" in config
+        assert "doc_machine" in config
 
 
 class TestListChains:
@@ -85,6 +97,8 @@ class TestListChains:
         # controller-worker-loop und review-chain sind die oeffentlichen Chains
         public_chains = [c for c in chains if not c.startswith("_")]
         assert len(public_chains) >= 1
+        assert "doc-keeper-machine" in chains
+        assert "wishes-come-true-local" in chains
 
 
 class TestLoadChain:
@@ -95,6 +109,14 @@ class TestLoadChain:
             assert "chain_name" in config
             assert "links" in config
             assert "mode" in config
+
+    def test_load_doc_keeper_and_wishes_local_chains(self):
+        doc_chain = load_chain("doc-keeper-machine")
+        assert doc_chain["chain_name"] == "doc-keeper-machine"
+        assert len(doc_chain["links"]) == 5
+        wishes_chain = load_chain("wishes-come-true-local")
+        assert wishes_chain["chain_name"] == "wishes-come-true-local"
+        assert len(wishes_chain["links"]) == 3
 
     def test_load_nonexistent_raises(self):
         with pytest.raises(FileNotFoundError):

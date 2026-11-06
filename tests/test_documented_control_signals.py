@@ -29,4 +29,7 @@ def test_diagrams_use_the_runtime_signal_names():
         for signal in ("PAUSE.json", "steer_queue.json", "STOP"):
             assert signal in text
         for obsolete in ("pause.req", "steer.req", "stop.req"):
-            assert obsolete not in text
+            # Only the explicit negation ("... are not control inputs") may name the obsolete files.
+            for line in text.splitlines():
+                if obsolete in line:
+                    assert "not control inputs" in line or "keine Steuereingaben" in line, line

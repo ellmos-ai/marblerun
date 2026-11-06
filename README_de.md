@@ -175,7 +175,7 @@ graph TD
 |   * status.txt       -> Kanonische Zustandsmaschine (RUNNING, PAUSED, STOPPED, ALL_DONE)         |
 |   * round_counter    -> Persistenter atomarer Rundenzähler (1 .. max_rounds)                    |
 |   * handoff.md       -> Verifizierte Nutzlast für die Kontextübergabe                           |
-|   * PAUSE.json / STOP / steer_queue.json -> Externe Steuersignale & Multi-Host-Governance           |
+|   * PAUSE.json / STOP / steer_queue.json -> Steueranfragen an sicheren Checkpoints             |
 +-------------------------------------------------------------------------------------------------+
                                       | (INV-LOCAL-01, INV-SEC-02, INV-SLA-10)
                                       v
@@ -357,6 +357,17 @@ Jede Kette verwaltet persistenten Zustand unter `state/<chain-name>/`:
 | `round_counter.txt` | Aktuelle Rundennummer |
 | `handoff.md` | Kontext-Handoff zwischen Links |
 | `start_time.txt` | Startzeitstempel der Kette |
+| `STOP` | Stoppanfrage mit dem Grund als Klartext |
+| `PAUSE.json` | Vorgemerkte Pausenanfrage einschließlich ihres Grundes |
+| `steer_queue.json` | Wartende Operator-Hinweise für den nächsten Modellaufruf |
+
+Verwende `llmauto chain stop <name> [grund]`, `llmauto chain pause <name> [grund]`,
+`llmauto chain resume <name>` und `llmauto chain steer <name> <nachricht>`, um
+diese Anfragen zu verwalten. Sie werden an sicheren Checkpoints gelesen: Eine
+Pausen- oder Stoppanfrage unterbricht keinen bereits laufenden Modellaufruf.
+Steering-Hinweise werden vor dem nächsten Modellaufruf aus der Queue entnommen
+und in dessen Prompt eingefügt. Resume hebt die vorgemerkte Pause auf.
+Dateien namens `pause.req`, `stop.req` oder `steer.req` sind keine Steuereingaben.
 
 ### Chain-Konfigurationsschema
 

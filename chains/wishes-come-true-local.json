@@ -1,0 +1,46 @@
+{
+    "chain_name": "wishes-come-true-local",
+    "description": "Lokale Wishes-Come-True Reparatur- und Terraforming-Staffette in Ocean/BACH (ohne Cloud-GitLab-Zwang): Nimmt Reparatur-Auftraege aus Ursache 1 (unintended_erosion) oder Ursache 2 (planned_terraforming_pending) bzw. aus dem Entwickler-Feature wishes_redirect entgegen und arbeitet sie lokal ab.",
+    "mode": "once",
+    "max_rounds": 3,
+    "runtime_hours": 2,
+    "max_consecutive_blocks": 3,
+    "links": [
+        {
+            "name": "wish-planner",
+            "role": "controller",
+            "model": "claude-sonnet-4-6",
+            "prompt": "wish-planner",
+            "description": "Analysiert den lokalen Reparatur-/Terraforming-Auftrag aus taskplan oder doc-keeper-machine und erstellt den konkreten Umsetzungsschnitt."
+        },
+        {
+            "name": "wish-builder",
+            "role": "worker",
+            "model": "claude-sonnet-4-6",
+            "prompt": "wish-builder",
+            "description": "Setzt den Code-Fix (gegen Erosion) oder das fehlende Terraforming lokal im Repo um und fuehrt pytest aus."
+        },
+        {
+            "name": "wish-reviewer",
+            "role": "reviewer",
+            "model": "claude-haiku-4-5",
+            "prompt": "wish-reviewer",
+            "description": "Prueft Tests, Doku-Paritaet (IST == SOLL) und schliesst den lokalen Task im taskplan ab."
+        }
+    ],
+    "prompts": {
+        "wish-planner": {
+            "type": "inline",
+            "text": "Lies den uebergebenen Reparatur- oder Terraforming-Auftrag (Ursache 1: unintended_erosion oder Ursache 2: planned_terraforming_pending). Formuliere einen minimal-invasiven, testbaren Umsetzungsplan fuer den lokalen Builder."
+        },
+        "wish-builder": {
+            "type": "inline",
+            "text": "Fuehre die geplante Reparatur bzw. das Terraforming lokal im Ziel-Repo aus. Stelle sicher, dass der Code wieder dem dokumentierten SOLL entspricht, und belege dies durch gruene Unit-Tests."
+        },
+        "wish-reviewer": {
+            "type": "inline",
+            "text": "Verifiziere den Fix gegen den urspruenglichen Doku-Claim und die Test-Suite. Markiere den zugehoerigen Task im lokalen taskplan als erledigt."
+        }
+    },
+    "task_pools": {}
+}
