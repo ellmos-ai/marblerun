@@ -38,6 +38,10 @@ worker reviewer controller LLM loop
 zero dependency LLM automation CLI
 ```
 
+## Integration test receipt (2026-11-04)
+
+Test suite: 187 passed, 0 skipped, local Windows/Python run. No remote CI or release receipt.
+
 ## External Discovery Notes
 
 As of 2026-10-11, web search finds the canonical GitHub repository for exact ellmos/llmauto queries. Broad `MarbleRun` searches still collide with confidential-computing and game/toolkit projects, so downstream directories, LLM indexes, and package metadata prefer `llmauto` plus Claude Code, agent-chain, and local-first automation wording. Test suite: 185 passed, 0 skipped | 100% green, exit code 0 (counted with `pytest -q`, not carried forward).
